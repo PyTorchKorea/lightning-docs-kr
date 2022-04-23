@@ -179,13 +179,6 @@ Current Lightning Users
    common/trainer
 
 .. toctree::
-   :maxdepth: 2
-   :name: api
-   :caption: API Reference
-
-   api_references
-
-.. toctree::
    :maxdepth: 1
    :name: Common Workflows
    :caption: Common Workflows
@@ -266,21 +259,10 @@ Current Lightning Users
    :caption: Hands-on Examples
    :glob:
 
-   notebooks/**/*
    PyTorch Lightning 101 class <https://www.youtube.com/playlist?list=PLaMu-SDt_RB5NUm67hU2pdE75j6KaIOv2>
    From PyTorch to PyTorch Lightning [Blog] <https://towardsdatascience.com/from-pytorch-to-pytorch-lightning-a-gentle-introduction-b371b7caaf09>
    From PyTorch to PyTorch Lightning [Video] <https://www.youtube.com/watch?v=QHww1JH7IDU>
 
-.. toctree::
-   :maxdepth: 1
-   :name: Community
-   :caption: Community
-
-   generated/CODE_OF_CONDUCT.md
-   generated/CONTRIBUTING.md
-   generated/BECOMING_A_CORE_CONTRIBUTOR.md
-   governance
-   generated/CHANGELOG.md
 
 .. raw:: html
 

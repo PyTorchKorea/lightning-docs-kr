@@ -24,18 +24,18 @@ import pt_lightning_sphinx_theme
 # -----------------------
 # VARIABLES WHEN WORKING ON DOCS... MAKE THIS TRUE TO BUILD FASTER
 # -----------------------
-_PL_FAST_DOCS_DEV = bool(int(os.getenv("PL_FAST_DOCS_DEV", 0)))
+_PL_FAST_DOCS_DEV = bool(int(os.getenv("PL_FAST_DOCS_DEV", 1)))
 
 # -----------------------
 # BUILD stuff
 # -----------------------
 PATH_HERE = os.path.abspath(os.path.dirname(__file__))
-PATH_ROOT = os.path.join(PATH_HERE, "..", "..")
+PATH_ROOT = os.path.join(PATH_HERE, "..")
 PATH_RAW_NB = os.path.join(PATH_ROOT, "_notebooks")
 sys.path.insert(0, os.path.abspath(PATH_ROOT))
 sys.path.append(os.path.join(PATH_RAW_NB, ".actions"))
 
-_SHOULD_COPY_NOTEBOOKS = True
+_SHOULD_COPY_NOTEBOOKS = False
 
 
 try:
@@ -48,7 +48,7 @@ FOLDER_GENERATED = "generated"
 SPHINX_MOCK_REQUIREMENTS = int(os.environ.get("SPHINX_MOCK_REQUIREMENTS", True))
 
 spec = spec_from_file_location(
-    "pytorch_lightning/__about__.py", os.path.join(PATH_ROOT, "pytorch_lightning", "__about__.py")
+    "pytorch_lightning/__about__.py", os.path.join(PATH_ROOT, "__about__.py")
 )
 about = module_from_spec(spec)
 spec.loader.exec_module(about)
@@ -76,11 +76,11 @@ def _transform_changelog(path_in: str, path_out: str) -> None:
 
 
 os.makedirs(os.path.join(PATH_HERE, FOLDER_GENERATED), exist_ok=True)
-# copy all documents from GH templates like contribution guide
-for md in glob.glob(os.path.join(PATH_ROOT, ".github", "*.md")):
-    shutil.copy(md, os.path.join(PATH_HERE, FOLDER_GENERATED, os.path.basename(md)))
-# copy also the changelog
-_transform_changelog(os.path.join(PATH_ROOT, "CHANGELOG.md"), os.path.join(PATH_HERE, FOLDER_GENERATED, "CHANGELOG.md"))
+# # copy all documents from GH templates like contribution guide
+# for md in glob.glob(os.path.join(PATH_ROOT, ".github", "*.md")):
+#     shutil.copy(md, os.path.join(PATH_HERE, FOLDER_GENERATED, os.path.basename(md)))
+# # copy also the changelog
+# _transform_changelog(os.path.join(PATH_ROOT, "CHANGELOG.md"), os.path.join(PATH_HERE, FOLDER_GENERATED, "CHANGELOG.md"))
 
 # -- Project information -----------------------------------------------------
 
@@ -284,15 +284,15 @@ epub_exclude_files = ["search.html"]
 
 # -- Options for intersphinx extension ---------------------------------------
 
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/3", None),
-    "torch": ("https://pytorch.org/docs/stable/", None),
-    "numpy": ("https://numpy.org/doc/stable/", None),
-    "PIL": ("https://pillow.readthedocs.io/en/stable/", None),
-    "torchmetrics": ("https://torchmetrics.readthedocs.io/en/stable/", None),
-    "fairscale": ("https://fairscale.readthedocs.io/en/latest/", None),
-    "graphcore": ("https://docs.graphcore.ai/en/latest/", None),
-}
+# intersphinx_mapping = {
+#     "python": ("https://docs.python.org/3", None),
+#     "torch": ("https://pytorch.org/docs/stable/", None),
+#     "numpy": ("https://numpy.org/doc/stable/", None),
+#     "PIL": ("https://pillow.readthedocs.io/en/stable/", None),
+#     "torchmetrics": ("https://torchmetrics.readthedocs.io/en/stable/", None),
+#     "fairscale": ("https://fairscale.readthedocs.io/en/latest/", None),
+#     "graphcore": ("https://docs.graphcore.ai/en/latest/", None),
+# }
 
 # -- Options for todo extension ----------------------------------------------
 
@@ -347,8 +347,8 @@ if SPHINX_MOCK_REQUIREMENTS:
     MOCK_PACKAGES += ["fairscale"]
     # mock also base packages when we are on RTD since we don't install them there
     MOCK_PACKAGES += package_list_from_file(os.path.join(PATH_ROOT, "requirements.txt"))
-    MOCK_PACKAGES += package_list_from_file(os.path.join(PATH_ROOT, "requirements", "extra.txt"))
-    MOCK_PACKAGES += package_list_from_file(os.path.join(PATH_ROOT, "requirements", "loggers.txt"))
+    # MOCK_PACKAGES += package_list_from_file(os.path.join(PATH_ROOT, "requirements", "extra.txt"))
+    # MOCK_PACKAGES += package_list_from_file(os.path.join(PATH_ROOT, "requirements", "loggers.txt"))
 MOCK_PACKAGES = [PACKAGE_MAPPING.get(pkg, pkg) for pkg in MOCK_PACKAGES]
 
 autodoc_mock_imports = MOCK_PACKAGES
