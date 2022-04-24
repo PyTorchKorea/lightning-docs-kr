@@ -1,0 +1,1297 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Optimization &mdash; PyTorch Lightning 1.7.0dev documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://pytorch-lightning.readthedocs.io/en/stable//common/optimization.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/main.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <!-- Google Analytics -->
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82W25RV60Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-82W25RV60Q');
+    </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://pytorch-lightning.rtfd.io/en/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://pytorch-lightning.readthedocs.io/en/latest/starter/introduction.html">Get Started</a>
+          </li> -->
+
+          <!-- <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch-lightning.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-transformers.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Transformers</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li> -->
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://www.pytorchlightning.ai/community">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://github.com/PyTorchLightning/pytorch-lightning/discussions" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          <!-- <li>
+            <a href="https://github.com/PyTorchLightning/pytorch-lightning">GitHub</a>
+          </li>
+
+          <li>
+            <a href="https://www.grid.ai/">Train on the cloud</a>
+          </li> -->
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  1.7.0dev
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../starter/introduction.html">Lightning in 15 minutes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starter/converting.html">Organize existing PyTorch into Lightning</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Level Up</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../levels/core_skills.html">Basic skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/intermediate.html">Intermediate skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/advanced.html">Advanced skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/expert.html">Expert skills</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trainer.html">Trainer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Common Workflows</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Avoid overfitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/build_model.html">Build a Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hyperparameters.html">Configure hyperparameters from the CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="progress_bar.html">Customize the progress bar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/production.html">Deploy models into production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/training_tricks.html">Effective Training Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/lightning_cli.html">Eliminate config boilerplate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tuning/profiler.html">Find bottlenecks in your code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/transfer_learning.html">Finetune a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualize/logging_intermediate.html">Manage experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cluster.html">Run on an on-prem cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/model_parallel.html">Train 1 trillion+ parameter models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cloud_training.html">Train on the cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="checkpointing.html">Save and load model progress</a></li>
+<li class="toctree-l1"><a class="reference internal" href="precision.html">Save memory with half-precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/gpu.html">Train on single or multiple GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/hpu.html">Train on single or multiple HPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/ipu.html">Train on single or multiple IPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/tpu.html">Train on single or multiple TPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/own_your_loop.html">Use a pure PyTorch training loop</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Glossary</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extensions/accelerator.html">Accelerators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extensions/callbacks.html">Callback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="checkpointing.html">Checkpointing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cluster.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="checkpointing_advanced.html">Cloud checkpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console_logs.html">Console Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debug/debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="early_stopping.html">Early stopping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualize/experiment_managers.html">Experiment manager (Logger)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/fault_tolerant_training.html">Fault tolerant training</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://lightning-flash.readthedocs.io/en/stable/">Flash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cloud_training.html">Grid AI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/gpu.html">GPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="precision.html">Half precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/hpu.html">HPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/production_intermediate.html">Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/ipu.html">IPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/lightning_cli.html">Lightning CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/build_model_expert.html">Raw PyTorch loop (expert)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/build_model_expert.html#lightninglite-stepping-stone-to-lightning">LightningLite (Stepping Stone to Lightning)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data/datamodule.html">LightningDataModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/ecosystem/transformers.html">Lightning Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualize/loggers.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extensions/loops.html">Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/tpu.html">TPU</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://torchmetrics.readthedocs.io/en/stable/">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/build_model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/model_parallel.html">Model Parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extensions/plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="progress_bar.html">Progress bar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/production_advanced.html">Production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/production_basic.html">Predict</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tuning/profiler.html">Profiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/pruning_quantization.html">Pruning and Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_fs.html">Remote filesystem and FSSPEC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/strategy_registry.html">Strategy registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starter/style_guide.html">Style guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/run_intermediate.html">Sweep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/training_tricks.html">SWA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cluster_advanced.html">SLURM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/transfer_learning.html">Transfer learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cluster_intermediate_2.html">Torch distributed</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://www.youtube.com/playlist?list=PLaMu-SDt_RB5NUm67hU2pdE75j6KaIOv2">PyTorch Lightning 101 class</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://towardsdatascience.com/from-pytorch-to-pytorch-lightning-a-gentle-introduction-b371b7caaf09">From PyTorch to PyTorch Lightning [Blog]</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.youtube.com/watch?v=QHww1JH7IDU">From PyTorch to PyTorch Lightning [Video]</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>Optimization</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/common/optimization.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <section id="optimization">
+<span id="id1"></span><h1>Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline">¶</a></h1>
+<p>Lightning offers two modes for managing the optimization process:</p>
+<ul class="simple">
+<li><p>Manual Optimization</p></li>
+<li><p>Automatic Optimization</p></li>
+</ul>
+<p>For the majority of research cases, <strong>automatic optimization</strong> will do the right thing for you and it is what most
+users should use.</p>
+<p>For advanced/expert users who want to do esoteric optimization schedules or techniques, use <strong>manual optimization</strong>.</p>
+<hr class="docutils" id="manual-optimization" />
+<section id="id2">
+<h2>Manual Optimization<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>For advanced research topics like reinforcement learning, sparse coding, or GAN research, it may be desirable to
+manually manage the optimization process.</p>
+<p>This is only recommended for experts who need ultimate flexibility.
+Lightning will handle only accelerator, precision and strategy logic.
+The users are left with <code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code>, gradient accumulation, model toggling, etc..</p>
+<p>To manually optimize, do the following:</p>
+<ul class="simple">
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">self.automatic_optimization=False</span></code> in your <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code>’s <code class="docutils literal notranslate"><span class="pre">__init__</span></code>.</p></li>
+<li><p>Use the following functions and call them manually:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">self.optimizers()</span></code> to access your optimizers (one or multiple)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code> to clear the gradients from the previous training step</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">self.manual_backward(loss)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code> to update your model parameters</p></li>
+</ul>
+</li>
+</ul>
+<p>Here is a minimal example of manual optimization.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">LightningModule</span>
+
+
+<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># Important: This property activates manual optimization.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="p">()</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_loss</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">manual_backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Before 1.2, <code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code> was calling <code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code> internally.
+From 1.2, it is left to the user’s expertise.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Be careful where you call <code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code>, or your model won’t converge.
+It is good practice to call <code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code> before <code class="docutils literal notranslate"><span class="pre">self.manual_backward(loss)</span></code>.</p>
+</div>
+<section id="access-your-own-optimizer">
+<h3>Access your Own Optimizer<a class="headerlink" href="#access-your-own-optimizer" title="Permalink to this headline">¶</a></h3>
+<p>The provided <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is a <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningOptimizer</span></code> object wrapping your own optimizer
+configured in your <code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_optimizers()</span></code>. You can access your own optimizer
+with <code class="docutils literal notranslate"><span class="pre">optimizer.optimizer</span></code>. However, if you use your own optimizer to perform a step, Lightning won’t be able to
+support accelerators, precision and profiling for you.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="p">()</span>
+
+        <span class="c1"># `optimizer` is a `LightningOptimizer` wrapping the optimizer.</span>
+        <span class="c1"># To access it, do the following.</span>
+        <span class="c1"># However, it won&#39;t work on TPU, AMP, etc...</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimizer</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+</section>
+<section id="gradient-accumulation">
+<h3>Gradient Accumulation<a class="headerlink" href="#gradient-accumulation" title="Permalink to this headline">¶</a></h3>
+<p>You can accumulate gradients over batches similarly to <code class="docutils literal notranslate"><span class="pre">accumulate_grad_batches</span></code> argument in
+<a class="reference internal" href="trainer.html#trainer"><span class="std std-ref">Trainer</span></a> for automatic optimization. To perform gradient accumulation with one optimizer
+after every <code class="docutils literal notranslate"><span class="pre">N</span></code> steps, you can do as such.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="n">opt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="p">()</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_loss</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">manual_backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+
+    <span class="c1"># accumulate gradients of N batches</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">batch_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="use-multiple-optimizers-like-gans">
+<h3>Use Multiple Optimizers (like GANs)<a class="headerlink" href="#use-multiple-optimizers-like-gans" title="Permalink to this headline">¶</a></h3>
+<p>Here is an example training a simple GAN with multiple optimizers using manual optimization.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">LightningModule</span>
+
+
+<span class="k">class</span> <span class="nc">SimpleGAN</span><span class="p">(</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">G</span> <span class="o">=</span> <span class="n">Generator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">D</span> <span class="o">=</span> <span class="n">Discriminator</span><span class="p">()</span>
+
+        <span class="c1"># Important: This property activates manual optimization.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">sample_z</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Z</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="n">n</span><span class="p">,))</span>
+        <span class="k">return</span> <span class="n">sample</span>
+
+    <span class="k">def</span> <span class="nf">sample_G</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_z</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">G</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+        <span class="c1"># Implementation follows the PyTorch tutorial:</span>
+        <span class="c1"># https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html</span>
+        <span class="n">g_opt</span><span class="p">,</span> <span class="n">d_opt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="p">()</span>
+
+        <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">real_label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">fake_label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="n">g_X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_G</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+
+        <span class="c1">##########################</span>
+        <span class="c1"># Optimize Discriminator #</span>
+        <span class="c1">##########################</span>
+        <span class="n">d_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">errD_real</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">d_x</span><span class="p">,</span> <span class="n">real_label</span><span class="p">)</span>
+
+        <span class="n">d_z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">(</span><span class="n">g_X</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span>
+        <span class="n">errD_fake</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">d_z</span><span class="p">,</span> <span class="n">fake_label</span><span class="p">)</span>
+
+        <span class="n">errD</span> <span class="o">=</span> <span class="n">errD_real</span> <span class="o">+</span> <span class="n">errD_fake</span>
+
+        <span class="n">d_opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">manual_backward</span><span class="p">(</span><span class="n">errD</span><span class="p">)</span>
+        <span class="n">d_opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="c1">######################</span>
+        <span class="c1"># Optimize Generator #</span>
+        <span class="c1">######################</span>
+        <span class="n">d_z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">(</span><span class="n">g_X</span><span class="p">)</span>
+        <span class="n">errG</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">d_z</span><span class="p">,</span> <span class="n">real_label</span><span class="p">)</span>
+
+        <span class="n">g_opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">manual_backward</span><span class="p">(</span><span class="n">errG</span><span class="p">)</span>
+        <span class="n">g_opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_dict</span><span class="p">({</span><span class="s2">&quot;g_loss&quot;</span><span class="p">:</span> <span class="n">errG</span><span class="p">,</span> <span class="s2">&quot;d_loss&quot;</span><span class="p">:</span> <span class="n">errD</span><span class="p">},</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">g_opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+        <span class="n">d_opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">g_opt</span><span class="p">,</span> <span class="n">d_opt</span>
+</pre></div>
+</div>
+</section>
+<section id="learning-rate-scheduling">
+<h3>Learning Rate Scheduling<a class="headerlink" href="#learning-rate-scheduling" title="Permalink to this headline">¶</a></h3>
+<p>Every optimizer you use can be paired with any
+<a class="reference external" href="https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate">Learning Rate Scheduler</a>. Please see the
+documentation of <code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_optimizers()</span></code> for all the available options</p>
+<p>You can call <code class="docutils literal notranslate"><span class="pre">lr_scheduler.step()</span></code> at arbitrary intervals.
+Use <code class="docutils literal notranslate"><span class="pre">self.lr_schedulers()</span></code> in  your <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code> to access any learning rate schedulers
+defined in your <code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_optimizers()</span></code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>Before v1.3, Lightning automatically called <code class="docutils literal notranslate"><span class="pre">lr_scheduler.step()</span></code> in both automatic and manual optimization. From
+1.3, <code class="docutils literal notranslate"><span class="pre">lr_scheduler.step()</span></code> is now for the user to call at arbitrary intervals.</p></li>
+<li><p>Note that the <code class="docutils literal notranslate"><span class="pre">lr_scheduler_config</span></code> keys, such as <code class="docutils literal notranslate"><span class="pre">&quot;frequency&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;interval&quot;</span></code>, will be ignored even if they are provided in
+your <code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_optimizers()</span></code> during manual optimization.</p></li>
+</ul>
+</div>
+<p>Here is an example calling <code class="docutils literal notranslate"><span class="pre">lr_scheduler.step()</span></code> every step.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># step every batch</span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="c1"># do forward, backward, and optimization</span>
+    <span class="o">...</span>
+
+    <span class="c1"># single scheduler</span>
+    <span class="n">sch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr_schedulers</span><span class="p">()</span>
+    <span class="n">sch</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># multiple schedulers</span>
+    <span class="n">sch1</span><span class="p">,</span> <span class="n">sch2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr_schedulers</span><span class="p">()</span>
+    <span class="n">sch1</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">sch2</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you want to call <code class="docutils literal notranslate"><span class="pre">lr_scheduler.step()</span></code> every <code class="docutils literal notranslate"><span class="pre">N</span></code> steps/epochs, do the following.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="c1"># do forward, backward, and optimization</span>
+    <span class="o">...</span>
+
+    <span class="n">sch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr_schedulers</span><span class="p">()</span>
+
+    <span class="c1"># step every N batches</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">batch_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sch</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># step every N epochs</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">is_last_batch</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">current_epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sch</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you want to call schedulers that require a metric value after each epoch, consider doing the following:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">training_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+    <span class="n">sch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr_schedulers</span><span class="p">()</span>
+
+    <span class="c1"># If the selected scheduler is a ReduceLROnPlateau scheduler.</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sch</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">ReduceLROnPlateau</span><span class="p">):</span>
+        <span class="n">sch</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">callback_metrics</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="use-closure-for-lbfgs-like-optimizers">
+<h3>Use Closure for LBFGS-like Optimizers<a class="headerlink" href="#use-closure-for-lbfgs-like-optimizers" title="Permalink to this headline">¶</a></h3>
+<p>It is a good practice to provide the optimizer with a closure function that performs a <code class="docutils literal notranslate"><span class="pre">forward</span></code>, <code class="docutils literal notranslate"><span class="pre">zero_grad</span></code> and
+<code class="docutils literal notranslate"><span class="pre">backward</span></code> of your model. It is optional for most optimizers, but makes your code compatible if you switch to an
+optimizer which requires a closure, such as <code class="xref py py-class docutils literal notranslate"><span class="pre">LBFGS</span></code>.</p>
+<p>See <a class="reference external" href="https://pytorch.org/docs/stable/optim.html#optimizer-step-closure">the PyTorch docs</a> for more about the closure.</p>
+<p>Here is an example using a closure function.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">LBFGS</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="n">opt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">closure</span><span class="p">():</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_loss</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">manual_backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loss</span>
+
+    <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="o">=</span><span class="n">closure</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">LBFGS</span></code> optimizer is not supported for apex AMP, native AMP, IPUs, or DeepSpeed.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="automatic-optimization">
+<h2>Automatic Optimization<a class="headerlink" href="#automatic-optimization" title="Permalink to this headline">¶</a></h2>
+<p>With Lightning, most users don’t have to think about when to call <code class="docutils literal notranslate"><span class="pre">.zero_grad()</span></code>, <code class="docutils literal notranslate"><span class="pre">.backward()</span></code> and <code class="docutils literal notranslate"><span class="pre">.step()</span></code>
+since Lightning automates that for you.</p>
+<p>Under the hood, Lightning does the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="nf">closure</span><span class="p">():</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training_step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">loss</span>
+
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="p">)</span>
+
+    <span class="n">lr_scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In the case of multiple optimizers, Lightning does the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">optimizers</span><span class="p">:</span>
+
+            <span class="k">def</span> <span class="nf">closure</span><span class="p">():</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training_step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">optimizer_idx</span><span class="p">)</span>
+                <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+                <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">loss</span>
+
+            <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">lr_scheduler</span> <span class="ow">in</span> <span class="n">lr_schedulers</span><span class="p">:</span>
+        <span class="n">lr_scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As can be seen in the code snippet above, Lightning defines a closure with <code class="docutils literal notranslate"><span class="pre">training_step()</span></code>, <code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code> for the optimization. This mechanism is in place to support optimizers which operate on the
+output of the closure (e.g. the loss) or need to call the closure several times (e.g. <code class="xref py py-class docutils literal notranslate"><span class="pre">LBFGS</span></code>).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Before v1.2.2, Lightning internally calls <code class="docutils literal notranslate"><span class="pre">backward</span></code>, <code class="docutils literal notranslate"><span class="pre">step</span></code> and <code class="docutils literal notranslate"><span class="pre">zero_grad</span></code> in the order.
+From v1.2.2, the order is changed to <code class="docutils literal notranslate"><span class="pre">zero_grad</span></code>, <code class="docutils literal notranslate"><span class="pre">backward</span></code> and <code class="docutils literal notranslate"><span class="pre">step</span></code>.</p>
+</div>
+<section id="id3">
+<h3>Gradient Accumulation<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Accumulated gradients run K small batches of size <code class="docutils literal notranslate"><span class="pre">N</span></code> before doing a backward pass. The effect is a large effective batch size of size <code class="docutils literal notranslate"><span class="pre">KxN</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the batch size.
+Internally it doesn’t stack up the batches and do a forward pass rather it accumulates the gradients for K batches and then do an <code class="docutils literal notranslate"><span class="pre">optimizer.step</span></code> to make sure the
+effective batch size is increased but there is no memory overhead.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When using distributed training for eg. DDP, with let’s say with <code class="docutils literal notranslate"><span class="pre">P</span></code> devices, each device accumulates independently i.e. it stores the gradients
+after each <code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code> and doesn’t sync the gradients across the devices until we call <code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code>. So for each accumulation
+step, the effective batch size on each device will remain <code class="docutils literal notranslate"><span class="pre">N*K</span></code> but right before the <code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code>, the gradient sync will make the effective
+batch size as <code class="docutils literal notranslate"><span class="pre">P*N*K</span></code>. For DP, since the batch is split across devices, the final effective batch size will be <code class="docutils literal notranslate"><span class="pre">N*K</span></code>.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></p>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEFAULT (ie: no accumulated grads)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">accumulate_grad_batches</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Accumulate gradients for 7 batches</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">accumulate_grad_batches</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can set different values for it at different epochs by passing a dictionary, where the key represents the epoch at which the value for gradient accumulation
+should be updated.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># till 5th epoch, it will accumulate every 8 batches. From 5th epoch</span>
+<span class="c1"># till 9th epoch it will accumulate every 4 batches and after that no accumulation</span>
+<span class="c1"># will happen. Note that you need to use zero-indexed epoch keys here</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">accumulate_grad_batches</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Or, you can create custom <code class="xref py py-class docutils literal notranslate"><span class="pre">GradientAccumulationScheduler</span></code></p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">GradientAccumulationScheduler</span>
+
+
+<span class="c1"># till 5th epoch, it will accumulate every 8 batches. From 5th epoch</span>
+<span class="c1"># till 9th epoch it will accumulate every 4 batches and after that no accumulation</span>
+<span class="c1"># will happen. Note that you need to use zero-indexed epoch keys here</span>
+<span class="n">accumulator</span> <span class="o">=</span> <span class="n">GradientAccumulationScheduler</span><span class="p">(</span><span class="n">scheduling</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="n">accumulator</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>Use Multiple Optimizers (like GANs)<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>To use multiple optimizers (optionally with learning rate schedulers), return two or more optimizers from
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_optimizers()</span></code>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># two optimizers, no schedulers</span>
+<span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Adam</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="n">SGD</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+
+<span class="c1"># two optimizers, one scheduler for adam only</span>
+<span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">opt1</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">opt2</span> <span class="o">=</span> <span class="n">SGD</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">optimizers</span> <span class="o">=</span> <span class="p">[</span><span class="n">opt1</span><span class="p">,</span> <span class="n">opt2</span><span class="p">]</span>
+    <span class="n">lr_schedulers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;scheduler&quot;</span><span class="p">:</span> <span class="n">ReduceLROnPlateau</span><span class="p">(</span><span class="n">opt1</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span> <span class="s2">&quot;monitor&quot;</span><span class="p">:</span> <span class="s2">&quot;metric_to_track&quot;</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">optimizers</span><span class="p">,</span> <span class="n">lr_schedulers</span>
+
+
+<span class="c1"># two optimizers, two schedulers</span>
+<span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">opt1</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">opt2</span> <span class="o">=</span> <span class="n">SGD</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">opt1</span><span class="p">,</span> <span class="n">opt2</span><span class="p">],</span> <span class="p">[</span><span class="n">StepLR</span><span class="p">(</span><span class="n">opt1</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span> <span class="n">OneCycleLR</span><span class="p">(</span><span class="n">opt2</span><span class="p">,</span> <span class="o">...</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Under the hood, Lightning will call each optimizer sequentially:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">optimizers</span><span class="p">:</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">train_step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">optimizer_idx</span><span class="p">)</span>
+            <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">lr_scheduler</span> <span class="ow">in</span> <span class="n">lr_schedulers</span><span class="p">:</span>
+        <span class="n">lr_scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="step-optimizeres-at-arbitrary-intervals">
+<h3>Step Optimizeres at Arbitrary Intervals<a class="headerlink" href="#step-optimizeres-at-arbitrary-intervals" title="Permalink to this headline">¶</a></h3>
+<p>To do more interesting things with your optimizers such as learning rate warm-up or odd scheduling,
+override the <code class="xref py py-meth docutils literal notranslate"><span class="pre">optimizer_step()</span></code> function.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you are overriding this method, make sure that you pass the <code class="docutils literal notranslate"><span class="pre">optimizer_closure</span></code> parameter to
+<code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code> function as shown in the examples because <code class="docutils literal notranslate"><span class="pre">training_step()</span></code>, <code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code> are called in the closure function.</p>
+</div>
+<p>For example, here step optimizer A every batch and optimizer B every 2 batches.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Alternating schedule for optimizer steps (e.g. GANs)</span>
+<span class="k">def</span> <span class="nf">optimizer_step</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">epoch</span><span class="p">,</span>
+    <span class="n">batch_idx</span><span class="p">,</span>
+    <span class="n">optimizer</span><span class="p">,</span>
+    <span class="n">optimizer_idx</span><span class="p">,</span>
+    <span class="n">optimizer_closure</span><span class="p">,</span>
+    <span class="n">on_tpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">using_native_amp</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">using_lbfgs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="c1"># update generator every step</span>
+    <span class="k">if</span> <span class="n">optimizer_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="o">=</span><span class="n">optimizer_closure</span><span class="p">)</span>
+
+    <span class="c1"># update discriminator every 2 steps</span>
+    <span class="k">if</span> <span class="n">optimizer_idx</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">batch_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># the closure (which includes the `training_step`) will be executed by `optimizer.step`</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="o">=</span><span class="n">optimizer_closure</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># call the closure by itself to run `training_step` + `backward` without an optimizer step</span>
+            <span class="n">optimizer_closure</span><span class="p">()</span>
+
+    <span class="c1"># ...</span>
+    <span class="c1"># add as many optimizers as you want</span>
+</pre></div>
+</div>
+<p>Here we add a manual learning rate warm-up without an lr scheduler.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># learning rate warm-up</span>
+<span class="k">def</span> <span class="nf">optimizer_step</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">epoch</span><span class="p">,</span>
+    <span class="n">batch_idx</span><span class="p">,</span>
+    <span class="n">optimizer</span><span class="p">,</span>
+    <span class="n">optimizer_idx</span><span class="p">,</span>
+    <span class="n">optimizer_closure</span><span class="p">,</span>
+    <span class="n">on_tpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">using_native_amp</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">using_lbfgs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="c1"># update params</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="o">=</span><span class="n">optimizer_closure</span><span class="p">)</span>
+
+    <span class="c1"># skip the first 500 steps</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">global_step</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">:</span>
+        <span class="n">lr_scale</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">global_step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">500.0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">pg</span> <span class="ow">in</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">param_groups</span><span class="p">:</span>
+            <span class="n">pg</span><span class="p">[</span><span class="s2">&quot;lr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lr_scale</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">learning_rate</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3>Access your Own Optimizer<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>The provided <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> is a <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningOptimizer</span></code> object wrapping your own optimizer
+configured in your <code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_optimizers()</span></code>.
+You can access your own optimizer with <code class="docutils literal notranslate"><span class="pre">optimizer.optimizer</span></code>. However, if you use your own optimizer
+to perform a step, Lightning won’t be able to support accelerators, precision and profiling for you.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># function hook in LightningModule</span>
+<span class="k">def</span> <span class="nf">optimizer_step</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">epoch</span><span class="p">,</span>
+    <span class="n">batch_idx</span><span class="p">,</span>
+    <span class="n">optimizer</span><span class="p">,</span>
+    <span class="n">optimizer_idx</span><span class="p">,</span>
+    <span class="n">optimizer_closure</span><span class="p">,</span>
+    <span class="n">on_tpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">using_native_amp</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">using_lbfgs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="o">=</span><span class="n">optimizer_closure</span><span class="p">)</span>
+
+
+<span class="c1"># `optimizer` is a `LightningOptimizer` wrapping the optimizer.</span>
+<span class="c1"># To access it, do the following.</span>
+<span class="c1"># However, it won&#39;t work on TPU, AMP, etc...</span>
+<span class="k">def</span> <span class="nf">optimizer_step</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">epoch</span><span class="p">,</span>
+    <span class="n">batch_idx</span><span class="p">,</span>
+    <span class="n">optimizer</span><span class="p">,</span>
+    <span class="n">optimizer_idx</span><span class="p">,</span>
+    <span class="n">optimizer_closure</span><span class="p">,</span>
+    <span class="n">on_tpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">using_native_amp</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">using_lbfgs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimizer</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="o">=</span><span class="n">optimizer_closure</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="bring-your-own-custom-learning-rate-schedulers">
+<h3>Bring your own Custom Learning Rate Schedulers<a class="headerlink" href="#bring-your-own-custom-learning-rate-schedulers" title="Permalink to this headline">¶</a></h3>
+<p>Lightning allows using custom learning rate schedulers that aren’t available in <a class="reference external" href="https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate">PyTorch natively</a>.
+One good example is <a class="reference external" href="https://github.com/rwightman/pytorch-image-models/blob/master/timm/scheduler/scheduler.py">Timm Schedulers</a>. When using custom learning rate schedulers
+relying on a different API from Native PyTorch ones, you should override the <code class="xref py py-meth docutils literal notranslate"><span class="pre">lr_scheduler_step()</span></code> with your desired logic.
+If you are using native PyTorch schedulers, there is no need to override this hook since Lightning will handle it automatically by default.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">timm.scheduler</span> <span class="kn">import</span> <span class="n">TanhLRScheduler</span>
+
+
+<span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">scheduler</span> <span class="o">=</span> <span class="n">TanhLRScheduler</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">optimizer</span><span class="p">],</span> <span class="p">[{</span><span class="s2">&quot;scheduler&quot;</span><span class="p">:</span> <span class="n">scheduler</span><span class="p">,</span> <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;epoch&quot;</span><span class="p">}]</span>
+
+
+<span class="k">def</span> <span class="nf">lr_scheduler_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">,</span> <span class="n">optimizer_idx</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
+    <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_epoch</span><span class="p">)</span>  <span class="c1"># timm&#39;s scheduler need the epoch value</span>
+</pre></div>
+</div>
+</section>
+<section id="configure-gradient-clipping">
+<span id="id6"></span><h3>Configure Gradient Clipping<a class="headerlink" href="#configure-gradient-clipping" title="Permalink to this headline">¶</a></h3>
+<p>To configure custom gradient clipping, consider overriding
+the <code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_gradient_clipping()</span></code> method.
+Attributes <code class="docutils literal notranslate"><span class="pre">gradient_clip_val</span></code> and <code class="docutils literal notranslate"><span class="pre">gradient_clip_algorithm</span></code> from Trainer will be passed in the
+respective arguments here and Lightning will handle gradient clipping for you. In case you want to set
+different values for your arguments of your choice and let Lightning handle the gradient clipping, you can
+use the inbuilt <code class="xref py py-meth docutils literal notranslate"><span class="pre">clip_gradients()</span></code> method and pass
+the arguments along with your optimizer.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure to not override <code class="xref py py-meth docutils literal notranslate"><span class="pre">clip_gradients()</span></code>
+method. If you want to customize gradient clipping, consider using
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_gradient_clipping()</span></code> method.</p>
+</div>
+<p>For example, here we will apply gradient clipping only to the gradients associated with optimizer A.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">configure_gradient_clipping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">optimizer_idx</span><span class="p">,</span> <span class="n">gradient_clip_val</span><span class="p">,</span> <span class="n">gradient_clip_algorithm</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">optimizer_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Lightning will handle the gradient clipping</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_gradients</span><span class="p">(</span>
+            <span class="n">optimizer</span><span class="p">,</span> <span class="n">gradient_clip_val</span><span class="o">=</span><span class="n">gradient_clip_val</span><span class="p">,</span> <span class="n">gradient_clip_algorithm</span><span class="o">=</span><span class="n">gradient_clip_algorithm</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>Here we configure gradient clipping differently for optimizer B.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">configure_gradient_clipping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">optimizer_idx</span><span class="p">,</span> <span class="n">gradient_clip_val</span><span class="p">,</span> <span class="n">gradient_clip_algorithm</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">optimizer_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Lightning will handle the gradient clipping</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_gradients</span><span class="p">(</span>
+            <span class="n">optimizer</span><span class="p">,</span> <span class="n">gradient_clip_val</span><span class="o">=</span><span class="n">gradient_clip_val</span><span class="p">,</span> <span class="n">gradient_clip_algorithm</span><span class="o">=</span><span class="n">gradient_clip_algorithm</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">optimizer_idx</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_gradients</span><span class="p">(</span>
+            <span class="n">optimizer</span><span class="p">,</span> <span class="n">gradient_clip_val</span><span class="o">=</span><span class="n">gradient_clip_val</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">gradient_clip_algorithm</span><span class="o">=</span><span class="n">gradient_clip_algorithm</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="total-stepping-batches">
+<h3>Total Stepping Batches<a class="headerlink" href="#total-stepping-batches" title="Permalink to this headline">¶</a></h3>
+<p>You can use built-in trainer property <code class="xref py py-paramref docutils literal notranslate"><span class="pre">estimated_stepping_batches</span></code> to compute
+total number of stepping batches for the complete training. The property is computed considering gradient accumulation factor and
+distributed setting into consideration so you don’t have to derive it manually. One good example where this can be helpful is while using
+<code class="xref py py-class docutils literal notranslate"><span class="pre">OneCycleLR</span></code> scheduler, which requires pre-computed <code class="docutils literal notranslate"><span class="pre">total_steps</span></code> during initialization.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">scheduler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">OneCycleLR</span><span class="p">(</span>
+        <span class="n">optimizer</span><span class="p">,</span> <span class="n">max_lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">total_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">estimated_stepping_batches</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">optimizer</span><span class="p">],</span> <span class="p">[</span><span class="n">scheduler</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Copyright (c) 2018-2022, William Falcon et al...
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Optimization</a><ul>
+<li><a class="reference internal" href="#id2">Manual Optimization</a><ul>
+<li><a class="reference internal" href="#access-your-own-optimizer">Access your Own Optimizer</a></li>
+<li><a class="reference internal" href="#gradient-accumulation">Gradient Accumulation</a></li>
+<li><a class="reference internal" href="#use-multiple-optimizers-like-gans">Use Multiple Optimizers (like GANs)</a></li>
+<li><a class="reference internal" href="#learning-rate-scheduling">Learning Rate Scheduling</a></li>
+<li><a class="reference internal" href="#use-closure-for-lbfgs-like-optimizers">Use Closure for LBFGS-like Optimizers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#automatic-optimization">Automatic Optimization</a><ul>
+<li><a class="reference internal" href="#id3">Gradient Accumulation</a></li>
+<li><a class="reference internal" href="#id4">Use Multiple Optimizers (like GANs)</a></li>
+<li><a class="reference internal" href="#step-optimizeres-at-arbitrary-intervals">Step Optimizeres at Arbitrary Intervals</a></li>
+<li><a class="reference internal" href="#id5">Access your Own Optimizer</a></li>
+<li><a class="reference internal" href="#bring-your-own-custom-learning-rate-schedulers">Bring your own Custom Learning Rate Schedulers</a></li>
+<li><a class="reference internal" href="#configure-gradient-clipping">Configure Gradient Clipping</a></li>
+<li><a class="reference internal" href="#total-stepping-batches">Total Stepping Batches</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/clipboard.min.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../_static/togglebutton.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script script type="text/javascript">
+  var collapsedSections = ['Best practices', 'Optional Extensions', 'Tutorials', 'API References', 'Bolts', 'Examples', 'Partner Domain Frameworks', 'Community'];
+</script>
+
+
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://pytorch-lightning.rtfd.io/en/latest">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://pytorch-lightning.readthedocs.io/en/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://pytorch-lightning.rtfd.io/en/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch-lightning.rtfd.io/en/latest/">PyTorch</a></li>
+            <li><a href="https://pytorch-lightning.readthedocs.io/en/latest/starter/introduction.html">Get Started</a></li>
+            <li><a href="https://pytorch-lightning.rtfd.io/en/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://www.pytorchlightning.ai/blog">Blog</a></li>
+            <li><a href="https://github.com/PyTorchLightning/pytorch-lightning/blob/master/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">Resources</a></li>
+            <li><a href="https://pytorch-lightning.readthedocs.io/en/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://pytorch-lightning.rtfd.io/en/latest">Docs</a></li>
+            <li><a href="https://www.pytorchlightning.ai/community" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/PyTorchLightning/pytorch-lightning/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/PyTorchLightnin" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://pytorch-lightning.rtfd.io/en/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://pytorch-lightning.readthedocs.io/en/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://www.pytorchlightning.ai/blog">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://pytorch-lightning.readthedocs.io/en/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-flash.readthedocs.io/en/stable/">Lightning Flash</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-transformers.readthedocs.io/en/stable/">Lightning Transformers</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-bolts.readthedocs.io/en/stable/">Lightning Bolts</a>
+            </li>
+          </ul> -->
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch-lightning.rtfd.io/en/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="https://www.pytorchlightning.ai/community">Community</a>
+            </li>
+
+            <li>
+              <a href="https://github.com/PyTorchLightning/pytorch-lightning/discussions">Forums</a>
+            </li>
+          </ul>-->
+
+          <!-- <li>
+            <a href="https://github.com/PyTorchLightning/pytorch-lightning">Github</a>
+          </li> -->
+
+          <!-- <li>
+            <a href="https://www.grid.ai/">Grid.ai</a>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+
+ </body>
+</html>

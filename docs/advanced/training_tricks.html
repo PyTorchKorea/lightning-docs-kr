@@ -1,0 +1,1064 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Effective Training Techniques &mdash; PyTorch Lightning 1.7.0dev documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://pytorch-lightning.readthedocs.io/en/stable//advanced/training_tricks.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/main.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Eliminate config boilerplate" href="../cli/lightning_cli.html" />
+    <link rel="prev" title="Deploy models into production" href="../deploy/production.html" />
+  <!-- Google Analytics -->
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82W25RV60Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-82W25RV60Q');
+    </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://pytorch-lightning.rtfd.io/en/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://pytorch-lightning.readthedocs.io/en/latest/starter/introduction.html">Get Started</a>
+          </li> -->
+
+          <!-- <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch-lightning.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-transformers.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Transformers</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li> -->
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://www.pytorchlightning.ai/community">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://github.com/PyTorchLightning/pytorch-lightning/discussions" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          <!-- <li>
+            <a href="https://github.com/PyTorchLightning/pytorch-lightning">GitHub</a>
+          </li>
+
+          <li>
+            <a href="https://www.grid.ai/">Train on the cloud</a>
+          </li> -->
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  1.7.0dev
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../starter/introduction.html">Lightning in 15 minutes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starter/converting.html">Organize existing PyTorch into Lightning</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Level Up</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../levels/core_skills.html">Basic skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/intermediate.html">Intermediate skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/advanced.html">Advanced skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/expert.html">Expert skills</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../common/lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Common Workflows</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../common/evaluation.html">Avoid overfitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/build_model.html">Build a Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/hyperparameters.html">Configure hyperparameters from the CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/progress_bar.html">Customize the progress bar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/production.html">Deploy models into production</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Effective Training Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/lightning_cli.html">Eliminate config boilerplate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tuning/profiler.html">Find bottlenecks in your code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transfer_learning.html">Finetune a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualize/logging_intermediate.html">Manage experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cluster.html">Run on an on-prem cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_parallel.html">Train 1 trillion+ parameter models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cloud_training.html">Train on the cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/checkpointing.html">Save and load model progress</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/precision.html">Save memory with half-precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/gpu.html">Train on single or multiple GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/hpu.html">Train on single or multiple HPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/ipu.html">Train on single or multiple IPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/tpu.html">Train on single or multiple TPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/own_your_loop.html">Use a pure PyTorch training loop</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Glossary</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../extensions/accelerator.html">Accelerators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extensions/callbacks.html">Callback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/checkpointing.html">Checkpointing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cluster.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/checkpointing_advanced.html">Cloud checkpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/console_logs.html">Console Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debug/debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/early_stopping.html">Early stopping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualize/experiment_managers.html">Experiment manager (Logger)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/fault_tolerant_training.html">Fault tolerant training</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://lightning-flash.readthedocs.io/en/stable/">Flash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cloud_training.html">Grid AI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/gpu.html">GPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/precision.html">Half precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/hpu.html">HPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/production_intermediate.html">Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/ipu.html">IPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/lightning_cli.html">Lightning CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/build_model_expert.html">Raw PyTorch loop (expert)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/build_model_expert.html#lightninglite-stepping-stone-to-lightning">LightningLite (Stepping Stone to Lightning)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data/datamodule.html">LightningDataModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/ecosystem/transformers.html">Lightning Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualize/loggers.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extensions/loops.html">Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accelerators/tpu.html">TPU</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://torchmetrics.readthedocs.io/en/stable/">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/build_model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_parallel.html">Model Parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extensions/plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/progress_bar.html">Progress bar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/production_advanced.html">Production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/production_basic.html">Predict</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tuning/profiler.html">Profiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pruning_quantization.html">Pruning and Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/remote_fs.html">Remote filesystem and FSSPEC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="strategy_registry.html">Strategy registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starter/style_guide.html">Style guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/run_intermediate.html">Sweep</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SWA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cluster_advanced.html">SLURM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transfer_learning.html">Transfer learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clouds/cluster_intermediate_2.html">Torch distributed</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://www.youtube.com/playlist?list=PLaMu-SDt_RB5NUm67hU2pdE75j6KaIOv2">PyTorch Lightning 101 class</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://towardsdatascience.com/from-pytorch-to-pytorch-lightning-a-gentle-introduction-b371b7caaf09">From PyTorch to PyTorch Lightning [Blog]</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.youtube.com/watch?v=QHww1JH7IDU">From PyTorch to PyTorch Lightning [Video]</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>Effective Training Techniques</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/advanced/training_tricks.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <section id="effective-training-techniques">
+<span id="training-tricks"></span><h1>Effective Training Techniques<a class="headerlink" href="#effective-training-techniques" title="Permalink to this headline">¶</a></h1>
+<p>Lightning implements various techniques to help during training that can help make the training smoother.</p>
+<hr class="docutils" />
+<section id="accumulate-gradients">
+<h2>Accumulate Gradients<a class="headerlink" href="#accumulate-gradients" title="Permalink to this headline">¶</a></h2>
+<p>Accumulated gradients run K small batches of size <code class="docutils literal notranslate"><span class="pre">N</span></code> before doing a backward pass. The effect is a large effective batch size of size <code class="docutils literal notranslate"><span class="pre">KxN</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the batch size.
+Internally it doesn’t stack up the batches and do a forward pass rather it accumulates the gradients for K batches and then do an <code class="docutils literal notranslate"><span class="pre">optimizer.step</span></code> to make sure the
+effective batch size is increased but there is no memory overhead.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When using distributed training for eg. DDP, with let’s say with <code class="docutils literal notranslate"><span class="pre">P</span></code> devices, each device accumulates independently i.e. it stores the gradients
+after each <code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code> and doesn’t sync the gradients across the devices until we call <code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code>. So for each accumulation
+step, the effective batch size on each device will remain <code class="docutils literal notranslate"><span class="pre">N*K</span></code> but right before the <code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code>, the gradient sync will make the effective
+batch size as <code class="docutils literal notranslate"><span class="pre">P*N*K</span></code>. For DP, since the batch is split across devices, the final effective batch size will be <code class="docutils literal notranslate"><span class="pre">N*K</span></code>.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></p>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEFAULT (ie: no accumulated grads)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">accumulate_grad_batches</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Accumulate gradients for 7 batches</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">accumulate_grad_batches</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can set different values for it at different epochs by passing a dictionary, where the key represents the epoch at which the value for gradient accumulation
+should be updated.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># till 5th epoch, it will accumulate every 8 batches. From 5th epoch</span>
+<span class="c1"># till 9th epoch it will accumulate every 4 batches and after that no accumulation</span>
+<span class="c1"># will happen. Note that you need to use zero-indexed epoch keys here</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">accumulate_grad_batches</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Or, you can create custom <code class="xref py py-class docutils literal notranslate"><span class="pre">GradientAccumulationScheduler</span></code></p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">GradientAccumulationScheduler</span>
+
+
+<span class="c1"># till 5th epoch, it will accumulate every 8 batches. From 5th epoch</span>
+<span class="c1"># till 9th epoch it will accumulate every 4 batches and after that no accumulation</span>
+<span class="c1"># will happen. Note that you need to use zero-indexed epoch keys here</span>
+<span class="n">accumulator</span> <span class="o">=</span> <span class="n">GradientAccumulationScheduler</span><span class="p">(</span><span class="n">scheduling</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="n">accumulator</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="gradient-clipping">
+<h2>Gradient Clipping<a class="headerlink" href="#gradient-clipping" title="Permalink to this headline">¶</a></h2>
+<p>Gradient clipping can be enabled to avoid exploding gradients. By default, this will clip the gradient norm by calling
+<code class="xref py py-func docutils literal notranslate"><span class="pre">torch.nn.utils.clip_grad_norm_()</span></code> computed over all model parameters together.
+If the Trainer’s <code class="docutils literal notranslate"><span class="pre">gradient_clip_algorithm</span></code> is set to <code class="docutils literal notranslate"><span class="pre">'value'</span></code> (<code class="docutils literal notranslate"><span class="pre">'norm'</span></code> by default), this will use instead
+<code class="xref py py-func docutils literal notranslate"><span class="pre">torch.nn.utils.clip_grad_value_()</span></code> for each parameter instead.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If using mixed precision, the <code class="docutils literal notranslate"><span class="pre">gradient_clip_val</span></code> does not need to be changed as the gradients are unscaled
+before applying the clipping function.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></p>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEFAULT (ie: don&#39;t clip)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">gradient_clip_val</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># clip gradients&#39; global norm to &lt;=0.5 using gradient_clip_algorithm=&#39;norm&#39; by default</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">gradient_clip_val</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># clip gradients&#39; maximum magnitude to &lt;=0.5</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">gradient_clip_val</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">gradient_clip_algorithm</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Read more about <a class="reference internal" href="../common/optimization.html#configure-gradient-clipping"><span class="std std-ref">Configuring Gradient Clipping</span></a> for advanced use-cases.</p>
+</section>
+<hr class="docutils" />
+<section id="stochastic-weight-averaging">
+<h2>Stochastic Weight Averaging<a class="headerlink" href="#stochastic-weight-averaging" title="Permalink to this headline">¶</a></h2>
+<p>Stochastic Weight Averaging (SWA) can make your models generalize better at virtually no additional cost.
+This can be used with both non-trained and trained models. The SWA procedure smooths the loss landscape thus making
+it harder to end up in a local minimum during optimization.</p>
+<p>For a more detailed explanation of SWA and how it works,
+read <a class="reference external" href="https://pytorch.org/blog/pytorch-1.6-now-includes-stochastic-weight-averaging">this post</a> by the PyTorch team.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">StochasticWeightAveraging</span></code> callback</p>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enable Stochastic Weight Averaging using the callback</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">StochasticWeightAveraging</span><span class="p">(</span><span class="n">swa_lrs</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">)])</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="batch-size-finder">
+<h2>Batch Size Finder<a class="headerlink" href="#batch-size-finder" title="Permalink to this headline">¶</a></h2>
+<p>Auto-scaling of batch size can be enabled to find the largest batch size that fits into
+memory. Large batch size often yields a better estimation of the gradients, but may also result in
+longer training time. Inspired by <a class="reference external" href="https://github.com/BlackHC/toma">https://github.com/BlackHC/toma</a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEFAULT (ie: don&#39;t scale batch size automatically)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">auto_scale_batch_size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># Autoscale batch size</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">auto_scale_batch_size</span><span class="o">=</span><span class="kc">None</span> <span class="o">|</span> <span class="s2">&quot;power&quot;</span> <span class="o">|</span> <span class="s2">&quot;binsearch&quot;</span><span class="p">)</span>
+
+<span class="c1"># Find the batch size</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Currently, this feature supports two modes <code class="docutils literal notranslate"><span class="pre">'power'</span></code> scaling and <code class="docutils literal notranslate"><span class="pre">'binsearch'</span></code>
+scaling. In <code class="docutils literal notranslate"><span class="pre">'power'</span></code> scaling, starting from a batch size of 1 keeps doubling
+the batch size until an out-of-memory (OOM) error is encountered. Setting the
+argument to <code class="docutils literal notranslate"><span class="pre">'binsearch'</span></code> will initially also try doubling the batch size until
+it encounters an OOM, after which it will do a binary search that will finetune the
+batch size. Additionally, it should be noted that the batch size scaler cannot
+search for batch sizes larger than the size of the training dataset.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature expects that a <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> field is either located as a model attribute
+i.e. <code class="docutils literal notranslate"><span class="pre">model.batch_size</span></code> or as a field in your <code class="docutils literal notranslate"><span class="pre">hparams</span></code> i.e. <code class="docutils literal notranslate"><span class="pre">model.hparams.batch_size</span></code>.
+Similarly it can work with datamodules too. The field should exist and will be updated by
+the results of this algorithm. Additionally, your <code class="docutils literal notranslate"><span class="pre">train_dataloader()</span></code> method should depend
+on this field for this feature to work i.e.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># using LightningModule</span>
+<span class="k">class</span> <span class="nc">LitModel</span><span class="p">(</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>
+        <span class="c1"># or</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+
+    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
+
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LitModel</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="c1"># using LightningDataModule</span>
+<span class="k">class</span> <span class="nc">LitDataModule</span><span class="p">(</span><span class="n">LightningDataModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>
+        <span class="c1"># or</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+
+    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
+
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>
+<span class="n">datamodule</span> <span class="o">=</span> <span class="n">LitDataModule</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Due to the constraints listed above, this features does <em>NOT</em> work when passing dataloaders directly
+to <code class="docutils literal notranslate"><span class="pre">.fit()</span></code>.</p>
+</div>
+<p>The scaling algorithm has a number of parameters that the user can control by
+invoking the <code class="xref py py-meth docutils literal notranslate"><span class="pre">scale_batch_size()</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use default in trainer construction</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">()</span>
+<span class="n">tuner</span> <span class="o">=</span> <span class="n">Tuner</span><span class="p">(</span><span class="n">trainer</span><span class="p">)</span>
+
+<span class="c1"># Invoke method</span>
+<span class="n">new_batch_size</span> <span class="o">=</span> <span class="n">tuner</span><span class="o">.</span><span class="n">scale_batch_size</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">extra_parameters_here</span><span class="p">)</span>
+
+<span class="c1"># Override old batch size (this is done automatically)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">new_batch_size</span>
+
+<span class="c1"># Fit as normal</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>The algorithm in short works by:</dt><dd><ol class="arabic simple">
+<li><p>Dumping the current state of the model and trainer</p></li>
+<li><dl class="simple">
+<dt>Iteratively until convergence or maximum number of tries <code class="docutils literal notranslate"><span class="pre">max_trials</span></code> (default 25) has been reached:</dt><dd><ul class="simple">
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method of trainer. This evaluates <code class="docutils literal notranslate"><span class="pre">steps_per_trial</span></code> (default 3) number of
+optimization steps. Each training step can trigger an OOM error if the tensors
+(training batch, weights, gradients, etc.) allocated during the steps have a
+too large memory footprint.</p></li>
+<li><p>If an OOM error is encountered, decrease batch size else increase it.
+How much the batch size is increased/decreased is determined by the chosen
+strategy.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>The found batch size is saved to either <code class="docutils literal notranslate"><span class="pre">model.batch_size</span></code> or <code class="docutils literal notranslate"><span class="pre">model.hparams.batch_size</span></code></p></li>
+<li><p>Restore the initial state of model and trainer</p></li>
+</ol>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Batch size finder is not yet supported for DDP or any of its variations, it is coming soon.</p>
+</div>
+<hr class="docutils" />
+</section>
+<section id="learning-rate-finder">
+<span id="id1"></span><h2>Learning Rate Finder<a class="headerlink" href="#learning-rate-finder" title="Permalink to this headline">¶</a></h2>
+<video width="50%" max-width="400px" controls
+poster="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/pl_docs/trainer_flags/thumb/auto_lr_find.jpg"
+src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/pl_docs/trainer_flags/auto_lr_find.mp4"></video><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>For training deep neural networks, selecting a good learning rate is essential
+for both better performance and faster convergence. Even optimizers such as
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Adam</span></code> that are self-adjusting the learning rate can benefit from more optimal
+choices.</p>
+<p>To reduce the amount of guesswork concerning choosing a good initial learning
+rate, a <cite>learning rate finder</cite> can be used. As described in <a class="reference external" href="https://arxiv.org/abs/1506.01186">this paper</a>
+a learning rate finder does a small run where the learning rate is increased
+after each processed batch and the corresponding loss is logged. The result of
+this is a <code class="docutils literal notranslate"><span class="pre">lr</span></code> vs. <code class="docutils literal notranslate"><span class="pre">loss</span></code> plot that can be used as guidance for choosing an optimal
+initial learning rate.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For the moment, this feature only works with models having a single optimizer.
+LR Finder support for DDP and any of its variations is not implemented yet. It is coming soon.</p>
+</div>
+<section id="using-lightning-s-built-in-lr-finder">
+<h3>Using Lightning’s built-in LR finder<a class="headerlink" href="#using-lightning-s-built-in-lr-finder" title="Permalink to this headline">¶</a></h3>
+<p>To enable the learning rate finder, your <a class="reference internal" href="../common/lightning_module.html"><span class="doc">lightning module</span></a> needs to
+have a <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> or <code class="docutils literal notranslate"><span class="pre">lr</span></code> attribute (or as a field in your <code class="docutils literal notranslate"><span class="pre">hparams</span></code> i.e.
+<code class="docutils literal notranslate"><span class="pre">hparams.learning_rate</span></code> or <code class="docutils literal notranslate"><span class="pre">hparams.lr</span></code>). Then, set <code class="docutils literal notranslate"><span class="pre">Trainer(auto_lr_find=True)</span></code>
+during trainer construction, and then call <code class="docutils literal notranslate"><span class="pre">trainer.tune(model)</span></code> to run the LR finder.
+The suggested <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> will be written to the console and will be automatically
+set to your <a class="reference internal" href="../common/lightning_module.html"><span class="doc">lightning module</span></a>, which can be accessed
+via <code class="docutils literal notranslate"><span class="pre">self.learning_rate</span></code> or <code class="docutils literal notranslate"><span class="pre">self.lr</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../common/trainer.html#tune"><span class="std std-ref">trainer.tune</span></a>.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LitModel</span><span class="p">(</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">))</span>
+
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LitModel</span><span class="p">()</span>
+
+<span class="c1"># finds learning rate automatically</span>
+<span class="c1"># sets hparams.lr or hparams.learning_rate to that learning rate</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">auto_lr_find</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">trainer</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If your model is using an arbitrary value instead of <code class="docutils literal notranslate"><span class="pre">self.lr</span></code> or <code class="docutils literal notranslate"><span class="pre">self.learning_rate</span></code>, set that value as <code class="docutils literal notranslate"><span class="pre">auto_lr_find</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LitModel</span><span class="p">()</span>
+
+<span class="c1"># to set to your own hparams.my_value</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">auto_lr_find</span><span class="o">=</span><span class="s2">&quot;my_value&quot;</span><span class="p">)</span>
+
+<span class="n">trainer</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also inspect the results of the learning rate finder or just play around
+with the parameters of the algorithm. This can be done by invoking the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">lr_find()</span></code> method. A typical example of this would look like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MyModelClass</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">()</span>
+
+<span class="c1"># Run learning rate finder</span>
+<span class="n">lr_finder</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">tuner</span><span class="o">.</span><span class="n">lr_find</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="c1"># Results can be found in</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lr_finder</span><span class="o">.</span><span class="n">results</span><span class="p">)</span>
+
+<span class="c1"># Plot with</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">lr_finder</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">suggest</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Pick point based on plot, or get suggestion</span>
+<span class="n">new_lr</span> <span class="o">=</span> <span class="n">lr_finder</span><span class="o">.</span><span class="n">suggestion</span><span class="p">()</span>
+
+<span class="c1"># update hparams of the model</span>
+<span class="n">model</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">new_lr</span>
+
+<span class="c1"># Fit model</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The figure produced by <code class="docutils literal notranslate"><span class="pre">lr_finder.plot()</span></code> should look something like the figure
+below. It is recommended to not pick the learning rate that achieves the lowest
+loss, but instead something in the middle of the sharpest downward slope (red point).
+This is the point returned py <code class="docutils literal notranslate"><span class="pre">lr_finder.suggestion()</span></code>.</p>
+<figure class="align-default">
+<img alt="../_images/lr_finder.png" src="../_images/lr_finder.png" />
+</figure>
+</section>
+</section>
+<hr class="docutils" />
+<section id="advanced-gpu-optimizations">
+<h2>Advanced GPU Optimizations<a class="headerlink" href="#advanced-gpu-optimizations" title="Permalink to this headline">¶</a></h2>
+<p>When training on single or multiple GPU machines, Lightning offers a host of advanced optimizations to improve throughput, memory efficiency, and model scaling.
+Refer to <a class="reference internal" href="model_parallel.html"><span class="doc">Advanced GPU Optimized Training</span></a> for more details.</p>
+<hr class="docutils" />
+</section>
+<section id="sharing-datasets-across-process-boundaries">
+<span id="ddp-spawn-shared-memory"></span><h2>Sharing Datasets Across Process Boundaries<a class="headerlink" href="#sharing-datasets-across-process-boundaries" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code> class provides an organized way to decouple data loading from training logic, with <code class="xref py py-meth docutils literal notranslate"><span class="pre">prepare_data()</span></code> being used for downloading and pre-processing the dataset on a single process, and <code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code> loading the pre-processed data for each process individually:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MNISTDataModule</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningDataModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">MNIST</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mnist</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">train_loader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnist</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>However, for in-memory datasets, that means that each process will hold a (redundant) replica of the dataset in memory, which may be impractical when using many processes while utilizing datasets that nearly fit into CPU memory, as the memory consumption will scale up linearly with the number of processes.
+For example, when training Graph Neural Networks, a common strategy is to load the entire graph into CPU memory for fast access to the entire graph structure and its features, and to then perform neighbor sampling to obtain mini-batches that fit onto the GPU.</p>
+<p>A simple way to prevent redundant dataset replicas is to rely on <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.multiprocessing</span></code> to share the <a class="reference external" href="https://pytorch.org/docs/stable/notes/multiprocessing.html">data automatically between spawned processes via shared memory</a>.
+For this, all data pre-loading should be done on the main process inside <code class="xref py py-meth docutils literal notranslate"><span class="pre">DataModule.__init__()</span></code>. As a result, all tensor-data will get automatically shared when using the <code class="xref py py-class docutils literal notranslate"><span class="pre">DDPSpawnStrategy</span></code> strategy.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.multiprocessing</span></code> will send a handle of each individual tensor to other processes.
+In order to prevent any errors due to too many open file handles, try to reduce the number of tensors to share, <em>e.g.</em>, by stacking your data into a single tensor.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MNISTDataModule</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningDataModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mnist</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">T</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">train_loader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnist</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">datamodule</span> <span class="o">=</span> <span class="n">MNISTDataModule</span><span class="p">(</span><span class="s2">&quot;data/MNIST&quot;</span><span class="p">)</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;ddp_spawn&quot;</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">datamodule</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See the <a class="reference external" href="https://github.com/pyg-team/pytorch_geometric/blob/master/examples/pytorch_lightning/gin.py">graph-level</a> and <a class="reference external" href="https://github.com/pyg-team/pytorch_geometric/blob/master/examples/pytorch_lightning/graph_sage.py">node-level</a> prediction examples in PyTorch Geometric for practical use-cases.</p>
+</section>
+</section>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../cli/lightning_cli.html" class="btn btn-neutral float-right" title="Eliminate config boilerplate" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="../deploy/production.html" class="btn btn-neutral" title="Deploy models into production" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Copyright (c) 2018-2022, William Falcon et al...
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Effective Training Techniques</a><ul>
+<li><a class="reference internal" href="#accumulate-gradients">Accumulate Gradients</a></li>
+<li><a class="reference internal" href="#gradient-clipping">Gradient Clipping</a></li>
+<li><a class="reference internal" href="#stochastic-weight-averaging">Stochastic Weight Averaging</a></li>
+<li><a class="reference internal" href="#batch-size-finder">Batch Size Finder</a></li>
+<li><a class="reference internal" href="#learning-rate-finder">Learning Rate Finder</a><ul>
+<li><a class="reference internal" href="#using-lightning-s-built-in-lr-finder">Using Lightning’s built-in LR finder</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-gpu-optimizations">Advanced GPU Optimizations</a></li>
+<li><a class="reference internal" href="#sharing-datasets-across-process-boundaries">Sharing Datasets Across Process Boundaries</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/clipboard.min.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../_static/togglebutton.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script script type="text/javascript">
+  var collapsedSections = ['Best practices', 'Optional Extensions', 'Tutorials', 'API References', 'Bolts', 'Examples', 'Partner Domain Frameworks', 'Community'];
+</script>
+
+
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://pytorch-lightning.rtfd.io/en/latest">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://pytorch-lightning.readthedocs.io/en/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://pytorch-lightning.rtfd.io/en/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch-lightning.rtfd.io/en/latest/">PyTorch</a></li>
+            <li><a href="https://pytorch-lightning.readthedocs.io/en/latest/starter/introduction.html">Get Started</a></li>
+            <li><a href="https://pytorch-lightning.rtfd.io/en/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://www.pytorchlightning.ai/blog">Blog</a></li>
+            <li><a href="https://github.com/PyTorchLightning/pytorch-lightning/blob/master/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">Resources</a></li>
+            <li><a href="https://pytorch-lightning.readthedocs.io/en/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://pytorch-lightning.rtfd.io/en/latest">Docs</a></li>
+            <li><a href="https://www.pytorchlightning.ai/community" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/PyTorchLightning/pytorch-lightning/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/PyTorchLightnin" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://pytorch-lightning.rtfd.io/en/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://pytorch-lightning.readthedocs.io/en/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://www.pytorchlightning.ai/blog">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://pytorch-lightning.readthedocs.io/en/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-flash.readthedocs.io/en/stable/">Lightning Flash</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-transformers.readthedocs.io/en/stable/">Lightning Transformers</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-bolts.readthedocs.io/en/stable/">Lightning Bolts</a>
+            </li>
+          </ul> -->
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch-lightning.rtfd.io/en/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="https://www.pytorchlightning.ai/community">Community</a>
+            </li>
+
+            <li>
+              <a href="https://github.com/PyTorchLightning/pytorch-lightning/discussions">Forums</a>
+            </li>
+          </ul>-->
+
+          <!-- <li>
+            <a href="https://github.com/PyTorchLightning/pytorch-lightning">Github</a>
+          </li> -->
+
+          <!-- <li>
+            <a href="https://www.grid.ai/">Grid.ai</a>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+
+ </body>
+</html>

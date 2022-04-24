@@ -1,0 +1,1369 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PQBQ3CV');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pytorch_lightning.loggers.neptune &mdash; PyTorch Lightning 1.7.0dev documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://pytorch-lightning.readthedocs.io/en/stable//_modules/pytorch_lightning/loggers/neptune.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/main.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <!-- Google Analytics -->
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://pytorch-lightning.rtfd.io/en/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../../../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch-lightning.readthedocs.io/en/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://www.pytorchlightning.ai/blog">Blog</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch-lightning.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-transformers.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Transformers</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li>
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://www.pytorchlightning.ai/community">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://github.com/PyTorchLightning/pytorch-lightning/discussions" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          <li>
+            <a href="https://github.com/PyTorchLightning/pytorch-lightning">GitHub</a>
+          </li>
+
+          <li>
+            <a href="https://www.grid.ai/">Train on the cloud</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  1.7.0dev
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../starter/introduction.html">Lightning in 15 minutes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../starter/converting.html">Organize existing PyTorch into Lightning</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Level Up</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../levels/core_skills.html">Basic skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../levels/intermediate.html">Intermediate skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../levels/advanced.html">Advanced skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../levels/expert.html">Expert skills</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Common Workflows</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/evaluation.html">Avoid overfitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model/build_model.html">Build a Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/hyperparameters.html">Configure hyperparameters from the CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/progress_bar.html">Customize the progress bar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deploy/production.html">Deploy models into production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/training_tricks.html">Effective Training Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/lightning_cli.html">Eliminate config boilerplate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tuning/profiler.html">Find bottlenecks in your code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/transfer_learning.html">Finetune a model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../visualize/logging_intermediate.html">Manage experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clouds/cluster.html">Run on an on-prem cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/model_parallel.html">Train 1 trillion+ parameter models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clouds/cloud_training.html">Train on the cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/checkpointing.html">Save and load model progress</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/precision.html">Save memory with half-precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accelerators/gpu.html">Train on single or multiple GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accelerators/hpu.html">Train on single or multiple HPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accelerators/ipu.html">Train on single or multiple IPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accelerators/tpu.html">Train on single or multiple TPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model/own_your_loop.html">Use a pure PyTorch training loop</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Glossary</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../extensions/accelerator.html">Accelerators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../extensions/callbacks.html">Callback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/checkpointing.html">Checkpointing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clouds/cluster.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/checkpointing_advanced.html">Cloud checkpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/console_logs.html">Console Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debug/debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/early_stopping.html">Early stopping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../visualize/experiment_managers.html">Experiment manager (Logger)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clouds/fault_tolerant_training.html">Fault tolerant training</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://lightning-flash.readthedocs.io/en/stable/">Flash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clouds/cloud_training.html">Grid AI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accelerators/gpu.html">GPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/precision.html">Half precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accelerators/hpu.html">HPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deploy/production_intermediate.html">Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accelerators/ipu.html">IPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/lightning_cli.html">Lightning CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model/build_model_expert.html">Raw PyTorch loop (expert)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model/build_model_expert.html#lightninglite-stepping-stone-to-lightning">LightningLite (Stepping Stone to Lightning)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data/datamodule.html">LightningDataModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/ecosystem/transformers.html">Lightning Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../visualize/loggers.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../extensions/loops.html">Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accelerators/tpu.html">TPU</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://torchmetrics.readthedocs.io/en/stable/">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model/build_model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/model_parallel.html">Model Parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../extensions/plugins.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/progress_bar.html">Progress bar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deploy/production_advanced.html">Production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deploy/production_basic.html">Predict</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tuning/profiler.html">Profiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/pruning_quantization.html">Pruning and Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/remote_fs.html">Remote filesystem and FSSPEC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/strategy_registry.html">Strategy registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../starter/style_guide.html">Style guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clouds/run_intermediate.html">Sweep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/training_tricks.html">SWA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clouds/cluster_advanced.html">SLURM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/transfer_learning.html">Transfer learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clouds/cluster_intermediate_2.html">Torch distributed</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://www.youtube.com/playlist?list=PLaMu-SDt_RB5NUm67hU2pdE75j6KaIOv2">PyTorch Lightning 101 class</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://towardsdatascience.com/from-pytorch-to-pytorch-lightning-a-gentle-introduction-b371b7caaf09">From PyTorch to PyTorch Lightning [Blog]</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.youtube.com/watch?v=QHww1JH7IDU">From PyTorch to PyTorch Lightning [Video]</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../../../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="../../index.html">Module code</a> &gt;</li>
+        
+      <li>pytorch_lightning.loggers.neptune</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <h1>Source code for pytorch_lightning.loggers.neptune</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright The PyTorch Lightning team.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Neptune Logger</span>
+<span class="sd">--------------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;NeptuneLogger&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">weakref</span> <span class="kn">import</span> <span class="n">ReferenceType</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">__version__</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks.model_checkpoint</span> <span class="kn">import</span> <span class="n">ModelCheckpoint</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.loggers.base</span> <span class="kn">import</span> <span class="n">LightningLoggerBase</span><span class="p">,</span> <span class="n">rank_zero_experiment</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.imports</span> <span class="kn">import</span> <span class="n">_NEPTUNE_AVAILABLE</span><span class="p">,</span> <span class="n">_NEPTUNE_GREATER_EQUAL_0_9</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.logger</span> <span class="kn">import</span> <span class="n">_add_prefix</span><span class="p">,</span> <span class="n">_convert_params</span><span class="p">,</span> <span class="n">_sanitize_callable_params</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.model_summary</span> <span class="kn">import</span> <span class="n">ModelSummary</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.rank_zero</span> <span class="kn">import</span> <span class="n">rank_zero_only</span>
+
+<span class="k">if</span> <span class="n">_NEPTUNE_AVAILABLE</span> <span class="ow">and</span> <span class="n">_NEPTUNE_GREATER_EQUAL_0_9</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">neptune</span> <span class="kn">import</span> <span class="n">new</span> <span class="k">as</span> <span class="n">neptune</span>
+        <span class="kn">from</span> <span class="nn">neptune.new.exceptions</span> <span class="kn">import</span> <span class="n">NeptuneLegacyProjectException</span><span class="p">,</span> <span class="n">NeptuneOfflineModeFetchException</span>
+        <span class="kn">from</span> <span class="nn">neptune.new.run</span> <span class="kn">import</span> <span class="n">Run</span>
+        <span class="kn">from</span> <span class="nn">neptune.new.types</span> <span class="kn">import</span> <span class="n">File</span> <span class="k">as</span> <span class="n">NeptuneFile</span>
+    <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">neptune</span>
+        <span class="kn">from</span> <span class="nn">neptune.exceptions</span> <span class="kn">import</span> <span class="n">NeptuneLegacyProjectException</span><span class="p">,</span> <span class="n">NeptuneOfflineModeFetchException</span>
+        <span class="kn">from</span> <span class="nn">neptune.run</span> <span class="kn">import</span> <span class="n">Run</span>
+        <span class="kn">from</span> <span class="nn">neptune.types</span> <span class="kn">import</span> <span class="n">File</span> <span class="k">as</span> <span class="n">NeptuneFile</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># needed for test mocks, and function signatures</span>
+    <span class="n">neptune</span><span class="p">,</span> <span class="n">Run</span><span class="p">,</span> <span class="n">NeptuneFile</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">_INTEGRATION_VERSION_KEY</span> <span class="o">=</span> <span class="s2">&quot;source_code/integrations/pytorch-lightning&quot;</span>
+
+<span class="c1"># kwargs used in previous NeptuneLogger version, now deprecated</span>
+<span class="n">_LEGACY_NEPTUNE_INIT_KWARGS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;project_name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;offline_mode&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;experiment_name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;experiment_id&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;params&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;upload_source_files&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;abort_callback&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;logger&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;upload_stdout&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;upload_stderr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;send_hardware_metrics&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;run_monitoring_thread&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;handle_uncaught_exceptions&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;git_info&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hostname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;notebook_id&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;notebook_path&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># kwargs used in legacy NeptuneLogger from neptune-pytorch-lightning package</span>
+<span class="n">_LEGACY_NEPTUNE_LOGGER_KWARGS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;base_namespace&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;close_after_fit&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="NeptuneLogger"><a class="viewcode-back" href="../../../extensions/generated/pytorch_lightning.loggers.NeptuneLogger.html#pytorch_lightning.loggers.NeptuneLogger">[docs]</a><span class="k">class</span> <span class="nc">NeptuneLogger</span><span class="p">(</span><span class="n">LightningLoggerBase</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Log using `Neptune &lt;https://neptune.ai&gt;`_.</span>
+
+<span class="sd">    Install it with pip:</span>
+
+<span class="sd">    .. code-block:: bash</span>
+
+<span class="sd">        pip install neptune-client</span>
+
+<span class="sd">    or conda:</span>
+
+<span class="sd">    .. code-block:: bash</span>
+
+<span class="sd">        conda install -c conda-forge neptune-client</span>
+
+<span class="sd">    **Quickstart**</span>
+
+<span class="sd">    Pass NeptuneLogger instance to the Trainer to log metadata with Neptune:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+
+<span class="sd">        from pytorch_lightning import Trainer</span>
+<span class="sd">        from pytorch_lightning.loggers import NeptuneLogger</span>
+
+<span class="sd">        neptune_logger = NeptuneLogger(</span>
+<span class="sd">            api_key=&quot;ANONYMOUS&quot;,  # replace with your own</span>
+<span class="sd">            project=&quot;common/pytorch-lightning-integration&quot;,  # format &quot;&lt;WORKSPACE/PROJECT&gt;&quot;</span>
+<span class="sd">            tags=[&quot;training&quot;, &quot;resnet&quot;],  # optional</span>
+<span class="sd">        )</span>
+<span class="sd">        trainer = Trainer(max_epochs=10, logger=neptune_logger)</span>
+
+<span class="sd">    **How to use NeptuneLogger?**</span>
+
+<span class="sd">    Use the logger anywhere in your :class:`~pytorch_lightning.core.lightning.LightningModule` as follows:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from neptune.new.types import File</span>
+<span class="sd">        from pytorch_lightning import LightningModule</span>
+
+
+<span class="sd">        class LitModel(LightningModule):</span>
+<span class="sd">            def training_step(self, batch, batch_idx):</span>
+<span class="sd">                # log metrics</span>
+<span class="sd">                acc = ...</span>
+<span class="sd">                self.log(&quot;train/loss&quot;, loss)</span>
+
+<span class="sd">            def any_lightning_module_function_or_hook(self):</span>
+<span class="sd">                # log images</span>
+<span class="sd">                img = ...</span>
+<span class="sd">                self.logger.experiment[&quot;train/misclassified_images&quot;].log(File.as_image(img))</span>
+
+<span class="sd">                # generic recipe</span>
+<span class="sd">                metadata = ...</span>
+<span class="sd">                self.logger.experiment[&quot;your/metadata/structure&quot;].log(metadata)</span>
+
+<span class="sd">    Note that syntax: ``self.logger.experiment[&quot;your/metadata/structure&quot;].log(metadata)`` is specific to Neptune</span>
+<span class="sd">    and it extends logger capabilities. Specifically, it allows you to log various types of metadata</span>
+<span class="sd">    like scores, files, images, interactive visuals, CSVs, etc.</span>
+<span class="sd">    Refer to the `Neptune docs &lt;https://docs.neptune.ai/you-should-know/logging-metadata#essential-logging-methods&gt;`_</span>
+<span class="sd">    for more detailed explanations.</span>
+<span class="sd">    You can also use regular logger methods ``log_metrics()``, and ``log_hyperparams()`` with NeptuneLogger</span>
+<span class="sd">    as these are also supported.</span>
+
+<span class="sd">    **Log after fitting or testing is finished**</span>
+
+<span class="sd">    You can log objects after the fitting or testing methods are finished:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        neptune_logger = NeptuneLogger(project=&quot;common/pytorch-lightning-integration&quot;)</span>
+
+<span class="sd">        trainer = pl.Trainer(logger=neptune_logger)</span>
+<span class="sd">        model = ...</span>
+<span class="sd">        datamodule = ...</span>
+<span class="sd">        trainer.fit(model, datamodule=datamodule)</span>
+<span class="sd">        trainer.test(model, datamodule=datamodule)</span>
+
+<span class="sd">        # Log objects after `fit` or `test` methods</span>
+<span class="sd">        # model summary</span>
+<span class="sd">        neptune_logger.log_model_summary(model=model, max_depth=-1)</span>
+
+<span class="sd">        # generic recipe</span>
+<span class="sd">        metadata = ...</span>
+<span class="sd">        neptune_logger.experiment[&quot;your/metadata/structure&quot;].log(metadata)</span>
+
+<span class="sd">    **Log model checkpoints**</span>
+
+<span class="sd">    If you have :class:`~pytorch_lightning.callbacks.ModelCheckpoint` configured,</span>
+<span class="sd">    Neptune logger automatically logs model checkpoints.</span>
+<span class="sd">    Model weights will be uploaded to the: &quot;model/checkpoints&quot; namespace in the Neptune Run.</span>
+<span class="sd">    You can disable this option:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        neptune_logger = NeptuneLogger(project=&quot;common/pytorch-lightning-integration&quot;, log_model_checkpoints=False)</span>
+
+<span class="sd">    **Pass additional parameters to the Neptune run**</span>
+
+<span class="sd">    You can also pass ``neptune_run_kwargs`` to specify the run in the greater detail, like ``tags`` or ``description``:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        from pytorch_lightning import Trainer</span>
+<span class="sd">        from pytorch_lightning.loggers import NeptuneLogger</span>
+
+<span class="sd">        neptune_logger = NeptuneLogger(</span>
+<span class="sd">            project=&quot;common/pytorch-lightning-integration&quot;,</span>
+<span class="sd">            name=&quot;lightning-run&quot;,</span>
+<span class="sd">            description=&quot;mlp quick run with pytorch-lightning&quot;,</span>
+<span class="sd">            tags=[&quot;mlp&quot;, &quot;quick-run&quot;],</span>
+<span class="sd">        )</span>
+<span class="sd">        trainer = Trainer(max_epochs=3, logger=neptune_logger)</span>
+
+<span class="sd">    Check `run documentation &lt;https://docs.neptune.ai/essentials/api-reference/run&gt;`_</span>
+<span class="sd">    for more info about additional run parameters.</span>
+
+<span class="sd">    **Details about Neptune run structure**</span>
+
+<span class="sd">    Runs can be viewed as nested dictionary-like structures that you can define in your code.</span>
+<span class="sd">    Thanks to this you can easily organize your metadata in a way that is most convenient for you.</span>
+
+<span class="sd">    The hierarchical structure that you apply to your metadata will be reflected later in the UI.</span>
+
+<span class="sd">    You can organize this way any type of metadata - images, parameters, metrics, model checkpoint, CSV files, etc.</span>
+
+<span class="sd">    See Also:</span>
+<span class="sd">        - Read about</span>
+<span class="sd">          `what object you can log to Neptune &lt;https://docs.neptune.ai/you-should-know/what-can-you-log-and-display&gt;`_.</span>
+<span class="sd">        - Check `example run &lt;https://app.neptune.ai/o/common/org/pytorch-lightning-integration/e/PTL-1/all&gt;`_</span>
+<span class="sd">          with multiple types of metadata logged.</span>
+<span class="sd">        - For more detailed info check</span>
+<span class="sd">          `user guide &lt;https://docs.neptune.ai/integrations-and-supported-tools/model-training/pytorch-lightning&gt;`_.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        api_key: Optional.</span>
+<span class="sd">            Neptune API token, found on https://neptune.ai upon registration.</span>
+<span class="sd">            Read: `how to find and set Neptune API token &lt;https://docs.neptune.ai/administration/security-and-privacy/</span>
+<span class="sd">            how-to-find-and-set-neptune-api-token&gt;`_.</span>
+<span class="sd">            It is recommended to keep it in the `NEPTUNE_API_TOKEN`</span>
+<span class="sd">            environment variable and then you can drop ``api_key=None``.</span>
+<span class="sd">        project: Optional.</span>
+<span class="sd">            Name of a project in a form of &quot;my_workspace/my_project&quot; for example &quot;tom/mask-rcnn&quot;.</span>
+<span class="sd">            If ``None``, the value of `NEPTUNE_PROJECT` environment variable will be taken.</span>
+<span class="sd">            You need to create the project in https://neptune.ai first.</span>
+<span class="sd">        name: Optional. Editable name of the run.</span>
+<span class="sd">            Run name appears in the &quot;all metadata/sys&quot; section in Neptune UI.</span>
+<span class="sd">        run: Optional. Default is ``None``. The Neptune ``Run`` object.</span>
+<span class="sd">            If specified, this `Run`` will be used for logging, instead of a new Run.</span>
+<span class="sd">            When run object is passed you can&#39;t specify other neptune properties.</span>
+<span class="sd">        log_model_checkpoints: Optional. Default is ``True``. Log model checkpoint to Neptune.</span>
+<span class="sd">            Works only if ``ModelCheckpoint`` is passed to the ``Trainer``.</span>
+<span class="sd">        prefix: Optional. Default is ``&quot;training&quot;``. Root namespace for all metadata logging.</span>
+<span class="sd">        \**neptune_run_kwargs: Additional arguments like ``tags``, ``description``, ``capture_stdout``, etc.</span>
+<span class="sd">            used when run is created.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ModuleNotFoundError:</span>
+<span class="sd">            If required Neptune package in version &gt;=0.9 is not installed on the device.</span>
+<span class="sd">        TypeError:</span>
+<span class="sd">            If configured project has not been migrated to new structure yet.</span>
+<span class="sd">        ValueError:</span>
+<span class="sd">            If argument passed to the logger&#39;s constructor is incorrect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">LOGGER_JOIN_CHAR</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
+    <span class="n">PARAMETERS_KEY</span> <span class="o">=</span> <span class="s2">&quot;hyperparams&quot;</span>
+    <span class="n">ARTIFACTS_KEY</span> <span class="o">=</span> <span class="s2">&quot;artifacts&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>  <span class="c1"># force users to call `NeptuneLogger` initializer with `kwargs`</span>
+        <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">project</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">run</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Run&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">log_model_checkpoints</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;training&quot;</span><span class="p">,</span>
+        <span class="n">agg_key_funcs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="nb">float</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">agg_default_func</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">neptune_run_kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="c1"># verify if user passed proper init arguments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verify_input_arguments</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">neptune_run_kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">neptune</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ModuleNotFoundError</span><span class="p">(</span>
+                <span class="s2">&quot;You want to use the `Neptune` logger which is not installed yet, install it with&quot;</span>
+                <span class="s2">&quot; `pip install neptune-client`.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">agg_key_funcs</span><span class="o">=</span><span class="n">agg_key_funcs</span><span class="p">,</span> <span class="n">agg_default_func</span><span class="o">=</span><span class="n">agg_default_func</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_model_checkpoints</span> <span class="o">=</span> <span class="n">log_model_checkpoints</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">=</span> <span class="n">prefix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_project_name</span> <span class="o">=</span> <span class="n">project</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_api_key</span> <span class="o">=</span> <span class="n">api_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span> <span class="o">=</span> <span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_neptune_run_kwargs</span> <span class="o">=</span> <span class="n">neptune_run_kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_short_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_retrieve_run_data</span><span class="p">()</span>
+
+            <span class="c1"># make sure that we&#39;ve log integration version for outside `Run` instances</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span><span class="p">[</span><span class="n">_INTEGRATION_VERSION_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">__version__</span>
+
+    <span class="k">def</span> <span class="nf">_retrieve_run_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run_short_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span><span class="p">[</span><span class="s2">&quot;sys/id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span><span class="p">[</span><span class="s2">&quot;sys/name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">NeptuneOfflineModeFetchException</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run_short_id</span> <span class="o">=</span> <span class="s2">&quot;OFFLINE&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run_name</span> <span class="o">=</span> <span class="s2">&quot;offline-name&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_neptune_init_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Backward compatibility in case of previous version retrieval</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_neptune_run_kwargs</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_project_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">args</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_project_name</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">args</span><span class="p">[</span><span class="s2">&quot;api_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_key</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_short_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">args</span><span class="p">[</span><span class="s2">&quot;run&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_short_id</span>
+
+        <span class="c1"># Backward compatibility in case of previous version retrieval</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">args</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_name</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="n">args</span>
+
+    <span class="k">def</span> <span class="nf">_construct_path_with_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Return sequence of keys joined by `LOGGER_JOIN_CHAR`, started with `_prefix` if defined.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGGER_JOIN_CHAR</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGGER_JOIN_CHAR</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_verify_input_arguments</span><span class="p">(</span>
+        <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">project</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">run</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Run&quot;</span><span class="p">],</span>
+        <span class="n">neptune_run_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">legacy_kwargs_msg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;Following kwargs are deprecated: </span><span class="si">{legacy_kwargs}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;If you are looking for the Neptune logger using legacy Python API,&quot;</span>
+            <span class="s2">&quot; it&#39;s still available as part of neptune-contrib package:</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;  - https://docs-legacy.neptune.ai/integrations/pytorch_lightning.html</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;The NeptuneLogger was re-written to use the neptune.new Python API</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;  - https://neptune.ai/blog/neptune-new</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;  - https://docs.neptune.ai/integrations-and-supported-tools/model-training/pytorch-lightning</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;You should use arguments accepted by either NeptuneLogger.init() or neptune.init()&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># check if user used legacy kwargs expected in `NeptuneLegacyLogger`</span>
+        <span class="n">used_legacy_kwargs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">legacy_kwarg</span> <span class="k">for</span> <span class="n">legacy_kwarg</span> <span class="ow">in</span> <span class="n">neptune_run_kwargs</span> <span class="k">if</span> <span class="n">legacy_kwarg</span> <span class="ow">in</span> <span class="n">_LEGACY_NEPTUNE_INIT_KWARGS</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">used_legacy_kwargs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">legacy_kwargs_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">legacy_kwargs</span><span class="o">=</span><span class="n">used_legacy_kwargs</span><span class="p">))</span>
+
+        <span class="c1"># check if user used legacy kwargs expected in `NeptuneLogger` from neptune-pytorch-lightning package</span>
+        <span class="n">used_legacy_neptune_kwargs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">legacy_kwarg</span> <span class="k">for</span> <span class="n">legacy_kwarg</span> <span class="ow">in</span> <span class="n">neptune_run_kwargs</span> <span class="k">if</span> <span class="n">legacy_kwarg</span> <span class="ow">in</span> <span class="n">_LEGACY_NEPTUNE_LOGGER_KWARGS</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">used_legacy_neptune_kwargs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">legacy_kwargs_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">legacy_kwargs</span><span class="o">=</span><span class="n">used_legacy_neptune_kwargs</span><span class="p">))</span>
+
+        <span class="c1"># check if user passed new client `Run` object</span>
+        <span class="k">if</span> <span class="n">run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">Run</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Run parameter expected to be of type `neptune.new.Run`.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;If you are looking for the Neptune logger using legacy Python API,&quot;</span>
+                <span class="s2">&quot; it&#39;s still available as part of neptune-contrib package:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;  - https://docs-legacy.neptune.ai/integrations/pytorch_lightning.html</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;The NeptuneLogger was re-written to use the neptune.new Python API</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;  - https://neptune.ai/blog/neptune-new</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;  - https://docs.neptune.ai/integrations-and-supported-tools/model-training/pytorch-lightning</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># check if user passed redundant neptune.init arguments when passed run</span>
+        <span class="n">any_neptune_init_arg_passed</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">[</span><span class="n">api_key</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">name</span><span class="p">])</span> <span class="ow">or</span> <span class="n">neptune_run_kwargs</span>
+        <span class="k">if</span> <span class="n">run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">any_neptune_init_arg_passed</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;When an already initialized run object is provided&quot;</span>
+                <span class="s2">&quot; you can&#39;t provide other neptune.init() parameters.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># Run instance can&#39;t be pickled</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;_run_instance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span> <span class="o">=</span> <span class="n">neptune</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_neptune_init_args</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@rank_zero_experiment</span>
+    <span class="k">def</span> <span class="nf">experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Run</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Actual Neptune run object. Allows you to use neptune logging features in your</span>
+<span class="sd">        :class:`~pytorch_lightning.core.lightning.LightningModule`.</span>
+
+<span class="sd">        Example::</span>
+
+<span class="sd">            class LitModel(LightningModule):</span>
+<span class="sd">                def training_step(self, batch, batch_idx):</span>
+<span class="sd">                    # log metrics</span>
+<span class="sd">                    acc = ...</span>
+<span class="sd">                    self.logger.experiment[&quot;train/acc&quot;].log(acc)</span>
+
+<span class="sd">                    # log images</span>
+<span class="sd">                    img = ...</span>
+<span class="sd">                    self.logger.experiment[&quot;train/misclassified_images&quot;].log(File.as_image(img))</span>
+
+<span class="sd">        Note that syntax: ``self.logger.experiment[&quot;your/metadata/structure&quot;].log(metadata)``</span>
+<span class="sd">        is specific to Neptune and it extends logger capabilities.</span>
+<span class="sd">        Specifically, it allows you to log various types of metadata like scores, files,</span>
+<span class="sd">        images, interactive visuals, CSVs, etc. Refer to the</span>
+<span class="sd">        `Neptune docs &lt;https://docs.neptune.ai/you-should-know/logging-metadata#essential-logging-methods&gt;`_</span>
+<span class="sd">        for more detailed explanations.</span>
+<span class="sd">        You can also use regular logger methods ``log_metrics()``, and ``log_hyperparams()``</span>
+<span class="sd">        with NeptuneLogger as these are also supported.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@rank_zero_experiment</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Run</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span> <span class="o">=</span> <span class="n">neptune</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_neptune_init_args</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_retrieve_run_data</span><span class="p">()</span>
+                <span class="c1"># make sure that we&#39;ve log integration version for newly created</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span><span class="p">[</span><span class="n">_INTEGRATION_VERSION_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">__version__</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_instance</span>
+        <span class="k">except</span> <span class="n">NeptuneLegacyProjectException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Project </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_project_name</span><span class="si">}</span><span class="s2"> has not been migrated to the new structure.&quot;</span>
+                <span class="s2">&quot; You can still integrate it with the Neptune logger using legacy Python API&quot;</span>
+                <span class="s2">&quot; available as part of neptune-contrib package:&quot;</span>
+                <span class="s2">&quot; https://docs-legacy.neptune.ai/integrations/pytorch_lightning.html</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+<div class="viewcode-block" id="NeptuneLogger.log_hyperparams"><a class="viewcode-back" href="../../../extensions/generated/pytorch_lightning.loggers.NeptuneLogger.html#pytorch_lightning.loggers.NeptuneLogger.log_hyperparams">[docs]</a>    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">log_hyperparams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Namespace</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># skipcq: PYL-W0221</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Log hyper-parameters to the run.</span>
+
+<span class="sd">        Hyperparams will be logged under the &quot;&lt;prefix&gt;/hyperparams&quot; namespace.</span>
+
+<span class="sd">        Note:</span>
+
+<span class="sd">            You can also log parameters by directly using the logger instance:</span>
+<span class="sd">            ``neptune_logger.experiment[&quot;model/hyper-parameters&quot;] = params_dict``.</span>
+
+<span class="sd">            In this way you can keep hierarchical structure of the parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params: `dict`.</span>
+<span class="sd">                Python dictionary structure with parameters.</span>
+
+<span class="sd">        Example::</span>
+
+<span class="sd">            from pytorch_lightning.loggers import NeptuneLogger</span>
+
+<span class="sd">            PARAMS = {</span>
+<span class="sd">                &quot;batch_size&quot;: 64,</span>
+<span class="sd">                &quot;lr&quot;: 0.07,</span>
+<span class="sd">                &quot;decay_factor&quot;: 0.97</span>
+<span class="sd">            }</span>
+
+<span class="sd">            neptune_logger = NeptuneLogger(</span>
+<span class="sd">                api_key=&quot;ANONYMOUS&quot;,</span>
+<span class="sd">                project=&quot;common/pytorch-lightning-integration&quot;</span>
+<span class="sd">            )</span>
+
+<span class="sd">            neptune_logger.log_hyperparams(PARAMS)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">_convert_params</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">_sanitize_callable_params</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">parameters_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PARAMETERS_KEY</span>
+        <span class="n">parameters_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_construct_path_with_prefix</span><span class="p">(</span><span class="n">parameters_key</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="n">parameters_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span></div>
+
+<div class="viewcode-block" id="NeptuneLogger.log_metrics"><a class="viewcode-back" href="../../../extensions/generated/pytorch_lightning.loggers.NeptuneLogger.html#pytorch_lightning.loggers.NeptuneLogger.log_metrics">[docs]</a>    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">log_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Log metrics (numeric values) in Neptune runs.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            metrics: Dictionary with metric names as keys and measured quantities as values.</span>
+<span class="sd">            step: Step number at which the metrics should be recorded, currently ignored.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">rank_zero_only</span><span class="o">.</span><span class="n">rank</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;run tried to log from global_rank != 0&quot;</span><span class="p">)</span>
+
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">_add_prefix</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGGER_JOIN_CHAR</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># `step` is ignored because Neptune expects strictly increasing step values which</span>
+            <span class="c1"># Lightning does not always guarantee.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">val</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NeptuneLogger.finalize"><a class="viewcode-back" href="../../../extensions/generated/pytorch_lightning.loggers.NeptuneLogger.html#pytorch_lightning.loggers.NeptuneLogger.finalize">[docs]</a>    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">finalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_construct_path_with_prefix</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">status</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">finalize</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">save_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Gets the save directory of the experiment which in this case is ``None`` because Neptune does not save</span>
+<span class="sd">        locally.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the root directory where experiment logs get saved</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;.neptune&quot;</span><span class="p">)</span>
+
+    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">log_model_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">model_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ModelSummary</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_construct_path_with_prefix</span><span class="p">(</span><span class="s2">&quot;model/summary&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">neptune</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">File</span><span class="o">.</span><span class="n">from_content</span><span class="p">(</span>
+            <span class="n">content</span><span class="o">=</span><span class="n">model_str</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;txt&quot;</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="NeptuneLogger.after_save_checkpoint"><a class="viewcode-back" href="../../../extensions/generated/pytorch_lightning.loggers.NeptuneLogger.html#pytorch_lightning.loggers.NeptuneLogger.after_save_checkpoint">[docs]</a>    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">after_save_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_callback</span><span class="p">:</span> <span class="s2">&quot;ReferenceType[ModelCheckpoint]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Automatically log checkpointed model. Called after model checkpoint callback saves a new checkpoint.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            checkpoint_callback: the model checkpoint callback instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_model_checkpoints</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">file_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">checkpoints_namespace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_construct_path_with_prefix</span><span class="p">(</span><span class="s2">&quot;model/checkpoints&quot;</span><span class="p">)</span>
+
+        <span class="c1"># save last model</span>
+        <span class="k">if</span> <span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">last_model_path</span><span class="p">:</span>
+            <span class="n">model_last_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_full_model_name</span><span class="p">(</span><span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">last_model_path</span><span class="p">,</span> <span class="n">checkpoint_callback</span><span class="p">)</span>
+            <span class="n">file_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model_last_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">checkpoints_namespace</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model_last_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">last_model_path</span><span class="p">)</span>
+
+        <span class="c1"># save best k models</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_k_models</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">model_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_full_model_name</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">checkpoint_callback</span><span class="p">)</span>
+            <span class="n">file_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">checkpoints_namespace</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+        <span class="c1"># log best model path and checkpoint</span>
+        <span class="k">if</span> <span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_model_path</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_construct_path_with_prefix</span><span class="p">(</span><span class="s2">&quot;model/best_model_path&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_model_path</span>
+
+            <span class="n">model_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_full_model_name</span><span class="p">(</span><span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_model_path</span><span class="p">,</span> <span class="n">checkpoint_callback</span><span class="p">)</span>
+            <span class="n">file_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">checkpoints_namespace</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_model_path</span><span class="p">)</span>
+
+        <span class="c1"># remove old models logged to experiment if they are not part of best k models at this point</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">checkpoints_namespace</span><span class="p">):</span>
+            <span class="n">exp_structure</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">get_structure</span><span class="p">()</span>
+            <span class="n">uploaded_model_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_full_model_names_from_exp_structure</span><span class="p">(</span><span class="n">exp_structure</span><span class="p">,</span> <span class="n">checkpoints_namespace</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">file_to_drop</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">uploaded_model_names</span> <span class="o">-</span> <span class="n">file_names</span><span class="p">):</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">checkpoints_namespace</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file_to_drop</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+
+        <span class="c1"># log best model score</span>
+        <span class="k">if</span> <span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_model_score</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_construct_path_with_prefix</span><span class="p">(</span><span class="s2">&quot;model/best_model_score&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_model_score</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+            <span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_full_model_name</span><span class="p">(</span><span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">checkpoint_callback</span><span class="p">:</span> <span class="s2">&quot;ReferenceType[ModelCheckpoint]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns model name which is string `model_path` appended to `checkpoint_callback.dirpath`.&quot;&quot;&quot;</span>
+        <span class="n">expected_model_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">dirpath</span><span class="si">}{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">model_path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">expected_model_path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_path</span><span class="si">}</span><span class="s2"> was expected to start with </span><span class="si">{</span><span class="n">expected_model_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="c1"># Remove extension from filepath</span>
+        <span class="n">filepath</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">model_path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">expected_model_path</span><span class="p">)</span> <span class="p">:])</span>
+
+        <span class="k">return</span> <span class="n">filepath</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_get_full_model_names_from_exp_structure</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">exp_structure</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">namespace</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Returns all paths to properties which were already logged in `namespace`&quot;&quot;&quot;</span>
+        <span class="n">structure_keys</span> <span class="o">=</span> <span class="n">namespace</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">LOGGER_JOIN_CHAR</span><span class="p">)</span>
+        <span class="n">uploaded_models_dict</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="p">[</span><span class="n">exp_structure</span><span class="p">,</span> <span class="o">*</span><span class="n">structure_keys</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_dict_paths</span><span class="p">(</span><span class="n">uploaded_models_dict</span><span class="p">))</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_dict_paths</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">path_in_build</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path_in_build</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">path_in_build</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">k</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">path</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_dict_paths</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Return the experiment name or &#39;offline-name&#39; when exp is run in offline mode.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Return the experiment version.</span>
+
+<span class="sd">        It&#39;s Neptune Run&#39;s short_id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_short_id</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_signal_deprecated_api_usage</span><span class="p">(</span><span class="n">f_name</span><span class="p">,</span> <span class="n">sample_code</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">msg_suffix</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;If you are looking for the Neptune logger using legacy Python API,&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot; it&#39;s still available as part of neptune-contrib package:</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  - https://docs-legacy.neptune.ai/integrations/pytorch_lightning.html</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;The NeptuneLogger was re-written to use the neptune.new Python API</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  - https://neptune.ai/blog/neptune-new</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  - https://docs.neptune.ai/integrations-and-supported-tools/model-training/pytorch-lightning</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Instead of `logger.</span><span class="si">{</span><span class="n">f_name</span><span class="si">}</span><span class="s2">` you can use:</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">{</span><span class="n">sample_code</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">raise_exception</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;The function you&#39;ve used is deprecated in v1.5.0 and will be removed in v1.7.0. &quot;</span> <span class="o">+</span> <span class="n">msg_suffix</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The function you&#39;ve used is deprecated.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">msg_suffix</span><span class="p">)</span>
+
+    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">log_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">metric_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_signal_deprecated_api_usage</span><span class="p">(</span><span class="s2">&quot;log_metric&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;logger.run[&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;].log(42)&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_tensor</span><span class="p">(</span><span class="n">metric_value</span><span class="p">):</span>
+            <span class="n">metric_value</span> <span class="o">=</span> <span class="n">metric_value</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">metric_value</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+
+    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">log_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_signal_deprecated_api_usage</span><span class="p">(</span><span class="s2">&quot;log_text&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;logger.run[&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">].log(&#39;text&#39;)&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+
+    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">log_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">log_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_signal_deprecated_api_usage</span><span class="p">(</span><span class="s2">&quot;log_image&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;logger.run[&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;].log(File(&#39;path_to_image&#39;))&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="c1"># if `img` is path to file, convert it to file object</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">NeptuneFile</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+
+    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">log_artifact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">destination</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ARTIFACTS_KEY</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">artifact</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_signal_deprecated_api_usage</span><span class="p">(</span><span class="s2">&quot;log_artifact&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;logger.run[&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">].log(&#39;path_to_file&#39;)&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">set_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_signal_deprecated_api_usage</span><span class="p">(</span>
+            <span class="s2">&quot;log_artifact&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;logger.run[&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">PARAMETERS_KEY</span><span class="si">}</span><span class="s2">/key&#39;].log(value)&quot;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">append_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_signal_deprecated_api_usage</span><span class="p">(</span>
+            <span class="s2">&quot;append_tags&quot;</span><span class="p">,</span> <span class="s2">&quot;logger.run[&#39;sys/tags&#39;].add([&#39;foo&#39;, &#39;bar&#39;])&quot;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span></div>
+</pre></div>
+
+             </article>
+             
+            </div>
+            <footer>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Copyright (c) 2018-2022, William Falcon et al...
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+         <script src="../../../_static/jquery.js"></script>
+         <script src="../../../_static/underscore.js"></script>
+         <script src="../../../_static/doctools.js"></script>
+         <script src="../../../_static/clipboard.min.js"></script>
+         <script src="../../../_static/copybutton.js"></script>
+         <script src="../../../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../../../_static/togglebutton.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script script type="text/javascript">
+  var collapsedSections = ['Best practices', 'Optional Extensions', 'Tutorials', 'API References', 'Bolts', 'Examples', 'Partner Domain Frameworks', 'Community'];
+</script>
+
+
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://pytorch-lightning.rtfd.io/en/latest">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://pytorch-lightning.readthedocs.io/en/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://pytorch-lightning.rtfd.io/en/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch-lightning.rtfd.io/en/latest/">PyTorch</a></li>
+            <li><a href="https://pytorch-lightning.readthedocs.io/en/latest/starter/introduction.html">Get Started</a></li>
+            <li><a href="https://pytorch-lightning.rtfd.io/en/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://www.pytorchlightning.ai/blog">Blog</a></li>
+            <li><a href="https://github.com/PyTorchLightning/pytorch-lightning/blob/master/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">Resources</a></li>
+            <li><a href="https://pytorch-lightning.readthedocs.io/en/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://pytorch-lightning.rtfd.io/en/latest">Docs</a></li>
+            <li><a href="https://www.pytorchlightning.ai/community" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/PyTorchLightning/pytorch-lightning/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/PyTorchLightnin" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../../../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://pytorch-lightning.rtfd.io/en/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch-lightning.readthedocs.io/en/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://www.pytorchlightning.ai/blog">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://pytorch-lightning.readthedocs.io/en/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-flash.readthedocs.io/en/stable/">Lightning Flash</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-transformers.readthedocs.io/en/stable/">Lightning Transformers</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-bolts.readthedocs.io/en/stable/">Lightning Bolts</a>
+            </li>
+          </ul>
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://pytorch-lightning.readthedocs.io/en/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch-lightning.rtfd.io/en/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="https://www.pytorchlightning.ai/community">Community</a>
+            </li>
+
+            <li>
+              <a href="https://github.com/PyTorchLightning/pytorch-lightning/discussions">Forums</a>
+            </li>
+          </ul>-->
+
+          <li>
+            <a href="https://github.com/PyTorchLightning/pytorch-lightning">Github</a>
+          </li>
+
+          <li>
+            <a href="https://www.grid.ai/">Grid.ai</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../../../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })                                                                                         
+  </script>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQBQ3CV"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+ </body>
+</html>
