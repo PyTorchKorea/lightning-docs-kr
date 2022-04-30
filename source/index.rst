@@ -3,16 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to ⚡ PyTorch Lightning
-===============================
+⚡ PyTorch Lightning에 오신 것을 환영합니다!
+==============================================
 
 .. twocolumns::
    :left:
       .. image:: https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/mov.gif
          :alt: Animation showing how to convert a standard training loop to a Lightning loop
    :right:
-      PyTorch Lightning is the deep learning framework for professional AI researchers and machine learning engineers who need maximal flexibility without sacrificing performance at scale.
-      Lightning evolves with you as your projects go from idea to paper/production.
+      PyTorch Lightning(파이토치 라이트닝))은 대규모에서 성능을 포기하지 않으면서 최대한의 유연성을 필요로 하는 전문적인 AI 연구자들과 머신러닝 엔지니어들을 위한 딥러닝 프레임워크입니다.
+      Lightning(라이트닝)은 프로젝트가 생각으로부터 문서 / 제품화에 이르는 동안 함께 발전합니다.
 
 .. raw:: html
 
@@ -36,8 +36,8 @@ Welcome to ⚡ PyTorch Lightning
    <hr class="docutils" style="margin: 50px 0 50px 0">
 
 
-Install Lightning
------------------
+Lightning 설치하기
+----------------------
 
 
 .. raw:: html
@@ -45,7 +45,7 @@ Install Lightning
    <div class="row" style='font-size: 16px'>
       <div class='col-md-6'>
 
-Pip users
+Pip 사용자라면,
 
 .. code-block:: bash
 
@@ -56,7 +56,7 @@ Pip users
       </div>
       <div class='col-md-6'>
 
-Conda users
+Conda 사용자라면,
 
 .. code-block:: bash
 
@@ -67,14 +67,14 @@ Conda users
       </div>
    </div>
 
-Or read the `advanced install guide <starter/installation.html>`_
+또는 `advanced install guide <starter/installation.html>`_ 참조하세요.
 
 .. raw:: html
 
    <hr class="docutils" style="margin: 50px 0 50px 0">
 
-Get Started
------------
+처음이신가요?
+-----------------
 
 .. raw:: html
 
@@ -84,13 +84,13 @@ Get Started
 .. Add callout items below this line
 
 .. customcalloutitem::
-   :description: Learn the 7 key steps of a typical Lightning workflow.
-   :header: Lightning in 15 minutes
+   :header: LIGHTNING 15분 만에 배워보기
+   :description: 일반적인 Lightning 워크플로우의 주요한 7단계를 배웁니다.
    :button_link:  starter/introduction.html
 
 .. customcalloutitem::
-   :description: Learn how to benchmark PyTorch Lightning.
    :header: Benchmarking
+   :description: Learn how to benchmark PyTorch Lightning.
    :button_link: benchmarking/benchmarks.html
 
 .. raw:: html
@@ -104,8 +104,8 @@ Get Started
 
    <hr class="docutils" style="margin: 50px 0 50px 0">
 
-Current Lightning Users
------------------------
+이미 Lightning 사용자라면?
+---------------------------
 
 .. raw:: html
 
@@ -268,7 +268,7 @@ Current Lightning Users
 
    </div>
 
-Indices and tables
+색인 및 검색
 ------------------
 
 * :ref:`genindex`
