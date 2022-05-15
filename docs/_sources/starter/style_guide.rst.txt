@@ -1,10 +1,11 @@
-###########
-Style Guide
-###########
-The main goal of PyTorch Lightning is to improve readability and reproducibility. Imagine looking into any GitHub repo or a research project,
-finding a :class:`~pytorch_lightning.core.lightning.LightningModule`, and knowing exactly where to look to find the things you care about.
+################
+스타일 가이드
+################
 
-The goal of this style guide is to encourage Lightning code to be structured similarly.
+파이토치 라이트닝(PyTorch Lightning)의 주요한 목표는 가독성과 재현성을 개선하는 것입니다. GitHub 저장소나 연구 프로젝트에서
+:class:`~pytorch_lightning.core.lightning.LightningModule` 을 발견하고, 관심있는 부분을 찾기 위해 정확히 어디를 봐야할지 정확히 알고 있다고 상상해보세요.
+
+이 스타일 가이드의 목표는 Lightning의 코드가 유사하게 구성되도록 권장하는데 있습니다.
 
 --------------
 

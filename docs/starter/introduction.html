@@ -9,10 +9,9 @@
   <meta charset="utf-8">
   <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Lightning in 15 minutes &mdash; PyTorch Lightning 1.7.0dev documentation</title>
+  <title>Lightning 15분 만에 배워보기 &mdash; PyTorch Lightning 1.7.0dev documentation</title>
   
 
   
@@ -43,9 +42,9 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="How to Organize PyTorch Into Lightning" href="converting.html" />
-    <link rel="prev" title="Welcome to ⚡ PyTorch Lightning" href="../index.html" />
-  <!-- Google Analytics -->
+    <link rel="prev" title="⚡ PyTorch Lightning에 오신 것을 환영합니다!" href="../index.html" />
   
+  <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-82W25RV60Q"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -215,7 +214,7 @@
             
               <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Lightning in 15 minutes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lightning 15분 만에 배워보기</a></li>
 <li class="toctree-l1"><a class="reference internal" href="converting.html">Organize existing PyTorch into Lightning</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Level Up</span></p>
@@ -345,7 +344,7 @@
       </li>
 
         
-      <li>Lightning in 15 minutes</li>
+      <li>Lightning 15분 만에 배워보기</li>
     
     
       <li class="pytorch-breadcrumbs-aside">
@@ -377,11 +376,12 @@
             <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
               
-  <section id="lightning-in-15-minutes">
-<h1>Lightning in 15 minutes<a class="headerlink" href="#lightning-in-15-minutes" title="Permalink to this headline">¶</a></h1>
-<p><strong>Required background:</strong> None</p>
-<p><strong>Goal:</strong> In this guide, we’ll walk you through the 7 key steps of a typical Lightning workflow.</p>
-<p>PyTorch Lightning is the deep learning framework with “batteries included” for professional AI researchers and machine learning engineers who need maximal flexibility while super-charging performance at scale.</p>
+  <section id="lightning-15">
+<h1>Lightning 15분 만에 배워보기<a class="headerlink" href="#lightning-15" title="Permalink to this headline">¶</a></h1>
+<p><strong>필요한 배경지식:</strong> 없음</p>
+<p><strong>목표:</strong> 이 문서에서는 일반적인 Lightning 워크플로우의 주요한 7단계를 안내합니다.</p>
+<p>PyTorch Lightning(파이토치 라이트닝)은 대규모로 엄청 빠른 성능을 요구하면서 최대한의 유연성을 필요로 하는
+전문적인 AI 연구자들과 머신러닝 엔지니어들을 위한 “배터리가 포함된(batteries included)” 딥러닝 프레임워크입니다.</p>
 <p><div class='row slack-container slack-align-left' style="margin: 20px 0 20px 0;"> 
     <div class='slack-button' style='width: 155px'>
         <a href="https://join.slack.com/t/pytorch-lightning/shared_invite/zt-12iz3cds1-uyyyBYJLiaL2bqVmMN7n~A" target="_blank">
@@ -395,19 +395,19 @@
         </a>
     </div>
 </div></p>
-<p>Lightning organizes PyTorch code to remove boilerplate and unlock scalability.</p>
+<p>Lightning(라이트닝)은 반복적으로 사용하는 코드(boilerplate)를 제거하고 확장성(scalability)을 확보하도록 PyTorch 코드를 재구성합니다.</p>
 <video width="100%" max-width="800px" controls autoplay muted playsinline
 src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/pl_docs/pl_docs_animation_final.m4v"></video><div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>By organizing PyTorch code, lightning enables:</p>
+<p>PyTorch 코드를 재구성함으로써, Lightning에서는 이런 것들이 가능해집니다:</p>
 <div class="display-card-container">
     <div class="row"><p><div class="col-md-3">
     
     <div class="display-card" style='height:290px'>
             <div class="image-center"><img src='https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/card_full_control.png' style=height:125px  ></div>
-            <h3>Full flexibility</h3>
-            <p class="body-paragraph">Try any ideas using raw PyTorch without the boilerplate.</p>
+            <h3>완전한 유연성</h3>
+            <p class="body-paragraph">반복되는 코드 없이 PyTorch를 그대로 사용하여 아이디어를 구현합니다.</p>
     </div>
     
     
@@ -416,8 +416,8 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/pl_docs/pl_docs_anim
     
     <div class="display-card" style='height:290px'>
             <div class="image-center"><img src='https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/card_no_boilerplate.png' style=height:125px  ></div>
-            <h3>Reproducible + Readable</h3>
-            <p class="body-paragraph">Decoupled research and engineering code enable reproducibility and better readability.</p>
+            <h3>재현성 + 가독성</h3>
+            <p class="body-paragraph">연구용 코드와 엔지니어링 코드를 분리하여 재현성을 갖추고 더 나은 가독성을 제공합니다.</p>
     </div>
     
     
@@ -426,8 +426,8 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/pl_docs/pl_docs_anim
     
     <div class="display-card" style='height:290px'>
             <div class="image-center"><img src='https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/card_hardware.png' style=height:125px  ></div>
-            <h3>Simple multi-GPU training</h3>
-            <p class="body-paragraph">Use multiple GPUs/TPUs/HPUs etc... without code changes.</p>
+            <h3>간단한 다중 GPU 학습</h3>
+            <p class="body-paragraph">코드 변경 없이 여러개의 GPU/TPU/HPU 등을 사용합니다.</p>
     </div>
     
     
@@ -436,43 +436,43 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/pl_docs/pl_docs_anim
     
     <div class="display-card" style='height:290px'>
             <div class="image-center"><img src='https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/card_testing.png' style=height:125px  ></div>
-            <h3>Built-in testing</h3>
-            <p class="body-paragraph">We've done all the testing so you don't have to.</p>
+            <h3>테스트 완료</h3>
+            <p class="body-paragraph">이미 모든 테스트를 완료하여 직접 테스트 할 필요없습니다.</p>
     </div>
     
     
 </div></p>
     </div>
 </div><hr class="docutils" />
-<section id="install-pytorch-lightning">
-<h2>1: Install PyTorch Lightning<a class="headerlink" href="#install-pytorch-lightning" title="Permalink to this headline">¶</a></h2>
+<section id="pytorch-lightning">
+<h2>1: PyTorch Lightning 설치하기<a class="headerlink" href="#pytorch-lightning" title="Permalink to this headline">¶</a></h2>
 <div class="row" style='font-size: 16px'>
-   <div class='col-md-6'><p>For <a class="reference external" href="https://pypi.org/project/pytorch-lightning/">pip</a> users</p>
+   <div class='col-md-6'><p><a class="reference external" href="https://pypi.org/project/pytorch-lightning/">pip</a> 사용자라면,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install pytorch-lightning
 </pre></div>
 </div>
 </div>
-<div class='col-md-6'><p>For <a class="reference external" href="https://anaconda.org/conda-forge/pytorch-lightning">conda</a> users</p>
+<div class='col-md-6'><p><a class="reference external" href="https://anaconda.org/conda-forge/pytorch-lightning">conda</a> 사용자라면,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install pytorch-lightning -c conda-forge
 </pre></div>
 </div>
    </div>
-</div><p>Or read the <a class="reference external" href="installation.html">advanced install guide</a></p>
+</div><p>또는 <a class="reference external" href="installation.html">advanced install guide</a> 를 참조하세요.</p>
 <hr class="docutils" />
 </section>
-<section id="define-a-lightningmodule">
-<span id="new-project"></span><h2>2: Define a LightningModule<a class="headerlink" href="#define-a-lightningmodule" title="Permalink to this headline">¶</a></h2>
-<p>A LightningModule enables your PyTorch nn.Module to play together in complex ways inside the training_step (there is also an optional validation_step and test_step).</p>
+<section id="lightningmodule">
+<span id="new-project"></span><h2>2: LightningModule 정의하기<a class="headerlink" href="#lightningmodule" title="Permalink to this headline">¶</a></h2>
+<p>LightningModule을 사용하여 PyTorch nn.Module이 training_step (뿐만 아니라 validation_step이나 test_step) 내에서 복잡한 방식으로 함께 동작할 수 있도록 합니다.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">optim</span><span class="p">,</span> <span class="n">nn</span><span class="p">,</span> <span class="n">utils</span><span class="p">,</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">tests.helpers.datasets</span> <span class="kn">import</span> <span class="n">MNIST</span>
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 
-<span class="c1"># define any number of nn.Modules (or use your current ones)</span>
+<span class="c1"># 원하는만큼의 nn.Module (또는 기존 모델)을 정의합니다.</span>
 <span class="n">encoder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">decoder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">))</span>
 
-<span class="c1"># define the LightningModule</span>
+<span class="c1"># LightningModule을 정의합니다.</span>
 <span class="k">class</span> <span class="nc">LitAutoEncoder</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoder</span><span class="p">,</span> <span class="n">decoder</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -496,55 +496,56 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/pl_docs/pl_docs_anim
         <span class="k">return</span> <span class="n">optimizer</span>
 
 
-<span class="c1"># init the autoencoder</span>
+<span class="c1"># 오토인코더(autoencoder)를 초기화합니다.</span>
 <span class="n">autoencoder</span> <span class="o">=</span> <span class="n">LitAutoEncoder</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span> <span class="n">decoder</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <hr class="docutils" />
-<section id="define-a-dataset">
-<h2>3: Define a dataset<a class="headerlink" href="#define-a-dataset" title="Permalink to this headline">¶</a></h2>
-<p>Lightning supports ANY iterable (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataLoader</span></code>, numpy, etc…) for the train/val/test/predict splits.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># setup data</span>
+<section id="id1">
+<h2>3: 데이터셋 정의하기<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Lightning은 <em>어떠한</em> 순회 가능한 객체(iterable; <code class="xref py py-class docutils literal notranslate"><span class="pre">DataLoader</span></code>, numpy 등…)도 학습/검증/테스트/예측용으로 나누어 사용할 수 있습니다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 데이터를 설정합니다.</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">train_loader</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <hr class="docutils" />
-<section id="train-the-model">
-<h2>4: Train the model<a class="headerlink" href="#train-the-model" title="Permalink to this headline">¶</a></h2>
-<p>The Lightning <a class="reference internal" href="../common/trainer.html"><span class="doc">Trainer</span></a> “mixes” any <a class="reference internal" href="../common/lightning_module.html"><span class="doc">LightningModule</span></a> with any dataset and abstracts away all the engineering complexity needed for scale.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># train the model (hint: here are some helpful Trainer arguments for rapid idea iteration)</span>
+<section id="id2">
+<h2>4: 모델 학습하기<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Lightning <a class="reference internal" href="../common/trainer.html"><span class="doc">Trainer</span></a> 는 모든 <a class="reference internal" href="../common/lightning_module.html"><span class="doc">LightningModule</span></a> 과 데이터셋을 “함께(mix)” 학습할 수 있으며,
+확장에 필요한 모든 엔지니어링적 복잡성들을 추상화(abstract)합니다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 모델을 학습합니다 (힌트: 빠른 아이디어 반복에 도움이 되는 Trainer의 인자들을 참고하세요)</span>
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">limit_train_batches</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">autoencoder</span><span class="p">,</span> <span class="n">train_dataloaders</span><span class="o">=</span><span class="n">train_loader</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The Lightning <a class="reference internal" href="../common/trainer.html"><span class="doc">Trainer</span></a> automates <a class="reference external" href="../common/trainer.html#trainer-flags">40+ tricks</a> including:</p>
+<p>Lightning <a class="reference internal" href="../common/trainer.html"><span class="doc">Trainer</span></a> 는 아래 예시들을 포함하여 <a class="reference external" href="../common/trainer.html#trainer-flags">40종류 이상의 기법들</a> 을 자동화합니다:</p>
 <ul class="simple">
-<li><p>Epoch and batch iteration</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code>, <code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code>, <code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code> calls</p></li>
-<li><p>Calling of <code class="docutils literal notranslate"><span class="pre">model.eval()</span></code>, enabling/disabling grads during evaluation</p></li>
-<li><p><a class="reference internal" href="../common/checkpointing.html"><span class="doc">Checkpoint Saving and Loading</span></a></p></li>
-<li><p>Tensorboard (see <a class="reference internal" href="../visualize/loggers.html"><span class="doc">loggers</span></a> options)</p></li>
-<li><p><a class="reference internal" href="../accelerators/gpu.html"><span class="doc">Multi-GPU</span></a> support</p></li>
+<li><p>에폭(epoch) 및 배치(batch) 반복</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code>, <code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code>, <code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code> 호출</p></li>
+<li><p>평가(evaluation) 도중 경사도(grads) 활성화/비활성화를 위한 <code class="docutils literal notranslate"><span class="pre">model.eval()</span></code> 호출</p></li>
+<li><p><a class="reference internal" href="../common/checkpointing.html"><span class="doc">체크포인트(checkpoint) 저장하기 및 불러오기</span></a></p></li>
+<li><p>텐서보드(tensorboard) (<a class="reference internal" href="../visualize/loggers.html"><span class="doc">loggers</span></a> 옵션 참조)</p></li>
+<li><p><a class="reference internal" href="../accelerators/gpu.html"><span class="doc">Multi-GPU</span></a> 지원</p></li>
 <li><p><a class="reference internal" href="../accelerators/tpu.html"><span class="doc">TPU</span></a></p></li>
-<li><p><a class="reference internal" href="../guides/speed.html#speed-amp"><span class="std std-ref">16-bit precision AMP</span></a> support</p></li>
+<li><p><a class="reference internal" href="../guides/speed.html#speed-amp"><span class="std std-ref">16비트 정밀도(precision) AMP</span></a> 지원</p></li>
 </ul>
 </section>
 <hr class="docutils" />
-<section id="use-the-model">
-<h2>5: Use the model<a class="headerlink" href="#use-the-model" title="Permalink to this headline">¶</a></h2>
-<p>Once you’ve trained the model you can export to onnx, torchscript and put it into production or simply load the weights and run predictions.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># load checkpoint</span>
+<section id="id4">
+<h2>5: 모델 사용하기<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>모델을 학습한 뒤에는 ONNX, TorchScript로 내보내기(export)하여 상용 환경에 포함하거나 단순히 가중치를 불러오고 예측을 실행할 수 있습니다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 체크포인트(checkpoint)를 불러옵니다.</span>
 <span class="n">checkpoint</span> <span class="o">=</span> <span class="s2">&quot;./lightning_logs/version_0/checkpoints/epoch=0-step=100.ckpt&quot;</span>
 <span class="n">autoencoder</span> <span class="o">=</span> <span class="n">LitAutoEncoder</span><span class="o">.</span><span class="n">load_from_checkpoint</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span> <span class="n">decoder</span><span class="o">=</span><span class="n">decoder</span><span class="p">)</span>
 
-<span class="c1"># choose your trained nn.Module</span>
+<span class="c1"># 학습한 nn.Module을 선택합니다.</span>
 <span class="n">encoder</span> <span class="o">=</span> <span class="n">autoencoder</span><span class="o">.</span><span class="n">encoder</span>
 <span class="n">encoder</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
-<span class="c1"># embed 4 fake images!</span>
+<span class="c1"># 4개의 가짜 이미지로 예측(embed)합니다!</span>
 <span class="n">fake_image_batch</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">)</span>
 <span class="n">embeddings</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">(</span><span class="n">fake_image_batch</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚡&quot;</span> <span class="o">*</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Predictions (4 image embeddings):</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;⚡&quot;</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
@@ -552,25 +553,25 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/pl_docs/pl_docs_anim
 </div>
 </section>
 <hr class="docutils" />
-<section id="visualize-training">
-<h2>6: Visualize training<a class="headerlink" href="#visualize-training" title="Permalink to this headline">¶</a></h2>
-<p>Lightning comes with a <em>lot</em> of batteries included. A helpful one is Tensorboard for visualizing experiments.</p>
-<p>Run this on your commandline and open your browser to <strong>http://localhost:6006/</strong></p>
+<section id="id5">
+<h2>6: 학습 시각화하기<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>Lightning에는 <em>많은</em> 배터리가 포함되어 있습니다. 실험을 시각화하는데 사용하는 텐서보드(Tensorboard)도 유용한 도구 중 하나입니다.</p>
+<p>명령줄(commandline)에서 아래를 실행하고 브라우저에서 <strong>http://localhost:6006/</strong> 을 열어보세요.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tensorboard --logdir .
 </pre></div>
 </div>
 </section>
 <hr class="docutils" />
-<section id="supercharge-training">
-<h2>7: Supercharge training<a class="headerlink" href="#supercharge-training" title="Permalink to this headline">¶</a></h2>
-<p>Enable advanced training features using Trainer arguments. These are state-of-the-art techniques that are automatically integrated into your training loop without changes to your code.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># train on 4 GPUs</span>
+<section id="id6">
+<h2>7: 엄청 빠르게 학습하기<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>Trainer에 인자(argument)를 사용하여 고급 학습 기능을 사용할 수 있습니다. 이는 다른 코드를 변경하지 않으면서 학습 단계(train loop)에 자동으로 통합할 수 있도록 하는 최신(state-of-the-art)의 기술입니다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 4개의 GPU에서 학습</span>
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
     <span class="n">devices</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
     <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
  <span class="p">)</span>
 
-<span class="c1"># train 1TB+ parameter models with Deepspeed/fsdp</span>
+<span class="c1"># Deepspeed/FSDP를 사용하여 1TB 이상의 매개변수를 갖는 모델 학습</span>
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
     <span class="n">devices</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
     <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
@@ -578,28 +579,28 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/pl_docs/pl_docs_anim
     <span class="n">precision</span><span class="o">=</span><span class="mi">16</span>
  <span class="p">)</span>
 
-<span class="c1"># 20+ helpful flags for rapid idea iteration</span>
+<span class="c1"># 빠른 아이디어 반복을 위한 20개 이상의 유용한 플래그(flag)</span>
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
     <span class="n">max_epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
     <span class="n">min_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
     <span class="n">overfit_batches</span><span class="o">=</span><span class="mi">1</span>
  <span class="p">)</span>
 
-<span class="c1"># access the latest state of the art techniques</span>
+<span class="c1"># 최신 기술을 사용</span>
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">StochasticWeightAveraging</span><span class="p">(</span><span class="o">...</span><span class="p">)])</span>
 </pre></div>
 </div>
 </section>
 <hr class="docutils" />
-<section id="maximize-flexibility">
-<h2>Maximize flexibility<a class="headerlink" href="#maximize-flexibility" title="Permalink to this headline">¶</a></h2>
-<p>Lightning’s core guiding principle is to always provide maximal flexibility <strong>without ever hiding any of the PyTorch</strong>.</p>
-<p>Lightning offers 5 <em>added</em> degrees of flexibility depending on your project’s complexity.</p>
+<section id="id7">
+<h2>유연성 극대화하기<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>Lightning의 핵심 원칙은 <strong>PyTorch의 어떠한 부분도 숨기지 않으면서</strong> 언제나 최대한의 유연성을 제공하는 것입니다.</p>
+<p>Lightning은 프로젝트의 복잡도에 따라 <em>추가적인</em> 5단계의 유연성을 제공합니다.</p>
 <hr class="docutils" />
-<section id="customize-training-loop">
-<h3>Customize training loop<a class="headerlink" href="#customize-training-loop" title="Permalink to this headline">¶</a></h3>
+<section id="loop">
+<h3>학습 단계(loop) 사용자 정의하기<a class="headerlink" href="#loop" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/custom_loop.png"><img alt="Injecting custom code in a training loop" src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/custom_loop.png" style="width: 600px;" /></a>
-<p>Inject custom code anywhere in the Training loop using any of the 20+ methods (<a class="reference internal" href="../common/lightning_module.html#lightning-hooks"><span class="std std-ref">Hooks</span></a>) available in the LightningModule.</p>
+<p>LightningModule에서 사용할 수 있는 20개 이상의 메소드 (<a class="reference internal" href="../common/lightning_module.html#lightning-hooks"><span class="std std-ref">Hooks</span></a>) 중 일부를 사용하여 훈련 단계 어디에든 사용자 정의 코드를 삽입할 수 있습니다.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LitAutoEncoder</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">optimizer_idx</span><span class="p">):</span>
         <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
@@ -607,25 +608,25 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/pl_docs/pl_docs_anim
 </div>
 </section>
 <hr class="docutils" />
-<section id="extend-the-trainer">
-<h3>Extend the Trainer<a class="headerlink" href="#extend-the-trainer" title="Permalink to this headline">¶</a></h3>
+<section id="trainer">
+<h3>Trainer 확장하기<a class="headerlink" href="#trainer" title="Permalink to this headline">¶</a></h3>
 <video width="100%" max-width="800px" controls autoplay muted playsinline
-src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/cb.m4v"></video><p>If you have multiple lines of code with similar functionalities, you can use callbacks to easily group them together and toggle all of those lines on or off at the same time.</p>
+src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/cb.m4v"></video><p>유사한 기능을 하는 여러줄의 코드가 있는 경우, 콜백(callback)을 사용하여 손쉽게 그룹으로 묶어서 해당하는 코드들을 동시에 켜거나 끌 수 있습니다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">AWSCheckpoints</span><span class="p">()])</span>
 </pre></div>
 </div>
 </section>
 <hr class="docutils" />
-<section id="use-a-raw-pytorch-loop">
-<h3>Use a raw PyTorch loop<a class="headerlink" href="#use-a-raw-pytorch-loop" title="Permalink to this headline">¶</a></h3>
-<p>For certain types of work at the bleeding-edge of research, Lightning offers experts full control of their training loops in various ways.</p>
+<section id="pytorch-loop">
+<h3>PyTorch 자체의 반복(loop) 사용하기<a class="headerlink" href="#pytorch-loop" title="Permalink to this headline">¶</a></h3>
+<p>최첨단 연구 시 특정 유형의 작업들을 위해, Lightning은 전문가들이 다양한 방식으로 학습 단계를 완전히 제어할 수 있는 기능을 제공합니다.</p>
 <div class="display-card-container">
     <div class="row"><p><div class="col-md-4">
     <a href='../model/build_model_advanced.html#manual-optimization'>
     <div class="display-card display-card-hover" style='height:320px'>
             <div class="image-center"><img src='https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/manual_opt.png' style=height:220px  ></div>
-            <h3>Manual optimization</h3>
-            <p class="body-paragraph">Automated training loop, but you own the optimization steps.</p>
+            <h3>직접 최적화(manual optimization)</h3>
+            <p class="body-paragraph">자동화된 학습 단계에서 최적화 단계는 사용자가 직접 관여합니다.</p>
     </div>
     </a>
     
@@ -634,8 +635,8 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/cb.m4v"></video><p>I
     <a href='../model/build_model_expert.html'>
     <div class="display-card display-card-hover" style='height:320px'>
             <div class="image-center"><img src='https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/lite.png' style=height:220px  ></div>
-            <h3>Lightning Lite</h3>
-            <p class="body-paragraph">Full control over loop for migrating complex PyTorch projects.</p>
+            <h3>Lightning Lite(라이트닝 라이트)</h3>
+            <p class="body-paragraph">복잡한 PyTorch 프로젝트를 이관하기 위한 반복 단계를 완벽히 제어합니다.</p>
     </div>
     </a>
     
@@ -644,8 +645,8 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/cb.m4v"></video><p>I
     <a href='../extensions/loops.html'>
     <div class="display-card display-card-hover" style='height:320px'>
             <div class="image-center"><img src='https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/loops.png' style=height:220px  ></div>
-            <h3>Loops</h3>
-            <p class="body-paragraph">Enable meta-learning, reinforcement learning, GANs with full control.</p>
+            <h3>반복(Loop)</h3>
+            <p class="body-paragraph">메타학습(meta-learning), 강화학습(reinforcement learning), GAN을 완벽히 제어합니다.</p>
     </div>
     </a>
     
@@ -654,9 +655,9 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/cb.m4v"></video><p>I
 </div></section>
 </section>
 <hr class="docutils" />
-<section id="next-steps">
-<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
-<p>Depending on your use case, you might want to check one of these out next.</p>
+<section id="id8">
+<h2>다음 단계<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>사용 사례에 따라, 아래 내용들 중 하나를 다음 단계로 살펴보세요.</p>
 <div class="display-card-container">
     <div class="row"><p><div class="col-md-3">
     <a href='../levels/basic_level_2.html'>
@@ -713,7 +714,7 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/cb.m4v"></video><p>I
         <a href="converting.html" class="btn btn-neutral float-right" title="How to Organize PyTorch Into Lightning" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
       
       
-        <a href="../index.html" class="btn btn-neutral" title="Welcome to ⚡ PyTorch Lightning" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+        <a href="../index.html" class="btn btn-neutral" title="⚡ PyTorch Lightning에 오신 것을 환영합니다!" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
       
     </div>
   
@@ -745,21 +746,21 @@ src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/cb.m4v"></video><p>I
           <div class="pytorch-right-menu" id="pytorch-right-menu">
             <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
               <ul>
-<li><a class="reference internal" href="#">Lightning in 15 minutes</a><ul>
-<li><a class="reference internal" href="#install-pytorch-lightning">1: Install PyTorch Lightning</a></li>
-<li><a class="reference internal" href="#define-a-lightningmodule">2: Define a LightningModule</a></li>
-<li><a class="reference internal" href="#define-a-dataset">3: Define a dataset</a></li>
-<li><a class="reference internal" href="#train-the-model">4: Train the model</a></li>
-<li><a class="reference internal" href="#use-the-model">5: Use the model</a></li>
-<li><a class="reference internal" href="#visualize-training">6: Visualize training</a></li>
-<li><a class="reference internal" href="#supercharge-training">7: Supercharge training</a></li>
-<li><a class="reference internal" href="#maximize-flexibility">Maximize flexibility</a><ul>
-<li><a class="reference internal" href="#customize-training-loop">Customize training loop</a></li>
-<li><a class="reference internal" href="#extend-the-trainer">Extend the Trainer</a></li>
-<li><a class="reference internal" href="#use-a-raw-pytorch-loop">Use a raw PyTorch loop</a></li>
+<li><a class="reference internal" href="#">Lightning 15분 만에 배워보기</a><ul>
+<li><a class="reference internal" href="#pytorch-lightning">1: PyTorch Lightning 설치하기</a></li>
+<li><a class="reference internal" href="#lightningmodule">2: LightningModule 정의하기</a></li>
+<li><a class="reference internal" href="#id1">3: 데이터셋 정의하기</a></li>
+<li><a class="reference internal" href="#id2">4: 모델 학습하기</a></li>
+<li><a class="reference internal" href="#id4">5: 모델 사용하기</a></li>
+<li><a class="reference internal" href="#id5">6: 학습 시각화하기</a></li>
+<li><a class="reference internal" href="#id6">7: 엄청 빠르게 학습하기</a></li>
+<li><a class="reference internal" href="#id7">유연성 극대화하기</a><ul>
+<li><a class="reference internal" href="#loop">학습 단계(loop) 사용자 정의하기</a></li>
+<li><a class="reference internal" href="#trainer">Trainer 확장하기</a></li>
+<li><a class="reference internal" href="#pytorch-loop">PyTorch 자체의 반복(loop) 사용하기</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+<li><a class="reference internal" href="#id8">다음 단계</a></li>
 </ul>
 </li>
 </ul>

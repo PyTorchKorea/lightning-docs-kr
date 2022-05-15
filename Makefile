@@ -20,9 +20,6 @@ help:
 
 docs:
 	make html
-	rm -rf docs
-	cp -r $(BUILDDIR)/html docs/
-	cp CNAME docs/CNAME
-	touch docs/.nojekyll
+	echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
 .PHONY: all docs clean
