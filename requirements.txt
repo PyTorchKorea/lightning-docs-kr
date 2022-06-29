@@ -18,7 +18,7 @@ jinja2>=3.0.0,<3.1.0
 # -r ../_notebooks/.actions/requirements.txt
 
 # switch sphinx theme to PyTorchKorea's
--e git+https://github.com/PyTorchKorea/lightning_sphinx_theme.git#egg=pt-lightning-sphinx-theme
+pt-lightning-sphinx-theme @ https://github.com/PyTorchKorea/lightning_sphinx_theme/archive/master.zip
 
 # PyTorch Lightning
-pytorch-lightning==1.6.1
+pytorch-lightning==1.6.4
