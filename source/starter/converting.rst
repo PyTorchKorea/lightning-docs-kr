@@ -1,18 +1,18 @@
 .. _converting:
 
 ######################################
-How to Organize PyTorch Into Lightning
+PyTorch를 Lightning으로 구성하기
 ######################################
 
-To enable your code to work with Lightning, perform the following to organize PyTorch into Lightning.
+아래와 같이 PyTorch를 Lightning(라이트닝)으로 구성할 수 있습니다.
 
 --------
 
 ******************************
-1. Keep you Computational Code
+1. 연산 코드 가져오기
 ******************************
 
-Keep your regular nn.Module architecture
+일반적인 nn.Module 구조를 가져옵니다
 
 .. testcode::
 
@@ -38,9 +38,9 @@ Keep your regular nn.Module architecture
 --------
 
 ***************************
-2. Configure Training Logic
+2. 학습 로직 구성하기
 ***************************
-In the training_step of the LightningModule configure how your training routine behaves with a batch of training data:
+LightningModule의 training_step에 학습 데이터를 묶음(batch)으로 가져와 학습하는 과정을 구성합니다:
 
 .. testcode::
 
@@ -55,14 +55,14 @@ In the training_step of the LightningModule configure how your training routine 
             loss = F.cross_entropy(y_hat, y)
             return loss
 
-.. note:: If you need to fully own the training loop for complicated legacy projects, check out :doc:`Own your loop <../model/own_your_loop>`.
+.. note:: 기존 프로젝트가 복잡해서 기존의 학습 루프를 직접 구성해야 하면 :doc:`Own your loop <../model/own_your_loop>` 를 참조하세요.
 
 ----
 
 ****************************************
-3. Move Optimizer(s) and LR Scheduler(s)
+3. 옵티마이저와 LR스케줄러 이동하기
 ****************************************
-Move your optimizers to the :meth:`~pytorch_lightning.core.lightning.LightningModule.configure_optimizers` hook.
+옵티마이저(들)를 :meth:`~pytorch_lightning.core.lightning.LightningModule.configure_optimizers` 훅(hook)으로 이동합니다.
 
 .. testcode::
 
@@ -75,9 +75,9 @@ Move your optimizers to the :meth:`~pytorch_lightning.core.lightning.LightningMo
 --------
 
 ***************************************
-4. Organize Validation Logic (optional)
+4. (선택사항) 검증 로직 구성하기
 ***************************************
-If you need a validation loop, configure how your validation routine behaves with a batch of validation data:
+검증(validation) 루프가 필요하면, 검증 데이터를 묶음(batch)으로 가져와 검증하는 과정을 구성합니다:
 
 .. testcode::
 
@@ -88,14 +88,14 @@ If you need a validation loop, configure how your validation routine behaves wit
             val_loss = F.cross_entropy(y_hat, y)
             self.log("val_loss", val_loss)
 
-.. tip:: ``trainer.validate()`` loads the best checkpoint automatically by default if checkpointing was enabled during fitting.
+.. tip:: 학습(fit) 중 체크포인트 기능이 켜진 경우 ``trainer.validate()`` 가 자동으로 최적의 체크포인트를 불러옵니다.
 
 --------
 
 ************************************
-5. Organize Testing Logic (optional)
+5. (선택사항) 테스트 로직 구성하기
 ************************************
-If you need a test loop, configure how your testing routine behaves with a batch of test data:
+테스트(test) 루프가 필요하면, 테스트 데이터를 묶음(batch)으로 가져와 테스트하는 과정을 구성합니다:
 
 .. testcode::
 
@@ -109,9 +109,9 @@ If you need a test loop, configure how your testing routine behaves with a batch
 --------
 
 ****************************************
-6. Configure Prediction Logic (optional)
+6. (선택사항) 예측 로직 구성하기
 ****************************************
-If you need a prediction loop, configure how your prediction routine behaves with a batch of test data:
+예측(prediction) 루프가 필요하면, 테스트 데이터를 묶음(batch)으로 가져와 예측하는 과정을 구성합니다:
 
 .. testcode::
 
@@ -124,14 +124,16 @@ If you need a prediction loop, configure how your prediction routine behaves wit
 --------
 
 ******************************************
-7. Remove any .cuda() or .to(device) Calls
+7. .cuda() 또는 .to(device) 호출 제거하기
 ******************************************
 
-Your :doc:`LightningModule <../common/lightning_module>` can automatically run on any hardware!
+:doc:`LightningModule <../common/lightning_module>` 은 어떠한 하드웨어에서도 자동으로 실행됩니다!
 
-If you have any explicit calls to ``.cuda()`` or ``.to(device)``, you can remove them since Lightning makes sure that the data coming from :class:`~torch.utils.data.DataLoader`
-and all the :class:`~torch.nn.Module` instances initialized inside ``LightningModule.__init__`` are moved to the respective devices automatically.
-If you still need to access the current device, you can use ``self.device`` anywhere in your ``LightningModule`` except in the ``__init__`` and ``setup`` methods.
+``LightningModule.__init__`` 내에서 초기화된 :class:`~torch.nn.Module` 인스턴스들과 :class:`~torch.utils.data.DataLoader` 에서 가져온 데이터는
+Lightning이 자동으로 해당 장치로 이동해서 실행하므로, 기존에 명시적으로 ``.cuda()`` 또는 ``.to(device)`` 을 호출하는 부분은 제거해도 됩니다.
+
+그럼에도 장치(device)에 직접 접근해야 할 필요가 있다면, ``LightningModule`` 내부에서 (``__init__`` 과 ``setup`` 메소드를 제외하고) 아무데서나
+``self.device`` 를 사용하면 됩니다.
 
 .. testcode::
 
@@ -140,8 +142,8 @@ If you still need to access the current device, you can use ``self.device`` anyw
             z = torch.randn(4, 5, device=self.device)
             ...
 
-Hint: If you are initializing a :class:`~torch.Tensor` within the ``LightningModule.__init__`` method and want it to be moved to the device automatically you should call
-:meth:`~torch.nn.Module.register_buffer` to register it as a parameter.
+Hint: ``LightningModule.__init__`` 메소드 내에서 :class:`~torch.Tensor` 를 초기화하면서 자동으로 장치(device)로 이동하려면
+:meth:`~torch.nn.Module.register_buffer` 를 호출하여 매개변수로 등록하면 됩니다.
 
 .. testcode::
 
@@ -152,46 +154,48 @@ Hint: If you are initializing a :class:`~torch.Tensor` within the ``LightningMod
 
 --------
 
-********************
-8. Use your own data
-********************
-Regular PyTorch DataLoaders work with Lightning. For more modular and scalable datasets, check out :doc:`LightningDataModule <../data/datamodule>`.
+*************************
+8. 기존 데이터 사용하기
+*************************
+일반적인 PyTorch DataLoader는 Lightning에서 동작합니다. 더 모듈화되고 확장 가능한 데이터셋들은 :doc:`LightningDataModule <../data/datamodule>` 를
+참고하세요.
 
 ----
 
 ************
-Good to know
+더 알아두기
 ************
 
-Additionally, you can run only the validation loop using :meth:`~pytorch_lightning.trainer.trainer.Trainer.validate` method.
+추가로, :meth:`~pytorch_lightning.trainer.trainer.Trainer.validate` 메소드를 사용하면 검증(validation) 루프만 실행할 수 있습니다.
 
 .. code-block:: python
 
     model = LitModel()
     trainer.validate(model)
 
-.. note:: ``model.eval()`` and ``torch.no_grad()`` are called automatically for validation.
+.. note:: ``model.eval()`` 와 ``torch.no_grad()`` 는 검증 시에 자동으로 호출됩니다.
 
 
-The test loop isn't used within :meth:`~pytorch_lightning.trainer.trainer.Trainer.fit`, therefore, you would need to explicitly call :meth:`~pytorch_lightning.trainer.trainer.Trainer.test`.
+테스트 루프(test loop)는 :meth:`~pytorch_lightning.trainer.trainer.Trainer.fit` 에서 사용되지 않으므로, 필요 시 명시적으로
+:meth:`~pytorch_lightning.trainer.trainer.Trainer.test` 을 호출해야 합니다.
 
 .. code-block:: python
 
     model = LitModel()
     trainer.test(model)
 
-.. note:: ``model.eval()`` and ``torch.no_grad()`` are called automatically for testing.
+.. note:: ``model.eval()`` 와 ``torch.no_grad()`` 는 테스트 시에 자동으로 호출됩니다.
 
-.. tip:: ``trainer.test()`` loads the best checkpoint automatically by default if checkpointing is enabled.
+.. tip:: 체크포인트 기능이 켜진 경우, ``trainer.test()`` 는 자동으로 최적의 체크포인트(best checkpoint)를 불러옵니다.
 
 
-The predict loop will not be used until you call :meth:`~pytorch_lightning.trainer.trainer.Trainer.predict`.
+예측 루프(prediction look)는 :meth:`~pytorch_lightning.trainer.trainer.Trainer.predict` 을 호출하기 전에는 사용되지 않습니다.
 
 .. code-block:: python
 
     model = LitModel()
     trainer.predict(model)
 
-.. note:: ``model.eval()`` and ``torch.no_grad()`` are called automatically for testing.
+.. note:: ``model.eval()`` 과 ``torch.no_grad()`` 는 예측 시에 자동으로 호출됩니다.
 
-.. tip:: ``trainer.predict()`` loads the best checkpoint automatically by default if checkpointing is enabled.
+.. tip:: 체크포인트 기능이 켜진 경우, ``trainer.predict()`` 는 자동으로 최적의 체크포인트를 불러옵니다.

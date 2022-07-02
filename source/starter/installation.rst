@@ -3,17 +3,17 @@
 .. _installation:
 
 ############
-Installation
+설치하기
 ############
 
 --------------
 
 *********************
-Installation with pip
+pip를 사용하여 설치
 *********************
 
-Install any supported version of PyTorch if you want from `PyTorch Installation Page <https://pytorch.org/get-started/locally/#start-locally>`_.
-Now you can install using `pip <https://pypi.org/project/pytorch-lightning/>`_ using the following command:
+`파이토치(PyTorch) 설치하기 페이지 <https://pytorch.kr/get-started/locally/#start-locally>` _ 에서 PyTorch를 설치한 뒤,
+아래 명령어로 `pip <https://pypi.org/project/pytorch-lightning/>`_ 를 사용하여 설치할 수 있습니다:
 
 .. code-block:: bash
 
@@ -22,17 +22,17 @@ Now you can install using `pip <https://pypi.org/project/pytorch-lightning/>`_ u
 --------------
 
 ***********************
-Installation with Conda
+Conda를 사용하여 설치
 ***********************
 
-If you don't have conda installed, follow the `Conda Installation Guide <https://docs.conda.io/projects/conda/en/latest/user-guide/install>`_.
-Lightning can be installed with `conda <https://anaconda.org/conda-forge/pytorch-lightning>`_ using the following command:
+만약 conda를 아직 설치하지 않았다면, `Conda 설치 가이드 <https://docs.conda.io/projects/conda/en/latest/user-guide/install>`_ 를 참고하세요.
+Lightning은 아래 명령어로 `conda <https://anaconda.org/conda-forge/pytorch-lightning>`_  를 사용하여 설치할 수 있습니다:
 
 .. code-block:: bash
 
     conda install pytorch-lightning -c conda-forge
 
-You can also use `Conda Environments <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_:
+`Conda 가상환경(Environments) <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_ 을 사용할 수도 있습니다:
 
 .. code-block:: bash
 
@@ -42,17 +42,18 @@ You can also use `Conda Environments <https://docs.conda.io/projects/conda/en/la
 --------------
 
 ************************
-Installation from Source
+소스 코드로 설치
 ************************
 
-Install nightly from the source. Note that it contains all the bug fixes and newly released features that
-are not published yet. This is the bleeding edge, so use it at your own discretion.
+소스 코드로 최신 버전(nightly)을 설치합니다. 아직 배포되지 않은 버그 수정(bug fix)과 새롭게 출시할 기능들이
+포함되어 있습니다. 미검증·불안정 최신 기능(bleeding edge)이므로, 신중하게 사용하세요.
 
 .. code-block:: bash
 
     pip install https://github.com/PyTorchLightning/pytorch-lightning/archive/master.zip
 
-Install future patch releases from the source. Note that the patch release contains only the bug fixes for the recent major release.
+향후 공개될 개선 버전(patch release)를 소스 코드로부터 설치합니다. 개선 버전은 가장 최근의 주요 버전(major release)에 대한 버그 수정만
+포함되어 있습니다.
 
 .. code-block:: bash
 
@@ -60,13 +61,13 @@ Install future patch releases from the source. Note that the patch release conta
 
 --------------
 
-******************
-Lightning Coverage
-******************
+************************************
+Lightning 커버리지(Coverage)
+************************************
 
-PyTorch Lightning is maintained and tested on different Python and PyTorch versions.
+파이토치 라이트닝(PyTorch Lightning)은 다양한 Python과 PyTorch 버전에서 유지 보수 및 테스트되고 있습니다.
 
-Check out the `CI Coverage <https://github.com/PyTorchLightning/pytorch-lightning#continuous-integration>`_ for more info.
+더 자세한 정보는 `CI Coverage <https://github.com/PyTorchLightning/pytorch-lightning#continuous-integration>`_ 를 참고하세요.
 
-It is rigorously tested across multiple GPUs, TPUs, CPUs and IPUs. GPU tests run on two NVIDIA P100. TPU tests run on Google GKE TPUv2/3.
-TPU py3.7 means we support Colab and Kaggle env. IPU tests run on MK1 IPU boxes.
+다양한 GPU와 TPU, CPU, IPU에서 엄격하게 테스트되었습니다. GPU 테스트는 2개의 NVIDIA P100에서 실행됩니다. TPU 테스트는 Google GKE TPUv2/3에서
+실행됩니다. TPU py3.7은 Colab 및 Kaggle 환경을 지원함을 뜻합니다. IPU 테스트는 MK1 IPU 장비에서 실행됩니다.
