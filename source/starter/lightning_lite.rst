@@ -1,38 +1,39 @@
 ###########################################
-LightningLite (Stepping Stone to Lightning)
+LightningLite (Lightning을 위한 디딤돌)
 ###########################################
 
 
-:class:`~pytorch_lightning.lite.LightningLite` enables pure PyTorch users to scale their existing code
-on any kind of device while retaining full control over their own loops and optimization logic.
+:class:`~pytorch_lightning.lite.LightningLite` 는 PyTorch 사용자들이 기존 반복(loop) / 최적화 로직을
+완벽하게 제어하면서 기존 코드를 모든 종류의 장치에서 사용 가능하도록 확장할 수 있도록 합니다.
 
 .. image:: https://pl-public-data.s3.amazonaws.com/docs/static/images/lite/lightning_lite.gif
-    :alt: Animation showing how to convert your PyTorch code to LightningLite.
+    :alt: PyTorch 코드를 LightningLite로 변환하는 방법을 보여주는 애니메이션.
     :width: 500
     :align: center
 
 |
 
-:class:`~pytorch_lightning.lite.LightningLite` is the right tool for you if you match one of the two following descriptions:
+아래 설명들 중 하나에 해당한다면 :class:`~pytorch_lightning.lite.LightningLite` 가 바로 적합한 도구입니다:
 
-- I want to quickly scale my existing code to multiple devices with minimal code changes.
-- I would like to convert my existing code to the Lightning API, but a full path to Lightning transition might be too complex. I am looking for a stepping stone to ensure reproducibility during the transition.
+- 기존 코드에 최소한의 변경만으로 여러 장치로 빠르게 확장하고 싶습니다.
+- 기존 코드를 Lightning API로 변환하고 싶지만, Lightning으로의 완벽한 전환 과정(full path)이 다소 복잡할 것 같습니다.
+  전환하는 동안 재현성(reproducibility)을 보장하기 위한 디딤돌(stepping stone)을 찾고 있습니다.
 
 
-.. warning:: :class:`~pytorch_lightning.lite.LightningLite` is currently a beta feature. Its API is subject to change based on your feedback.
+.. warning:: :class:`~pytorch_lightning.lite.LightningLite` 은 현재 beta 기능입니다. 사용자 피드백에 따라 API가 변경될 수 있습니다.
 
 
 ----------
 
 ****************
-Learn by example
+예제로 배우기
 ****************
 
 
-My Existing PyTorch Code
+기존 PyTorch 코드
 ========================
 
-The ``run`` function contains custom training loop used to train ``MyModel`` on ``MyDataset`` for ``num_epochs`` epochs.
+``run`` 함수는 ``MyModel`` 학습을 위해 ``MyDataset`` 을 ``num_epochs`` 에폭(epoch)만큼 반복하는 사용자 정의 학습 루프(loop)를 포함하고 있습니다.
 
 .. code-block:: python
 
@@ -72,16 +73,16 @@ The ``run`` function contains custom training loop used to train ``MyModel`` on 
 ----------
 
 
-Convert to LightningLite
-========================
+LightningLite로 변환하기
+==========================
 
-Here are five required steps to convert to :class:`~pytorch_lightning.lite.LightningLite`.
+:class:`~pytorch_lightning.lite.LightningLite` 로 변환하기 위해 필요한 다섯 단계는 다음과 같습니다.
 
-1. Subclass :class:`~pytorch_lightning.lite.LightningLite` and override its :meth:`~pytorch_lightning.lite.LightningLite.run` method.
-2. Move the body of your existing ``run`` function into :class:`~pytorch_lightning.lite.LightningLite` ``run`` method.
-3. Remove all ``.to(...)``, ``.cuda()`` etc calls since :class:`~pytorch_lightning.lite.LightningLite` will take care of it.
-4. Apply :meth:`~pytorch_lightning.lite.LightningLite.setup` over each model and optimizers pair and :meth:`~pytorch_lightning.lite.LightningLite.setup_dataloaders` on all your dataloaders and replace ``loss.backward()`` by ``self.backward(loss)``.
-5. Instantiate your :class:`~pytorch_lightning.lite.LightningLite` subclass and call its :meth:`~pytorch_lightning.lite.LightningLite.run` method.
+1. :class:`~pytorch_lightning.lite.LightningLite` 를 상속(subclass)받아 :meth:`~pytorch_lightning.lite.LightningLite.run` 메소드를 재정의합니다.
+2. 기존 ``run`` 함수의 내용을 :class:`~pytorch_lightning.lite.LightningLite` 의 ``run`` 메소드로 이동합니다.
+3. ``.to(...)``, ``.cuda()`` 등과 같은 모든 호출을 제거합니다. :class:`~pytorch_lightning.lite.LightningLite` 가 자동으로 이를 처리할 것입니다.
+4. 각 모델과 옵티마이저(optimizer) 쌍에는 :meth:`~pytorch_lightning.lite.LightningLite.setup` 을, 모든 데이터로더(dataloader)에는 :meth:`~pytorch_lightning.lite.LightningLite.setup_dataloaders` 을 적용하고, ``loss.backward()`` 를 ``self.backward(loss)`` 로 변경합니다.
+5. :class:`~pytorch_lightning.lite.LightningLite` 를 상속받은 서브클래스를 객체화(instantiate)한 뒤 :meth:`~pytorch_lightning.lite.LightningLite.run` 메소드를 호출합니다.
 
 |
 
@@ -106,48 +107,48 @@ Here are five required steps to convert to :class:`~pytorch_lightning.lite.Light
 
             model = MyModel(...)
             optimizer = torch.optim.SGD(model.parameters(), ...)
-            model, optimizer = self.setup(model, optimizer)  # Scale your model / optimizers
+            model, optimizer = self.setup(model, optimizer)  # 모델 / 옵티마이저(optimizer) 확장
 
             dataloader = DataLoader(MyDataset(...), ...)
-            dataloader = self.setup_dataloaders(dataloader)  # Scale your dataloaders
+            dataloader = self.setup_dataloaders(dataloader)  # 데이터로더(dataloader) 확장
 
             model.train()
             for epoch in range(args.num_epochs):
                 for batch in dataloader:
                     optimizer.zero_grad()
                     loss = model(batch)
-                    self.backward(loss)  # instead of loss.backward()
+                    self.backward(loss)  # loss.backward() 대체
                     optimizer.step()
 
 
     Lite(...).run(args)
 
 
-That's all. You can now train on any kind of device and scale your training. Check out `this <https://github.com/PyTorchLightning/pytorch-lightning/blob/master/pl_examples/basic_examples/mnist_examples/image_classifier_2_lite.py>`_ full MNIST training example with LightningLite.
+이게 전부입니다. 이제 모든 종류의 장치에서 학습하고 확장할 수 있습니다. LightningLite를 사용한 전체 MNIST 학습 예제는 `여기 <https://github.com/PyTorchLightning/pytorch-lightning/blob/master/pl_examples/basic_examples/mnist_examples/image_classifier_2_lite.py>`_ 에서 확인할 수 있습니다.
 
-:class:`~pytorch_lightning.lite.LightningLite` takes care of device management, so you don't have to.
-You should remove any device-specific logic within your code.
+:class:`~pytorch_lightning.lite.LightningLite` 가 장치를 관리하므로, 사용자가 관리하지 않아도 됩니다.
+코드 내에 특정 장치용 로직이 있다면 삭제해야 합니다.
 
-Here is how to train on eight GPUs with `torch.bfloat16 <https://pytorch.org/docs/1.10.0/generated/torch.Tensor.bfloat16.html>`_ precision:
+다음은 8개의 GPU에서 `torch.bfloat16 <https://pytorch.org/docs/1.10.0/generated/torch.Tensor.bfloat16.html>`_ 정밀도(precision)로 학습을 하는 방법을 보여줍니다:
 
 .. code-block:: python
 
     Lite(strategy="ddp", devices=8, accelerator="gpu", precision="bf16").run(10)
 
-Here is how to use `DeepSpeed Zero3 <https://www.deepspeed.ai/news/2021/03/07/zero3-offload.html>`_ with eight GPUs and precision 16:
+`DeepSpeed Zero3 <https://www.deepspeed.ai/news/2021/03/07/zero3-offload.html>`_ 를 사용하여 8개의 GPU와 정밀도 16으로 학습하는 방법은 다음과 같습니다:
 
 .. code-block:: python
 
     Lite(strategy="deepspeed", devices=8, accelerator="gpu", precision=16).run(10)
 
-:class:`~pytorch_lightning.lite.LightningLite` can also figure it out automatically for you!
+나아가 :class:`~pytorch_lightning.lite.LightningLite` 가 알아서 해주기도 합니다!
 
 .. code-block:: python
 
     Lite(devices="auto", accelerator="auto", precision=16).run(10)
 
-You can also easily use distributed collectives if required.
-Here is an example while running on 256 GPUs (eight GPUs times 32 nodes).
+필요한 경우 분산-집합(distributed collectives)을 사용할 수도 있습니다.
+다음은 (8개의 GPU x 32개 노드의) GPU 256개에서 실행하는 예제입니다.
 
 .. code-block:: python
 
@@ -184,94 +185,89 @@ Here is an example while running on 256 GPUs (eight GPUs times 32 nodes).
     Lite(strategy="ddp", devices=8, num_nodes=32, accelerator="gpu").run()
 
 
-If you require custom data or model device placement, you can deactivate
-:class:`~pytorch_lightning.lite.LightningLite` automatic placement by doing
-``self.setup_dataloaders(..., move_to_device=False)`` for the data and
-``self.setup(..., move_to_device=False)`` for the model.
-Furthermore, you can access the current device from ``self.device`` or
-rely on :meth:`~pytorch_lightning.lite.LightningLite.to_device`
-utility to move an object to the current device.
+사용자 지정 데이터 또는 모델에 장치 할당이 필요한 경우, 데이터에는 ``self.setup_dataloaders(..., move_to_device=False)`` 를 하고
+모델에는 ``self.setup(..., move_to_device=False)`` 를 함으로써 :class:`~pytorch_lightning.lite.LightningLite` 의 자동 배치를
+비활성화할 수 있습니다.
+뿐만 아니라, ``self.device`` 로 현재 장치에 접근하거나 :meth:`~pytorch_lightning.lite.LightningLite.to_device` 를 사용하여
+객체를 현재 장치로 이동할 수 있습니다.
 
 
-.. note:: We recommend instantiating the models within the :meth:`~pytorch_lightning.lite.LightningLite.run` method as large models would cause an out-of-memory error otherwise.
+.. note:: 큰 모델들은 out-of-memory(메모리 부족) 에러가 발생하므로 :meth:`~pytorch_lightning.lite.LightningLite.run` 에서 모델을 생성(instantiate)하는 것을 권장합니다.
 
 .. tip::
 
-    If you have hundreds or thousands of lines within your :meth:`~pytorch_lightning.lite.LightningLite.run` function
-    and you are feeling unsure about them, then that is the correct feeling.
-    In 2019, our :class:`~pytorch_lightning.core.lightning.LightningModule` was getting larger
-    and we got the same feeling, so we started to organize our code for simplicity, interoperability and standardization.
-    This is definitely a good sign that you should consider refactoring your code and / or switching to
-    :class:`~pytorch_lightning.core.lightning.LightningModule` ultimately.
+    :meth:`~pytorch_lightning.lite.LightningLite.run` 함수 내에 수백에서 수천 라인의 코드가 있고 이에 대해 확신이 서지 않는다면,
+    적절한 느낌입니다. 2019년에 :class:`~pytorch_lightning.core.lightning.LightningModule` 이 점점 커지면서 개발자들 또한 같은 느낌을 받았고,
+    이에 따라 단순성(simplicity)과 상호운용성(interoperability), 표준화(standardization)를 위해 코드를 구성하기 시작했습니다.
+    이러한 느낌은 코드 리팩토링(refactoring)과 함께 / 또는 :class:`~pytorch_lightning.core.lightning.LightningModule` 으로 완전히 전환하는 것을
+    고려해봐야 한다는 좋은 신호입니다.
 
 
 ----------
 
 
-Distributed Training Pitfalls
+분산 학습 시의 함정(pitfall)
 =============================
 
-The :class:`~pytorch_lightning.lite.LightningLite` provides you with the tools to scale your training,
-but there are several major challenges ahead of you now:
+:class:`~pytorch_lightning.lite.LightningLite` 는 학습을 확장할 수 있는 도구들을 제공하지만, 직면해야 할 몇 가지 주요한 과제들도 있습니다:
 
 
 .. list-table::
    :widths: 50 50
    :header-rows: 0
 
-   * - Processes divergence
-     - This happens when processes execute a different section of the code due to different if/else conditions, race conditions on existing files and so on, resulting in hanging.
-   * - Cross processes reduction
-     - Miscalculated metrics or gradients due to errors in their reduction.
-   * - Large sharded models
-     - Instantiation, materialization and state management of large models.
-   * - Rank 0 only actions
-     - Logging, profiling, and so on.
-   * - Checkpointing / Early stopping / Callbacks / Logging
-     - Ability to customize your training behavior easily and make it stateful.
-   * - Fault-tolerant training
-     - Ability to resume from a failure as if it never happened.
+   * - 프로세스 발산(Processes divergence)
+     - 이전 파일 또는 다른 이유에서 서로 다른 if/else 조건, 경쟁 조건(race condition)으로 프로세스가 코드의 다른 부분(section) 실행하여 멈출(hanging) 때 발생합니다.
+   * - 프로세스 간 리듀스(Cross processes reduction)
+     - 리듀스 과정(reduction)에서의 오류로 메트릭(metric) 또는 변화도(gradient)가 잘못 계산되었습니다.
+   * - 대규모의 샤딩된 모델(Large sharded models)
+     - 대규모 모델의 생성(instantiation)과 구현(materialization), 상태 관리(state management).
+   * - 순서가 0뿐인 작업(Rank 0 only actions)
+     - 로깅(logging), 프로파일링(profiling) 등.
+   * - 체크포인팅 / 조기 중단 / 콜백 / 로깅 (Checkpointing / Early stopping / Callbacks / Logging)
+     - 학습 과정을 쉽게 사용자 정의하고 상태를 관리할 수 있는 기능.
+   * - 결함-감내 학습(Fault-tolerant training)
+     - 오류 발생 시에 마치 오류가 없었던 것처럼 재개(resume)하는 기능.
 
 
-If you are facing one of those challenges, then you are already meeting the limit of :class:`~pytorch_lightning.lite.LightningLite`.
-We recommend you to convert to :doc:`Lightning <../starter/introduction>`, so you never have to worry about those.
+위와 같은 과제들 중 하나를 맞이했다면, 이제 :class:`~pytorch_lightning.lite.LightningLite` 의 한계를 마주한 것입니다.
+이러한 걱정을 할 필요가 없는 :doc:`Lightning <../starter/introduction>` 으로 변환하는 것을 추천합니다.
 
 ----------
 
-Convert to Lightning
-====================
+Lightning으로의 변환
+======================
 
-:class:`~pytorch_lightning.lite.LightningLite` is a stepping stone to transition fully to the Lightning API and benefit
-from its hundreds of features.
+:class:`~pytorch_lightning.lite.LightningLite` 은 수백가지 기능을 갖는 Lightning API로의 완전한 전환을 위한 디딤돌입니다.
 
-You can see our :class:`~pytorch_lightning.lite.LightningLite` class as a
-future :class:`~pytorch_lightning.core.lightning.LightningModule`, and slowly refactor your code into its API.
-Below, the :meth:`~pytorch_lightning.core.lightning.LightningModule.training_step`, :meth:`~pytorch_lightning.core.lightning.LightningModule.forward`,
-:meth:`~pytorch_lightning.core.lightning.LightningModule.configure_optimizers`, :meth:`~pytorch_lightning.core.lightning.LightningModule.train_dataloader` methods
-are implemented.
+:class:`~pytorch_lightning.lite.LightningLite` 클래스 자체를 :class:`~pytorch_lightning.core.lightning.LightningModule` 의 개선된 버전(future)로 볼 수도 있으므로,
+해당 API로 코드를 천천히 재구성(refactor)해보겠습니다.
+아래에는 :meth:`~pytorch_lightning.core.lightning.LightningModule.training_step` 와 :meth:`~pytorch_lightning.core.lightning.LightningModule.forward`,
+:meth:`~pytorch_lightning.core.lightning.LightningModule.configure_optimizers`, :meth:`~pytorch_lightning.core.lightning.LightningModule.train_dataloader` 메서드들이
+구현되어 있습니다.
 
 
 .. code-block:: python
 
     class Lite(LightningLite):
 
-        # 1. This would become the LightningModule `__init__` function.
+        # 1. 이 부분은 LightningModule의 `__init__` 함수가 됩니다.
         def run(self, args):
             self.args = args
 
             self.model = MyModel(...)
 
-            self.fit()  # This would be automated by the Lightning Trainer.
+            self.fit()  # 이는 Lightning Trainer에 의해 자동화됩니다.
 
-        # 2. This can be fully removed as Lightning creates its own fitting loop,
-        # and sets up the model, optimizer, dataloader, etc for you.
+        # 2. Lightning이 자체적인 학습 루프(fitting loop)를 생성하고,
+        # 모델, 옵티마이저, 데이터로더 등을 설정하므로 이 코드는 완전히 제거해도 됩니다.
         def fit(self):
-            # setup everything
+            # 필요한 것들을 설정
             optimizer = self.configure_optimizers()
             self.model, optimizer = self.setup(self.model, optimizer)
             dataloader = self.setup_dataloaders(self.train_dataloader())
 
-            # start fitting
+            # 학습(fitting) 시작
             self.model.train()
             for epoch in range(num_epochs):
                 for batch in enumerate(dataloader):
@@ -280,7 +276,7 @@ are implemented.
                     self.backward(loss)
                     optimizer.step()
 
-        # 3. This stays here as it belongs to the LightningModule.
+        # 3. 이는 LightningModule에 속하므로 그대로 둡니다.
         def forward(self, x):
             return self.model(x)
 
@@ -290,7 +286,7 @@ are implemented.
         def configure_optimizers(self):
             return torch.optim.SGD(self.model.parameters(), ...)
 
-        # 4. [Optionally] This can stay here or be extracted to the LightningDataModule to enable higher composability.
+        # 4. [선택사항] 이는 그대로 두거나, LightningDataModule이 더 높은 결합성(composability)을 갖도록 따로 분리(extract)할 수도 있습니다.
         def train_dataloader(self):
             return DataLoader(MyDataset(...), ...)
 
@@ -298,8 +294,8 @@ are implemented.
     Lite(...).run(args)
 
 
-Finally, change the :meth:`~pytorch_lightning.lite.LightningLite.run` into a
-:meth:`~pytorch_lightning.core.lightning.LightningModule.__init__` and drop the ``fit`` call from inside.
+마지막으로, :meth:`~pytorch_lightning.lite.LightningLite.run` 을 :meth:`~pytorch_lightning.core.lightning.LightningModule.__init__` 으로
+바꾸고, 내부의 ``fit`` 호출 부분을 삭제합니다.
 
 .. code-block:: python
 
@@ -332,61 +328,61 @@ Finally, change the :meth:`~pytorch_lightning.lite.LightningLite.run` into a
     trainer.fit(LightningModel(), datamodule=BoringDataModule())
 
 
-You have successfully converted to PyTorch Lightning, and can now benefit from its hundred of features!
+이제 수백가지 기능들의 이점을 누릴 수 있는 PyTorch Lightning으로의 변환을 성공적으로 완료하였습니다!
 
 ----------
 
-********************
-Lightning Lite Flags
-********************
+********************************
+Lightning Lite 매개변수(flag)
+********************************
 
-Lite is specialized in accelerated distributed training and inference. It offers you convenient ways to configure
-your device and communication strategy and to switch seamlessly from one to the other. The terminology and usage are
-identical to Lightning, which means minimum effort for you to convert when you decide to do so.
+Lite는 가속화된 분산 학습 및 추론(inference)에 특화되어 있습니다. 이는 장치 및 통신 전략을 손쉽게 구성하고,
+다른 방식으로의 원활하게 전환할 수 있는 편리한 방법을 제공합니다. 용어(terminology) 및 사용법이 Lightning과
+동일하므로, 변환을 결심했을 때 변환에 드는 노력을 최소화할 수 있습니다.
 
 
-accelerator
-===========
+accelerator (가속기 종류)
+==========================
 
-Choose one of ``"cpu"``, ``"gpu"``, ``"tpu"``, ``"auto"`` (IPU support is coming soon).
+``"cpu"``, ``"gpu"``, ``"tpu"``, ``"auto"`` 중 하나를 선택합니다 (IPU는 곧 제공 예정입니다).
 
 .. code-block:: python
 
-    # CPU accelerator
+    # CPU 가속기
     lite = Lite(accelerator="cpu")
 
-    # Running with GPU Accelerator using 2 GPUs
+    # 2개의 GPU 가속기에서 실행
     lite = Lite(devices=2, accelerator="gpu")
 
-    # Running with TPU Accelerator using 8 tpu cores
+    # 8개의 TPU 가속기에서 실행
     lite = Lite(devices=8, accelerator="tpu")
 
-    # Running with GPU Accelerator using the DistributedDataParallel strategy
+    # DistributedDataParallel(ddp) 전략으로 GPU 가속기에서 실행
     lite = Lite(devices=4, accelerator="gpu", strategy="ddp")
 
-The ``"auto"`` option recognizes the machine you are on and selects the available accelerator.
+``"auto"`` 옵션은 사용 중인 기기를 인식하고 사용 가능한 가속기를 선택합니다.
 
 .. code-block:: python
 
-    # If your machine has GPUs, it will use the GPU Accelerator
+    # 기기에 GPU가 있으면, GPU 가속기를 사용합니다.
     lite = Lite(devices=2, accelerator="auto")
 
 
-strategy
-========
+strategy (학습 전략)
+======================
 
-Choose a training strategy: ``"dp"``, ``"ddp"``, ``"ddp_spawn"``, ``"tpu_spawn"``, ``"deepspeed"``, ``"ddp_sharded"``, or ``"ddp_sharded_spawn"``.
+학습 전략을 선택합니다: ``"dp"``, ``"ddp"``, ``"ddp_spawn"``, ``"tpu_spawn"``, ``"deepspeed"``, ``"ddp_sharded"``, 또는 ``"ddp_sharded_spawn"``
 
 .. code-block:: python
 
-    # Running with the DistributedDataParallel strategy on 4 GPUs
+    # 4개의 GPU에서 DistributedDataParallel 전략 사용
     lite = Lite(strategy="ddp", accelerator="gpu", devices=4)
 
-    # Running with the DDP Spawn strategy using 4 cpu processes
+    # 4개의 CPU에서 DDP Spawn 전략 사용
     lite = Lite(strategy="ddp_spawn", accelerator="cpu", devices=4)
 
 
-Additionally, you can pass in your custom strategy by configuring additional parameters.
+또한, 몇몇 매개변수를 추가로 설정해서 사용자 지정 전략을 사용할 수 있습니다.
 
 .. code-block:: python
 
@@ -395,119 +391,118 @@ Additionally, you can pass in your custom strategy by configuring additional par
     lite = Lite(strategy=DeepSpeedStrategy(stage=2), accelerator="gpu", devices=2)
 
 
-Support for Horovod and Fully Sharded training strategies are coming soon.
+Horovoard 및 Full Sharded 학습 전략은 곧 지원될 예정입니다.
 
 
-devices
-=======
+device (장치)
+==============
 
-Configure the devices to run on. Can be of type:
+실행할 장치를 설정합니다. 아래와 같은 자료형일 수 있습니다:
 
-- int: the number of devices (e.g., GPUs) to train on
-- list of int: which device index (e.g., GPU ID) to train on (0-indexed)
-- str: a string representation of one of the above
+- int: 학습할 장치(예. GPU)의 개수
+- list of int: 학습할 장치의 인덱스(예. GPU ID, 0-indexed)
+- str: 위 중 하나의 문자열 표현
 
 .. code-block:: python
 
-    # default used by Lite, i.e., use the CPU
+    # Lite에서 사용하는 기본 값, CPU에서 실행
     lite = Lite(devices=None)
 
-    # equivalent
+    # 위와 동일
     lite = Lite(devices=0)
 
-    # int: run on two GPUs
+    # int: 2개의 GPU에서 실행
     lite = Lite(devices=2, accelerator="gpu")
 
-    # list: run on GPUs 1, 4 (by bus ordering)
+    # list: GPU 1, 4에서 실행 (버스 순서에 따름)
     lite = Lite(devices=[1, 4], accelerator="gpu")
-    lite = Lite(devices="1, 4", accelerator="gpu")  # equivalent
+    lite = Lite(devices="1, 4", accelerator="gpu")  # 위와 동일
 
-    # -1: run on all GPUs
+    # -1: 모든 GPU에서 실행
     lite = Lite(devices=-1, accelerator="gpu")
-    lite = Lite(devices="-1", accelerator="gpu")  # equivalent
+    lite = Lite(devices="-1", accelerator="gpu")  # 위와 동일
 
 
 
-gpus
-====
+gpus (사용하지 않음)
+=======================
 
-.. warning:: ``gpus=x`` has been deprecated in v1.7 and will be removed in v2.0.
-    Please use ``accelerator='gpu'`` and ``devices=x`` instead.
+.. warning:: ``gpus=x`` 는 v1.7에서 더 이상 사용하지 않으며(deprecated), v2.0에서 제거될 예정입니다.
+    대신에 ``accelerator='gpu'`` 및 ``devices=x`` 을 사용하십시오.
 
-Shorthand for setting ``devices=X`` and ``accelerator="gpu"``.
+``devices=X`` 및 ``accelerator="gpu"`` 의 약어(shorthand).
 
 .. code-block:: python
 
-    # Run on two GPUs
+    # 2개의 GPU에서 실행
     lite = Lite(accelerator="gpu", devices=2)
 
-    # Equivalent
+    # 위와 동일
     lite = Lite(devices=2, accelerator="gpu")
 
 
-tpu_cores
-=========
+tpu_cores (사용하지 않음)
+============================
 
-.. warning:: ``tpu_cores=x`` has been deprecated in v1.7 and will be removed in v2.0.
-    Please use ``accelerator='tpu'`` and ``devices=x`` instead.
+.. warning:: ``tpu_cores=x`` 는 v1.7에서 더 이상 사용하지 않으며(deprecated), v2.0에서 제거될 예정입니다.
+    대신에 ``accelerator='tpu'`` 및 ``devices=x`` 을 사용하십시오.
 
-Shorthand for ``devices=X`` and ``accelerator="tpu"``.
+``devices=X`` 및 ``accelerator="tpu"`` 의 약어.
 
 .. code-block:: python
 
-    # Run on eight TPUs
+    # 8개의 TPU에서 실행
     lite = Lite(accelerator="tpu", devices=8)
 
-    # Equivalent
+    # 위와 동일
     lite = Lite(devices=8, accelerator="tpu")
 
 
-num_nodes
-=========
+num_nodes (노드의 수)
+====================================
 
-
-Number of cluster nodes for distributed operation.
+분산 작업 시의 클러스터 노드의 수.
 
 .. code-block:: python
 
-    # Default used by Lite
+    # Lite에서 사용하는 기본값
     lite = Lite(num_nodes=1)
 
-    # Run on 8 nodes
+    # 8개의 노드에서 실행
     lite = Lite(num_nodes=8)
 
 
-Learn more about distributed multi-node training on clusters :doc:`here <../clouds/cluster>`.
+클러스터에서의 분산 다중 노드 학습에 대해서는 :doc:`이 문서 <../clouds/cluster>` 에서 자세히 알아볼 수 있습니다.
 
 
-precision
-=========
+precision (정밀도)
+=====================
 
-Lightning Lite supports double precision (64), full precision (32), or half precision (16) operation (including `bfloat16 <https://pytorch.org/docs/1.10.0/generated/torch.Tensor.bfloat16.html>`_).
-Half precision, or mixed precision, is the combined use of 32 and 16-bit floating points to reduce the memory footprint during model training.
-This can result in improved performance, achieving significant speedups on modern GPUs.
+Lightning Lite는 배정밀도(double precision; 64), 단정밀도(full precision; 32), 또는 반정밀도(half precision; 16) 연산(`bfloat16 <https://pytorch.org/docs/1.10.0/generated/torch.Tensor.bfloat16.html>`_ 포함)을 지원합니다.
+반정밀도 또는 혼합 정밀도(mixed precision)는 32비트 정밀도와 16비트 정밀도를 합쳐서 사용하여 모델 학습 시의 메모리 공간(footprint)을 줄입니다.
+그 결과 성능이 향상되어 최신 GPU에서 눈에 띄게 성능이 향상됩니다.
 
 .. code-block:: python
 
-    # Default used by the Lite
+    # Lite에서 사용하는 기본값
     lite = Lite(precision=32, devices=1)
 
-    # 16-bit (mixed) precision
+    # 16-비트 (혼합) 정밀도
     lite = Lite(precision=16, devices=1)
 
-    # 16-bit bfloat precision
+    # 16-비트 bfloat 정밀도
     lite = Lite(precision="bf16", devices=1)
 
-    # 64-bit (double) precision
+    # 64-비트 (배(double)) 정밀도
     lite = Lite(precision=64, devices=1)
 
 
-plugins
-=======
+plugins (플러그인)
+=====================
 
-:ref:`Plugins` allow you to connect arbitrary backends, precision libraries, clusters etc. For example:
-To define your own behavior, subclass the relevant class and pass it in. Here's an example linking up your own
-:class:`~pytorch_lightning.plugins.environments.ClusterEnvironment`.
+:ref:`Plugins` 을 사용하여 임의의 백엔드(backend), 정밀도 라이브러리, 클러스터 등을 연결할 수 있습니다.
+예: 임의의 동작을 정의하고 싶으면 관련 클래스를 상속받아 전달하면 됩니다. 다음은 직접 만든
+:class:`~pytorch_lightning.plugins.environments.ClusterEnvironment` 를 연결하는 예시입니다.
 
 .. code-block:: python
 
@@ -534,20 +529,20 @@ To define your own behavior, subclass the relevant class and pass it in. Here's 
 
 
 **********************
-Lightning Lite Methods
+Lightning Lite 메소드
 **********************
 
 
 run
-===
+====
 
-The run method serves two purposes:
+run 메소드는 2가지 용도로 사용합니다:
 
-1.  Override this method from the :class:`~pytorch_lightning.lite.lite.LightningLite` class and put your
-    training (or inference) code inside.
-2.  Launch the training procedure by calling the run method. Lite will take care of setting up the distributed backend.
+1.  :class:`~pytorch_lightning.lite.lite.LightningLite` 클래스에서 이 메시드를 재정의(override)하고
+    학습(또는 추론) 코드를 내부에 넣습니다.
+2.  run 메소드를 호출하여 학습 절차를 시작합니다. Lite는 분산 백엔드 설정을 처리합니다.
 
-You can optionally pass arguments to the run method. For example, the hyperparameters or a backbone for the model.
+선택적으로 run 메소드에 인자(예를 들어 모델의 하이퍼파라매터나 백엔드)를 전달할 수 있습니다.
 
 .. code-block:: python
 
@@ -556,9 +551,9 @@ You can optionally pass arguments to the run method. For example, the hyperparam
 
     class Lite(LightningLite):
 
-        # Input arguments are optional; put whatever you need
+        # 입력 인자는 선택 사항입니다; 필요 시에 넣으세요.
         def run(self, learning_rate, num_layers):
-            """Here goes your training loop"""
+            """여기에 학습 과정이 들어갑니다."""
 
 
     lite = Lite(accelerator="gpu", devices=2)
@@ -566,32 +561,30 @@ You can optionally pass arguments to the run method. For example, the hyperparam
 
 
 setup
-=====
+======
 
-Set up a model and corresponding optimizer(s). If you need to set up multiple models, call ``setup()`` on each of them.
-Moves the model and optimizer to the correct device automatically.
+모델 및 해당하는 옵티마이저(들)을 설정합니다. 여러 모델을 설정해야 하는 경우, 각각에 대해서 ``setup()`` 을 호출하십시오.
+모델과 옵티마이저는 적절한 장치로 자동으로 이동합니다.
 
 .. code-block:: python
 
     model = nn.Linear(32, 64)
     optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
-    # Set up model and optimizer for accelerated training
+    # 가속화된 학습을 위해 모델 및 옵티마이저 설정
     model, optimizer = self.setup(model, optimizer)
 
-    # If you don't want Lite to set the device
+    # Lite가 장치를 설정하는 것을 원치 않는 경우
     model, optimizer = self.setup(model, optimizer, move_to_device=False)
 
 
-The setup method also prepares the model for the selected precision choice so that operations during ``forward()`` get
-cast automatically.
+setup 메소드는 선택한 정밀도로 모델을 준비하여 ``forward()`` 중 연산들이 자동으로 변환(cast)되도록 합니다.
 
 setup_dataloaders
 =================
 
-Set up one or multiple dataloaders for accelerated operation. If you are running a distributed strategy (e.g., DDP), Lite
-replaces the sampler automatically for you. In addition, the dataloader will be configured to move the returned
-data tensors to the correct device automatically.
+가속화된 연산을 위해 하나 이상의 데이터로더를 설정합니다. 분산 전략(예. DDP)을 사용하는 경우, Lite는 자동으로 샘플러(sampler)를
+대체합니다. 또한, 데이터로더는 반환된 데이터 텐서를 적절한 장치로 자동으로 이동하도록 설정됩니다.
 
 .. code-block:: python
 
@@ -600,17 +593,17 @@ data tensors to the correct device automatically.
 
     train_data, test_data = self.setup_dataloaders(train_data, test_data)
 
-    # If you don't want Lite to move the data to the device
+    # Lite가 데이터를 자동으로 장치로 이동시키는 것을 원치 않는 경우
     train_data, test_data = self.setup_dataloaders(train_data, test_data, move_to_device=False)
 
-    # If you don't want Lite to replace the sampler in the context of distributed training
+    # Lite가 분산 학습 도중 샘플러를 대체하기를 원치 않는 경우
     train_data, test_data = self.setup_dataloaders(train_data, test_data, replace_sampler=False)
 
 
 backward
-========
+===========
 
-This replaces any occurrences of ``loss.backward()`` and makes your code accelerator and precision agnostic.
+``loss.backward()`` 을 대체하여 정밀도와 가속기 코드를 신경쓰지 않도록(agnostic) 합니다.
 
 .. code-block:: python
 
@@ -624,10 +617,9 @@ This replaces any occurrences of ``loss.backward()`` and makes your code acceler
 to_device
 =========
 
-Use :meth:`~pytorch_lightning.lite.lite.LightningLite.to_device` to move models, tensors or collections of tensors to
-the current device. By default :meth:`~pytorch_lightning.lite.lite.LightningLite.setup` and
-:meth:`~pytorch_lightning.lite.lite.LightningLite.setup_dataloaders` already move the model and data to the correct
-device, so calling this method is only necessary for manual operation when needed.
+:meth:`~pytorch_lightning.lite.lite.LightningLite.to_device` 를 사용하여 모델 또는 텐서, 텐서 컬렉션을 현재 장치로 이동합니다.
+기본적으로 :meth:`~pytorch_lightning.lite.lite.LightningLite.setup` 및 :meth:`~pytorch_lightning.lite.lite.LightningLite.setup_dataloaders` 가
+모델과 데이터를 적절한 장치로 이동했으므로, 이 메소드는 수동 작업이 필요할 때만 사용합니다.
 
 .. code-block:: python
 
@@ -638,33 +630,33 @@ device, so calling this method is only necessary for manual operation when neede
 seed_everything
 ===============
 
-Make your code reproducible by calling this method at the beginning of your run.
+run의 시작 부분에 이 메소드를 호출하여 코드를 재현 가능하도록 합니다.
 
 .. code-block:: python
 
-    # Instead of `torch.manual_seed(...)`, call:
+    # `torch.manual_seed(...)` 대신 다음을 호출:
     self.seed_everything(1234)
 
 
-This covers PyTorch, NumPy and Python random number generators. In addition, Lite takes care of properly initializing
-the seed of dataloader worker processes (can be turned off by passing ``workers=False``).
+이는 PyTorch 및 NumPy, Python 난수 생성기를 포괄합니다. 또한, Lite는 데이터로더 워커(worker) 프로세서의 시드(seed)를 적절히 초기화합니다.
+(``workers=False`` 를 전달하여 이 기능을 끌 수 있습니다.)
 
 
 autocast
 ========
 
-Let the precision backend autocast the block of code under this context manager. This is optional and already done by
-Lite for the model's forward method (once the model was :meth:`~pytorch_lightning.lite.lite.LightningLite.setup`).
-You need this only if you wish to autocast more operations outside the ones in model forward:
+정밀도 백엔드가 autocast 컨텍스트 매니저 내부의 코드 블록을 자동으로 캐스팅하도록 합니다. 이는 선택사항이며, Lite가
+(모델이 :meth:`~pytorch_lightning.lite.lite.LightningLite.setup` 될 때) 이미 모델의 forward 메소드에 적용하였습니다
+모델 forward 메소드 외부의 추가 연산들에 대해 자동으로 캐스팅하려는 경우에만 사용합니다:
 
 .. code-block:: python
 
     model, optimizer = self.setup(model, optimizer)
 
-    # Lite handles precision automatically for the model
+    # Lite가 모델의 정밀도를 자동으로 처리합니다
     output = model(inputs)
 
-    with self.autocast():  # optional
+    with self.autocast():  # 선택 사항
         loss = loss_function(output, target)
 
     self.backward(loss)
@@ -674,54 +666,53 @@ You need this only if you wish to autocast more operations outside the ones in m
 print
 =====
 
-Print to the console via the built-in print function, but only on the main process.
-This avoids excessive printing and logs when running on multiple devices/nodes.
+내장 print 함수를 통해 콘솔에 출력하지만, 메인 프로세스(main process)에서만 가능합니다.
+이는 여러 장치/노드에서 실행할 때 과도한 출력 및 로그를 방지합니다.
 
 
 .. code-block:: python
 
-    # Print only on the main process
+    # 메인 프로세스에서만 출력
     self.print(f"{epoch}/{num_epochs}| Train Epoch Loss: {loss}")
 
 
 save
 ====
 
-Save contents to a checkpoint. Replaces all occurrences of ``torch.save(...)`` in your code. Lite will take care of
-handling the saving part correctly, no matter if you are running a single device, multi-devices or multi-nodes.
+체크포인트(checkpoint)에 내용을 저장합니다. 기존의 ``torch.save(...)`` 를 모두 대체합니다. Lite는 단일 장치나 다중 장치,
+다중 노드 중 어디에서 실행하던지 잘 저장될 수 있도록 처리합니다.
 
 .. code-block:: python
 
-    # Instead of `torch.save(...)`, call:
+    # `torch.save(...)` 대신 다음을 호출:
     self.save(model.state_dict(), "path/to/checkpoint.ckpt")
 
 
 load
 ====
 
-Load checkpoint contents from a file. Replaces all occurrences of ``torch.load(...)`` in your code. Lite will take care of
-handling the loading part correctly, no matter if you are running a single device, multi-device, or multi-node.
+파일로부터 체크포인트 내용을 불러옵니다. 기존의 ``torch.load(...)`` 를 모두 대체합니다. Lite는 단일 장치나 다중 장치,
+다중 노드 중 어디에서 실행하던지 잘 불러올 수 있도록 처리합니다.
 
 .. code-block:: python
 
-    # Instead of `torch.load(...)`, call:
+    # `torch.load(...)` 대신 다음을 호출:
     self.load("path/to/checkpoint.ckpt")
 
 
 barrier
 =======
 
-Call this if you want all processes to wait and synchronize. Once all processes have entered this call,
-execution continues. Useful for example when you want to download data on one process and make all others wait until
-the data is written to disk.
+모든 프로세스들이 대기해였다가 동기화되길 원할 때 사용합니다. 모든 프로세스가 barrier 호출에 진입하면, 그 때 계속 실행합니다.
+예를 들어 한 프로세스가 데이터를 다운로드해서 디스크에 쓰는 동안 다른 모든 프로세스들이 대기하도록 할 때 유용합니다.
 
 .. code-block:: python
 
-    # Download data only on one process
+    # 한 프로세스에서만 데이터 다운로드
     if self.global_rank == 0:
         download_data("http://...")
 
-    # Wait until all processes meet up here
+    # 모든 프로세스가 여기서 만날 때까지 대기
     self.barrier()
 
-    # All processes are allowed to read the data now
+    # 이제 모든 프로세스가 데이터를 읽을 수 있음
