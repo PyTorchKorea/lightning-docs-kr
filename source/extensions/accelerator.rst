@@ -1,11 +1,11 @@
-.. _accelerator:
+﻿.. _accelerator:
 
 ###########
 Accelerator
 ###########
 
-The Accelerator connects a Lightning Trainer to arbitrary hardware (CPUs, GPUs, TPUs, IPUs, ...).
-Currently there are accelerators for:
+Accelerator(가속기)는 Lightning Trainer를 임의 하드웨어 (CPUs, GPUs, TPUs, IPUs 등...)에 연결합니다.
+현재 다음과 같은 Accelerator가 있습니다:
 
 - CPU
 - :doc:`GPU <../accelerators/gpu>`
@@ -13,47 +13,45 @@ Currently there are accelerators for:
 - :doc:`IPU <../accelerators/ipu>`
 - :doc:`HPU <../accelerators/hpu>`
 
-The Accelerator is part of the Strategy which manages communication across multiple devices (distributed communication).
-Whenever the Trainer, the loops or any other component in Lightning needs to talk to hardware, it calls into the Strategy and the Strategy calls into the Accelerator.
+Accelerator는 여러 장치 (분산 통신) 간의 통신을 관리하는 Strategy의 일부입니다.
+Trainer, loops 또는 Lightning의 다른 구성 요소가 하드웨어와 통신해야할 때마다 Strategy를 호출하고 Strategy는 Accelerator를 호출합니다.
 
 .. image:: https://pl-public-data.s3.amazonaws.com/docs/static/images/strategies/overview.jpeg
     :alt: Illustration of the Strategy as a composition of the Accelerator and several plugins
 
 We expose Accelerators and Strategies mainly for expert users who want to extend Lightning to work with new
 hardware and distributed training or clusters.
+주로 새로운 하드웨어 및 분산 학습 또는 클러스터와 함께 작동하도록 Lightning을 확장하려는 전문가 사용자를 위해 Accelerators 및 Strategies를 제공합니다.
 
 
 ----------
 
-Create a Custom Accelerator
+사용자 지정 Accelerator 만들기
 ---------------------------
 
-Here is how you create a new Accelerator.
-Let's pretend we want to integrate the fictional XPU accelerator and we have access to its hardware through a library
-``xpulib``.
-
+다음은 새로운 Accelerator를 만드는 방법입니다.
+가상의 XPU 가속기를 통합하고 ``xpulib`` 라이브러리를 통해 하드웨어에 액세스할 수 있다고 가정해 보겠습니다.
 .. code-block:: python
 
     import xpulib
 
 
     class XPUAccelerator(Accelerator):
-        """Experimental support for XPU, optimized for large-scale machine learning."""
+        """대규모 기계 학습에 최적화된 XPU에 대한 실험 지원."""
 
         @staticmethod
         def parse_devices(devices: Any) -> Any:
-            # Put parsing logic here how devices can be passed into the Trainer
-            # via the `devices` argument
+            # 장치가 `devices` 인수를 통해 Trainer에게 전달 될 수있는 방법 작성
             return devices
 
         @staticmethod
         def get_parallel_devices(devices: Any) -> Any:
-            # Here, convert the device indices to actual device objects
+            # 장치 인덱스를 실제 장치 객체로 변환
             return [torch.device("xpu", idx) for idx in devices]
 
         @staticmethod
         def auto_device_count() -> int:
-            # Return a value for auto-device selection when `Trainer(devices="auto")`
+            # `Trainer(devices="auto")`일 때 auto-device 선택값 반환
             return xpulib.available_devices()
 
         @staticmethod
@@ -62,10 +60,11 @@ Let's pretend we want to integrate the fictional XPU accelerator and we have acc
 
         def get_device_stats(self, device: Union[str, torch.device]) -> Dict[str, Any]:
             # Return optional device statistics for loggers
+            # loggers에 대한 선택적인 장치 통계 반환
             return {}
 
 
-Finally, add the XPUAccelerator to the Trainer:
+마지막으로 Trainer에 XPUAccelerator를 추가합니다:
 
 .. code-block:: python
 
@@ -75,15 +74,15 @@ Finally, add the XPUAccelerator to the Trainer:
     trainer = Trainer(accelerator=accelerator, devices=2)
 
 
-:doc:`Learn more about Strategies <../extensions/strategy>` and how they interact with the Accelerator.
+:doc:Strategies 및 Strategies가 Accelerator와 어떻게 상호 작용하는지에 대해 `더 알아보기. <../extensions/strategy>`
 
 
 ----------
 
-Registering Accelerators
+Accelerators 등록
 ------------------------
 
-If you wish to switch to a custom accelerator from the CLI without code changes, you can implement the :meth:`~pytorch_lightning.accelerators.accelerator.Accelerator.register_accelerators` class method to register your new accelerator under a shorthand name like so:
+코드 변경 없이 CLI에서 사용자 지정 가속기로 전환하려면 다음과 같이 새 가속기를 약식 이름으로 등록하는 :meth:`~pytorch_lightning.accelerators.accelerator.Accelerator.register_accelerators` 클래스 메서드를 구현하면 됩니다:
 
 .. code-block:: python
 
@@ -98,13 +97,13 @@ If you wish to switch to a custom accelerator from the CLI without code changes,
                 description=f"XPU Accelerator - optimized for large-scale machine learning.",
             )
 
-Now, this is possible:
+이제 다음과 같이 사용이 가능합니다:
 
 .. code-block:: python
 
     trainer = Trainer(accelerator="xpu")
 
-Or if you are using the Lightning CLI, for example:
+또는 Lightning CLI를 사용하는 경우 예를 들어 다음과 같습니다:
 
 .. code-block:: bash
 
