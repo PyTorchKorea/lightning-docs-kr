@@ -1,16 +1,16 @@
 :orphan:
 
 #####################
-Train a model (basic)
+모델 학습하기 (기본)
 #####################
-**Audience**: Users who need to train a model without coding their own training loops.
+**예상 독자**: 자체 학습 루프(loop)를 작성하지 않고 모델을 학습할 필요가 있는 사용자.
 
 ----
 
 ***********
-Add imports
+불러오기
 ***********
-Add the relevant imports at the top of the file
+파일의 가장 윗 부분에 관련 호출(import)을 추가합니다
 
 .. code:: python
 
@@ -25,9 +25,9 @@ Add the relevant imports at the top of the file
 
 ----
 
-*****************************
-Define the PyTorch nn.Modules
-*****************************
+***************************************
+파이토치(PyTorch) nn.Modules 정의하기
+***************************************
 
 .. code:: python
 
@@ -48,13 +48,13 @@ Define the PyTorch nn.Modules
 
 ----
 
-************************
-Define a LightningModule
-************************
-The LightningModule is the full **recipe** that defines how your nn.Modules interact.
+**************************
+LightningModule 정의하기
+**************************
+LightningModule은 nn.Module이 어떻게 동작할지 정의할 수 있는 완벽한 **비결(recipe)** 입니다.
 
-- The **training_step** defines how the *nn.Modules* interact together.
-- In the **configure_optimizers** define the optimizer(s) for your models.
+- **training_step** 은 *nn.Modules* 과 어떻게 상호 작용할 것인지 정의합니다.
+- **configure_optimizers** 에서는 모델에서 사용할 옵티마이저(들)을 정의합니다.
 
 .. code:: python
 
@@ -65,7 +65,7 @@ The LightningModule is the full **recipe** that defines how your nn.Modules inte
             self.decoder = decoder
 
         def training_step(self, batch, batch_idx):
-            # training_step defines the train loop.
+            # training_step은 학습 루프를 정의합니다.
             x, y = batch
             x = x.view(x.size(0), -1)
             z = self.encoder(x)
@@ -80,9 +80,9 @@ The LightningModule is the full **recipe** that defines how your nn.Modules inte
 ----
 
 ***************************
-Define the training dataset
+학습 데이터셋 정의하기
 ***************************
-Define a PyTorch :class:`~torch.utils.data.DataLoader` which contains your training dataset.
+학습 데이터셋을 포함하고 있는 PyTorch :class:`~torch.utils.data.DataLoader` 를 정의합니다.
 
 .. code-block:: python
 
@@ -92,9 +92,9 @@ Define a PyTorch :class:`~torch.utils.data.DataLoader` which contains your train
 ----
 
 ***************
-Train the model
+모델 학습하기
 ***************
-To train the model use the Lightning :doc:`Trainer <../common/trainer>` which handles all the engineering and abstracts away all the complexity needed for scale.
+모델 학습을 위해서는 Lightning :doc:`Trainer <../common/trainer>` 를 사용합니다. 이는 규모 확장 시에 필요한 모든 복잡성을 추상화하고 각종 엔지니어링을 담당합니다.
 
 .. code-block:: python
 
@@ -108,9 +108,9 @@ To train the model use the Lightning :doc:`Trainer <../common/trainer>` which ha
 ----
 
 ***************************
-Eliminate the training loop
+학습 루프 제거하기
 ***************************
-Under the hood, the Lightning Trainer runs the following training loop on your behalf
+사용자를 대신하여 Lightning Trainer가 내부적으로 아래와 같은 학습 루프를 실행합니다.
 
 .. code:: python
 
@@ -124,6 +124,6 @@ Under the hood, the Lightning Trainer runs the following training loop on your b
         optimizer.step()
         optimizer.zero_grad()
 
-The power of Lightning comes when the training loop gets complicated as you add validation/test splits, schedulers, distributed training and all the latest SOTA techniques.
+Lightning의 진가는 검증/테스트 분할(validation/test split), 스케줄러, 분산 학습 및 최신 SOTA 테크닉들을 추가하면서 학습 과정이 복잡해질 때 나타납니다.
 
-With Lightning, you can add mix all these techniques together without needing to rewrite a new loop every time.
+Lightning을 사용하면 매번 새로운 학습 루프를 작성할 필요없이 이러한 테크닉들을 모두 사용할 수 있습니다.
