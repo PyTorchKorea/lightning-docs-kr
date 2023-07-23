@@ -1,0 +1,5 @@
+-r ../docs.txt
+
+# lai-sphinx-theme is not installable
+# refer: https://github.com/Lightning-AI/lightning/issues/16158
+# lai-sphinx-theme

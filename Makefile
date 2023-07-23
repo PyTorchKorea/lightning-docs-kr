@@ -1,25 +1,38 @@
-# Minimal makefile for Sphinx documentation
-#
+.PHONY: test clean docs
 
-# You can set these variables from the command line.
-SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
-SOURCEDIR     = source
-BUILDDIR      = build
+# to imitate SLURM set only single node
+export SLURM_LOCALID=0
+# assume you have installed need packages
+export SPHINX_MOCK_REQUIREMENTS=1
+# install only Lightning Trainer packages
+export PACKAGE_NAME=pytorch
 
-# Put it first so that "make" without argument is like "make help".
-help:
-	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-
-.PHONY: help Makefile
-
-# Catch-all target: route all unknown targets to Sphinx using the new
-# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-%: Makefile
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) -v
+clean:
+	# clean all temp runs
+	rm -rf $(shell find . -name "mlruns")
+	rm -rf $(shell find . -name "lightning_log")
+	rm -rf $(shell find . -name "lightning_logs")
+	rm -rf _ckpt_*
+	rm -rf .mypy_cache
+	rm -rf .pytest_cache
+	rm -rf ./docs/build
+	rm -rf ./docs/source-fabric/api/generated
+	rm -rf ./docs/source-pytorch/notebooks
+	rm -rf ./docs/source-pytorch/generated
+	rm -rf ./docs/source-pytorch/*/generated
+	rm -rf ./docs/source-pytorch/api
+	rm -rf ./docs/source-app/generated
+	rm -rf ./docs/source-app/*/generated
+	rm -rf build
+	rm -rf dist
+	rm -rf *.egg-info
 
 docs:
-	make html
-	echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+	git submodule update --init --recursive # get Notebook submodule
+	pip install -qq lightning # install (stable) Lightning from PyPI instead of src
+	pip install -qq -r requirements/app/base.txt
+	pip install -qq -r requirements/pytorch/docs.txt
+	cd docs/source-pytorch && $(MAKE) html --jobs $(nproc) && cd ../../
 
-.PHONY: all docs clean
+update:
+	git submodule update --init --recursive --remote

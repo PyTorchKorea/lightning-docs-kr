@@ -1,0 +1,4 @@
+[submodule "_notebooks"]
+	path = _notebooks
+	url = https://github.com/PyTorchKorea/lightning-tutorials-kr.git
+	branch = publication
