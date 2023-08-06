@@ -29,9 +29,7 @@ clean:
 
 docs:
 	git submodule update --init --recursive # get Notebook submodule
-	pip install -qq lightning # install (stable) Lightning from PyPI instead of src
-	pip install -qq -r requirements/app/base.txt
-	pip install -qq -r requirements/pytorch/docs.txt
+	pip install -r requirements.txt
 	cd docs/source-pytorch && $(MAKE) html --jobs $(nproc) && cd ../../
 
 update:

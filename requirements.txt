@@ -1,5 +1,5 @@
 # instead of install from source, use the pre-built wheel
-lightning
+lightning==2.0.5
 
 # the default package dependencies
 -r ./requirements/app/base.txt

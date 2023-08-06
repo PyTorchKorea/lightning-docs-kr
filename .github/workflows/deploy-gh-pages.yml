@@ -9,80 +9,54 @@ defaults:
   run:
     shell: bash
 
-env:
-  FREEZE_REQUIREMENTS: "1"
-  TORCH_URL: "https://download.pytorch.org/whl/cpu/torch_stable.html"
-  PYPI_CACHE_DIR: "_pip-wheels"
-
 jobs:
   make-html:
     runs-on: ubuntu-latest
-    container:
-      image: pytorchlightning/pytorch_lightning:docs
-    strategy:
-      fail-fast: false
-      matrix:
-        pkg-name: ["app", "fabric", "pytorch"]
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           submodules: true
 
-      - name: pip wheels cache
-        uses: actions/cache/restore@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          path: ${{ env.PYPI_CACHE_DIR }}
-          key: pypi_wheels
+          python-version: '3.10'
+          cache: 'pip'
 
-      - name: Install package & dependencies
+      - name: Upgrade pip
         run: |
-          mkdir -p $PYPI_CACHE_DIR  # in case cache was not hit
-          ls -lh $PYPI_CACHE_DIR
-          mkdir -p pypi_pkgs  # in case template is not pulled
-          pip --version
-          pip install -U -r requirements.txt \
-            -f pypi_pkgs/ -f $PYPI_CACHE_DIR -f ${TORCH_URL}
-          pip install -U -r requirements/${{ matrix.pkg-name }}/docs.txt \
-            -f pypi_pkgs/ -f $PYPI_CACHE_DIR -f ${TORCH_URL}
-          pip list
-        shell: bash
+          # install pip=>20.1 to use "pip cache dir"
+          python3 -m pip install --upgrade pip
 
-      - name: Make Documentation
-        working-directory: ./docs/source-${{ matrix.pkg-name }}
-        run: make html --debug --jobs $(nproc) SPHINXOPTS="-W --keep-going"
+      - name: Get pip cache dir
+        id: pip-cache
+        run: echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
 
-      - name: Keep artifact
-        id: keep-artifact
-        run: python -c "print('DAYS=' + str(7 if '${{ github.event_name }}'.startswith('pull_request') else 0))" >> $GITHUB_OUTPUT
-
-      - name: Upload built docs
-        uses: actions/upload-artifact@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
         with:
-          name: docs-${{ matrix.pkg-name }}-${{ github.sha }}
-          path: docs/build/html/
-          retention-days: ${{ steps.keep-artifact.outputs.DAYS }}
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-      - name: Dump handy wheels
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      - name: Make Sphinx documentation for PyTorchLightning
+        run: |
+          # git config --global --add safe.directory '*'    # to allow sphinx to write to any directory
+          ls -alF docs/
+          make docs
         continue-on-error: true
-        uses: ./.github/actions/pip-wheels
-        with:
-          wheel-dir: ${{ env.PYPI_CACHE_DIR }}
-          torch-url: ${{ env.TORCH_URL }}
-          cache-key: "pypi_wheels"
 
-  deploy-docs:
-    needs: [make-html]
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        pkg-name: ["app", "fabric", "pytorch"]
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: docs-${{ matrix.pkg-name }}-${{ github.sha }}
-          path: docs/build/html/
+      - name: Debug message
+        run: |
+          ls -alF /tmp
+          cat /tmp/*.log
+          ls -alF docs/build/html
+          pip freeze
+
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -94,3 +68,4 @@ jobs:
           user_name: "GitHub Action"
           user_email: "reserve.dev@gmail.com"
           commit_message: "Rebuild w/ ${{ github.event.head_commit.message }}"
+          allow_empty_commit: true
