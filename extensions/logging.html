@@ -1,0 +1,1036 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ko" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ko" > <!--<![endif]-->
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5SCNQBF5');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Logging &mdash; PyTorch Lightning &amp; PyTorch Korea User Group 2.0.5 문서</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://lightning.ai/docs/pytorch/stable//extensions/logging.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/main.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+  <!-- Google Analytics -->
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82W25RV60Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82W25RV60Q');
+    </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="../_static/js/react/react.jsx" type="text/babel"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://lightning.ai/docs/pytorch/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://lightning.ai/pages/blog/">Blog</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/pytorch/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/fabric/stable/">
+                  <span class="dropdown-title">Lightning Fabric</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li> -->
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://www.pytorchlightning.ai/community">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning.ai/docs/pytorch/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning.ai/forums/" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          <!-- 
+          <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/past_versions.html">Previous Versions</a>
+          </li>
+          
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning">GitHub</a>
+          </li> -->
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning AI</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.kr/">파이토치 한국 사용자 모임</a>
+          </li>
+
+          <li>
+            <a href="https://discuss.pytorch.kr/">파이토치 한국어 커뮤니티</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  2.0.5
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../starter/introduction.html">Lightning in 15 minutes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starter/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../upgrade/migration_guide.html">Guide how to upgrade to the 2.0 version</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Level Up</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../levels/core_skills.html">Basic skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/intermediate.html">Intermediate skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/advanced.html">Advanced skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/expert.html">Expert skills</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../common/lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Optional API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">accelerators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#callbacks">callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#cli">cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#core">core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#loggers">loggers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#profiler">profiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#trainer">trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#strategies">strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#tuner">tuner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#utilities">utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary/index.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/index.html">How-to Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>Logging</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/extensions/logging.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <section id="logging">
+<span id="id1"></span><h1>Logging<a class="headerlink" href="#logging" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<section id="supported-loggers">
+<h2>Supported Loggers<a class="headerlink" href="#supported-loggers" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>The following are loggers we support:</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lightning.pytorch.loggers.CometLogger.html#lightning.pytorch.loggers.CometLogger" title="lightning.pytorch.loggers.CometLogger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CometLogger</span></code></a></p></td>
+<td><p>Track your parameters, metrics, source code and more using <a class="reference external" href="https://www.comet.com/?utm_source=lightning.pytorch&amp;utm_medium=referral">Comet</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lightning.pytorch.loggers.CSVLogger.html#lightning.pytorch.loggers.CSVLogger" title="lightning.pytorch.loggers.CSVLogger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CSVLogger</span></code></a></p></td>
+<td><p>Log to local file system in yaml and CSV format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lightning.pytorch.loggers.MLFlowLogger.html#lightning.pytorch.loggers.MLFlowLogger" title="lightning.pytorch.loggers.MLFlowLogger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MLFlowLogger</span></code></a></p></td>
+<td><p>Log using <a class="reference external" href="https://mlflow.org">MLflow</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lightning.pytorch.loggers.NeptuneLogger.html#lightning.pytorch.loggers.NeptuneLogger" title="lightning.pytorch.loggers.NeptuneLogger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NeptuneLogger</span></code></a></p></td>
+<td><p>Log using <a class="reference external" href="https://neptune.ai">Neptune</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lightning.pytorch.loggers.TensorBoardLogger.html#lightning.pytorch.loggers.TensorBoardLogger" title="lightning.pytorch.loggers.TensorBoardLogger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TensorBoardLogger</span></code></a></p></td>
+<td><p>Log to local file system in <a class="reference external" href="https://www.tensorflow.org/tensorboard">TensorBoard</a> format.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lightning.pytorch.loggers.WandbLogger.html#lightning.pytorch.loggers.WandbLogger" title="lightning.pytorch.loggers.WandbLogger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WandbLogger</span></code></a></p></td>
+<td><p>Log using <a class="reference external" href="https://docs.wandb.ai/integrations/lightning">Weights and Biases</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The above loggers will normally plot an additional chart (<strong>global_step VS epoch</strong>). Depending on the loggers you use, there might be some additional charts too.</p>
+<p>By default, Lightning uses <code class="docutils literal notranslate"><span class="pre">TensorBoard</span></code> logger under the hood, and stores the logs to a directory (by default in <code class="docutils literal notranslate"><span class="pre">lightning_logs/</span></code>).</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightning.pytorch</span> <span class="kn">import</span> <span class="n">Trainer</span>
+
+<span class="c1"># Automatically logs to a directory (by default ``lightning_logs/``)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To see your logs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tensorboard<span class="w"> </span>--logdir<span class="o">=</span>lightning_logs/
+</pre></div>
+</div>
+<p>To visualize tensorboard in a jupyter notebook environment, run the following command in a jupyter cell:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%reload_ext<span class="w"> </span>tensorboard
+%tensorboard<span class="w"> </span>--logdir<span class="o">=</span>lightning_logs/
+</pre></div>
+</div>
+<p>You can also pass a custom Logger to the <a class="reference internal" href="../api/lightning.pytorch.trainer.trainer.Trainer.html#lightning.pytorch.trainer.trainer.Trainer" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></a>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightning.pytorch</span> <span class="kn">import</span> <span class="n">loggers</span> <span class="k">as</span> <span class="n">pl_loggers</span>
+
+<span class="n">tb_logger</span> <span class="o">=</span> <span class="n">pl_loggers</span><span class="o">.</span><span class="n">TensorBoardLogger</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;logs/&quot;</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="n">tb_logger</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Choose from any of the others such as MLflow, Comet, Neptune, WandB, etc.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">comet_logger</span> <span class="o">=</span> <span class="n">pl_loggers</span><span class="o">.</span><span class="n">CometLogger</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;logs/&quot;</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="n">comet_logger</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To use multiple loggers, simply pass in a <code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">tuple</span></code> of loggers.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">tb_logger</span> <span class="o">=</span> <span class="n">pl_loggers</span><span class="o">.</span><span class="n">TensorBoardLogger</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;logs/&quot;</span><span class="p">)</span>
+<span class="n">comet_logger</span> <span class="o">=</span> <span class="n">pl_loggers</span><span class="o">.</span><span class="n">CometLogger</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;logs/&quot;</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="p">[</span><span class="n">tb_logger</span><span class="p">,</span> <span class="n">comet_logger</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>By default, Lightning logs every 50 steps. Use Trainer flags to <a class="reference internal" href="#logging-frequency"><span class="std std-ref">Control Logging Frequency</span></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>By default, all loggers log to <code class="docutils literal notranslate"><span class="pre">os.getcwd()</span></code>. You can change the logging path using
+<code class="docutils literal notranslate"><span class="pre">Trainer(default_root_dir=&quot;/your/path/to/save/checkpoints&quot;)</span></code> without instantiating a logger.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="logging-from-a-lightningmodule">
+<h2>Logging from a LightningModule<a class="headerlink" href="#logging-from-a-lightningmodule" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>Lightning offers automatic log functionalities for logging scalars, or manual logging for anything else.</p>
+<section id="automatic-logging">
+<h3>Automatic Logging<a class="headerlink" href="#automatic-logging" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p>Use the <code class="xref py py-meth docutils literal notranslate"><span class="pre">log()</span></code> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">log_dict()</span></code>
+methods to log from anywhere in a <a class="reference internal" href="../common/lightning_module.html"><span class="doc">LightningModule</span></a> and <a class="reference internal" href="callbacks.html"><span class="doc">callbacks</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;my_metric&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+
+<span class="c1"># or a dict to log all metrics at once with individual plots</span>
+<span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log_dict</span><span class="p">({</span><span class="s2">&quot;acc&quot;</span><span class="p">:</span> <span class="n">acc</span><span class="p">,</span> <span class="s2">&quot;recall&quot;</span><span class="p">:</span> <span class="n">recall</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>Everything explained below applies to both <code class="xref py py-meth docutils literal notranslate"><span class="pre">log()</span></code> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">log_dict()</span></code> methods.</p>
+</div>
+<p>Depending on where the <code class="xref py py-meth docutils literal notranslate"><span class="pre">log()</span></code> method is called, Lightning auto-determines
+the correct logging mode for you. Of course you can override the default behavior by manually setting the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">log()</span></code> parameters.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;my_loss&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">on_step</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">on_epoch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">log()</span></code> method has a few options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">on_step</span></code>: Logs the metric at the current step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">on_epoch</span></code>: Automatically accumulates and logs at the end of the epoch.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prog_bar</span></code>: Logs to the progress bar (Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logger</span></code>: Logs to the logger like <code class="docutils literal notranslate"><span class="pre">Tensorboard</span></code>, or any other custom logger passed to the <a class="reference internal" href="../api/lightning.pytorch.trainer.trainer.Trainer.html#lightning.pytorch.trainer.trainer.Trainer" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></a> (Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reduce_fx</span></code>: Reduction function over step values for end of epoch. Uses <code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.mean()</span></code> by default and is not applied when a <a class="reference external" href="https://torchmetrics.readthedocs.io/en/stable/pages/implement.html#torchmetrics.Metric" title="(PyTorch-Metrics v1.0.1에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torchmetrics.Metric</span></code></a> is logged.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable_graph</span></code>: If True, will not auto detach the graph.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sync_dist</span></code>: If True, reduces the metric across devices. Use with care as this may lead to a significant communication overhead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sync_dist_group</span></code>: The DDP group to sync across.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_dataloader_idx</span></code>: If True, appends the index of the current dataloader to the name (when using multiple dataloaders). If False, user needs to give unique names for each dataloader to not mix the values.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_size</span></code>: Current batch size used for accumulating logs logged with <code class="docutils literal notranslate"><span class="pre">on_epoch=True</span></code>. This will be directly inferred from the loaded batch, but for some data structures you might need to explicitly provide it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rank_zero_only</span></code>: Whether the value will be logged only on rank 0. This will prevent synchronization which would produce a deadlock as not all processes would perform this log call.</p></li>
+</ul>
+<table class="colwidths-given docutils align-default" id="id3">
+<caption><span class="caption-text">Default behavior of logging in Callback or LightningModule</span><a class="headerlink" href="#id3" title="이 표에 대한 퍼머링크">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Hook</p></th>
+<th class="head"><p>on_step</p></th>
+<th class="head"><p>on_epoch</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>on_train_start, on_train_epoch_start, on_train_epoch_end</p></td>
+<td><p>False</p></td>
+<td><p>True</p></td>
+</tr>
+<tr class="row-odd"><td><p>on_before_backward, on_after_backward, on_before_optimizer_step, on_before_zero_grad</p></td>
+<td><p>True</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-even"><td><p>on_train_batch_start, on_train_batch_end, training_step</p></td>
+<td><p>True</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>on_validation_start, on_validation_epoch_start, on_validation_epoch_end</p></td>
+<td><p>False</p></td>
+<td><p>True</p></td>
+</tr>
+<tr class="row-even"><td><p>on_validation_batch_start, on_validation_batch_end, validation_step</p></td>
+<td><p>False</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>While logging tensor metrics with <code class="docutils literal notranslate"><span class="pre">on_epoch=True</span></code> inside step-level hooks and using mean-reduction (default) to accumulate the metrics across the current epoch, Lightning tries to extract the
+batch size from the current batch. If multiple possible batch sizes are found, a warning is logged and if it fails to extract the batch size from the current batch, which is possible if
+the batch is a custom structure/collection, then an error is raised. To avoid this, you can specify the <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> inside the <code class="docutils literal notranslate"><span class="pre">self.log(...</span> <span class="pre">batch_size=batch_size)</span></code> call.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="c1"># extracts the batch size from `batch`</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;train_loss&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">on_epoch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="c1"># uses `batch_size=10`</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;val_loss&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<ul class="simple">
+<li><p>The above config for <code class="docutils literal notranslate"><span class="pre">validation</span></code> applies for <code class="docutils literal notranslate"><span class="pre">test</span></code> hooks as well.</p></li>
+<li><p>Setting <code class="docutils literal notranslate"><span class="pre">on_epoch=True</span></code> will cache all your logged values during the full training epoch and perform a
+reduction in <code class="docutils literal notranslate"><span class="pre">on_train_epoch_end</span></code>. We recommend using <a class="reference external" href="https://torchmetrics.readthedocs.io/">TorchMetrics</a>, when working with custom reduction.</p></li>
+<li><p>Setting both <code class="docutils literal notranslate"><span class="pre">on_step=True</span></code> and <code class="docutils literal notranslate"><span class="pre">on_epoch=True</span></code> will create two keys per metric you log with
+suffix <code class="docutils literal notranslate"><span class="pre">_step</span></code> and <code class="docutils literal notranslate"><span class="pre">_epoch</span></code> respectively. You can refer to these keys e.g. in the <cite>monitor</cite>
+argument of <a class="reference internal" href="../api/lightning.pytorch.callbacks.ModelCheckpoint.html#lightning.pytorch.callbacks.ModelCheckpoint" title="lightning.pytorch.callbacks.model_checkpoint.ModelCheckpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelCheckpoint</span></code></a> or in the graphs plotted to the logger of your choice.</p></li>
+</ul>
+</div>
+<p>If your work requires to log in an unsupported method, please open an issue with a clear description of why it is blocking you.</p>
+</section>
+<section id="manual-logging-non-scalar-artifacts">
+<h3>Manual Logging Non-Scalar Artifacts<a class="headerlink" href="#manual-logging-non-scalar-artifacts" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p>If you want to log anything that is not a scalar, like histograms, text, images, etc., you may need to use the logger object directly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="c1"># the logger you used (in this case tensorboard)</span>
+    <span class="n">tensorboard</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">experiment</span>
+    <span class="n">tensorboard</span><span class="o">.</span><span class="n">add_image</span><span class="p">()</span>
+    <span class="n">tensorboard</span><span class="o">.</span><span class="n">add_histogram</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">tensorboard</span><span class="o">.</span><span class="n">add_figure</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="make-a-custom-logger">
+<h2>Make a Custom Logger<a class="headerlink" href="#make-a-custom-logger" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>You can implement your own logger by writing a class that inherits from <a class="reference internal" href="../api/lightning.pytorch.loggers.logger.html#lightning.pytorch.loggers.logger.Logger" title="lightning.pytorch.loggers.logger.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a>.
+Use the <code class="xref py py-func docutils literal notranslate"><span class="pre">rank_zero_experiment()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">rank_zero_only()</span></code> decorators to make sure that only the first process in DDP training creates the experiment and logs the data respectively.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightning.pytorch.loggers.logger</span> <span class="kn">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">rank_zero_experiment</span>
+<span class="kn">from</span> <span class="nn">lightning.pytorch.utilities</span> <span class="kn">import</span> <span class="n">rank_zero_only</span>
+
+
+<span class="k">class</span> <span class="nc">MyLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;MyLogger&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Return the experiment version, int or str.</span>
+        <span class="k">return</span> <span class="s2">&quot;0.1&quot;</span>
+
+    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">log_hyperparams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="c1"># params is an argparse.Namespace</span>
+        <span class="c1"># your code to record hyperparameters goes here</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">log_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+        <span class="c1"># metrics is a dictionary of metric names and values</span>
+        <span class="c1"># your code to record metrics goes here</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Optional. Any code necessary to save logger data goes here</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@rank_zero_only</span>
+    <span class="k">def</span> <span class="nf">finalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="c1"># Optional. Any code that needs to be run after training</span>
+        <span class="c1"># finishes goes here</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>If you write a logger that may be useful to others, please send
+a pull request to add it to Lightning!</p>
+<hr class="docutils" />
+</section>
+<section id="control-logging-frequency">
+<span id="logging-frequency"></span><h2>Control Logging Frequency<a class="headerlink" href="#control-logging-frequency" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<section id="id2">
+<h3>Logging frequency<a class="headerlink" href="#id2" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p>It may slow down training to log on every single batch. By default, Lightning logs every 50 rows, or 50 training steps.
+To change this behaviour, set the <code class="docutils literal notranslate"><span class="pre">log_every_n_steps</span></code> <a class="reference internal" href="../api/lightning.pytorch.trainer.trainer.Trainer.html#lightning.pytorch.trainer.trainer.Trainer" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></a> flag.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">log_every_n_steps</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="log-writing-frequency">
+<h3>Log Writing Frequency<a class="headerlink" href="#log-writing-frequency" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p>Individual logger implementations determine their flushing frequency. For example, on the
+<a class="reference internal" href="../api/lightning.pytorch.loggers.csv_logs.html#lightning.pytorch.loggers.csv_logs.CSVLogger" title="lightning.pytorch.loggers.csv_logs.CSVLogger"><code class="xref py py-class docutils literal notranslate"><span class="pre">CSVLogger</span></code></a> you can set the flag <code class="docutils literal notranslate"><span class="pre">flush_logs_every_n_steps</span></code>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="progress-bar">
+<h2>Progress Bar<a class="headerlink" href="#progress-bar" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>You can add any metric to the progress bar using <code class="xref py py-meth docutils literal notranslate"><span class="pre">log()</span></code>
+method, setting <code class="docutils literal notranslate"><span class="pre">prog_bar=True</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;my_loss&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You could learn more about progress bars supported by Lightning <a class="reference internal" href="../common/progress_bar.html"><span class="doc">here</span></a>.</p>
+<section id="modifying-the-progress-bar">
+<h3>Modifying the Progress Bar<a class="headerlink" href="#modifying-the-progress-bar" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p>The progress bar by default already includes the training loss and version number of the experiment
+if you are using a logger. These defaults can be customized by overriding the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">get_metrics()</span></code> hook in your logger.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightning.pytorch.callbacks.progress</span> <span class="kn">import</span> <span class="n">TQDMProgressBar</span>
+
+
+<span class="k">class</span> <span class="nc">CustomProgressBar</span><span class="p">(</span><span class="n">TQDMProgressBar</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># don&#39;t show the version number</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">()</span>
+        <span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;v_num&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">items</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="configure-console-logging">
+<h2>Configure Console Logging<a class="headerlink" href="#configure-console-logging" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>Lightning logs useful information about the training process and user warnings to the console.
+You can retrieve the Lightning console logger and change it to your liking. For example, adjust the logging level
+or redirect output for certain modules to log files:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># configure logging at the root level of Lightning</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;lightning.pytorch&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+
+<span class="c1"># configure logging on module level, redirect to file</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;lightning.pytorch.core&quot;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="s2">&quot;core.log&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Read more about custom Python logging <a class="reference external" href="https://docs.python.org/3/library/logging.html">here</a>.</p>
+</section>
+<hr class="docutils" />
+<section id="logging-hyperparameters">
+<h2>Logging Hyperparameters<a class="headerlink" href="#logging-hyperparameters" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>When training a model, it is useful to know what hyperparams went into that model.
+When Lightning creates a checkpoint, it stores a key <code class="docutils literal notranslate"><span class="pre">&quot;hyper_parameters&quot;</span></code> with the hyperparams.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lightning_checkpoint</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="k">lambda</span> <span class="n">storage</span><span class="p">,</span> <span class="n">loc</span><span class="p">:</span> <span class="n">storage</span><span class="p">)</span>
+<span class="n">hyperparams</span> <span class="o">=</span> <span class="n">lightning_checkpoint</span><span class="p">[</span><span class="s2">&quot;hyper_parameters&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Some loggers also allow logging the hyperparams used in the experiment. For instance,
+when using the <code class="docutils literal notranslate"><span class="pre">TensorBoardLogger</span></code>, all hyperparams will show
+in the hparams tab at <a class="reference external" href="https://pytorch.org/docs/stable/tensorboard.html#torch.utils.tensorboard.writer.SummaryWriter.add_hparams" title="(PyTorch v2.0에서)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.utils.tensorboard.writer.SummaryWriter.add_hparams()</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>If you want to track a metric in the tensorboard hparams tab, log scalars to the key <code class="docutils literal notranslate"><span class="pre">hp_metric</span></code>. If tracking multiple metrics, initialize <code class="docutils literal notranslate"><span class="pre">TensorBoardLogger</span></code> with <code class="docutils literal notranslate"><span class="pre">default_hp_metric=False</span></code> and call <code class="docutils literal notranslate"><span class="pre">log_hyperparams</span></code> only once with your metric keys and initial values. Subsequent updates can simply be logged to the metric keys. Refer to the examples below for setting up proper hyperparams metrics tracking within the <a class="reference internal" href="../common/lightning_module.html"><span class="doc">LightningModule</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using default_hp_metric</span>
+<span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;hp_metric&quot;</span><span class="p">,</span> <span class="n">some_scalar</span><span class="p">)</span>
+
+
+<span class="c1"># Using custom or multiple metrics (default_hp_metric=False)</span>
+<span class="k">def</span> <span class="nf">on_train_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log_hyperparams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;hp/metric_1&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;hp/metric_2&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+
+
+<span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;hp/metric_1&quot;</span><span class="p">,</span> <span class="n">some_scalar_1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;hp/metric_2&quot;</span><span class="p">,</span> <span class="n">some_scalar_2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the example, using <code class="docutils literal notranslate"><span class="pre">&quot;hp/&quot;</span></code> as a prefix allows for the metrics to be grouped under “hp” in the tensorboard scalar tab where you can collapse them.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="managing-remote-filesystems">
+<h2>Managing Remote Filesystems<a class="headerlink" href="#managing-remote-filesystems" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>Lightning supports saving logs to a variety of filesystems, including local filesystems and several cloud storage providers.</p>
+<p>Check out the <a class="reference internal" href="../common/remote_fs.html"><span class="doc">Remote Filesystems</span></a> doc for more info.</p>
+</section>
+</section>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Copyright (c) 2018-2023, Lightning AI et al...
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Logging</a><ul>
+<li><a class="reference internal" href="#supported-loggers">Supported Loggers</a></li>
+<li><a class="reference internal" href="#logging-from-a-lightningmodule">Logging from a LightningModule</a><ul>
+<li><a class="reference internal" href="#automatic-logging">Automatic Logging</a></li>
+<li><a class="reference internal" href="#manual-logging-non-scalar-artifacts">Manual Logging Non-Scalar Artifacts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#make-a-custom-logger">Make a Custom Logger</a></li>
+<li><a class="reference internal" href="#control-logging-frequency">Control Logging Frequency</a><ul>
+<li><a class="reference internal" href="#id2">Logging frequency</a></li>
+<li><a class="reference internal" href="#log-writing-frequency">Log Writing Frequency</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#progress-bar">Progress Bar</a><ul>
+<li><a class="reference internal" href="#modifying-the-progress-bar">Modifying the Progress Bar</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configure-console-logging">Configure Console Logging</a></li>
+<li><a class="reference internal" href="#logging-hyperparameters">Logging Hyperparameters</a></li>
+<li><a class="reference internal" href="#managing-remote-filesystems">Managing Remote Filesystems</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/clipboard.min.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../_static/togglebutton.js"></script>
+         <script src="../_static/translations.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script script type="text/javascript">
+  var collapsedSections = ['Best practices', 'Optional Extensions', 'Tutorials', 'API References', 'Bolts', 'Examples', 'Partner Domain Frameworks', 'Community'];
+</script>
+
+
+
+  <!-- Begin Footer -->
+
+  <!-- <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources"> -->
+    <!-- <div class="container"> -->
+      <!-- <div class="row"> -->
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://lightning.ai/docs/pytorch/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning.ai/docs/pytorch/latest/">PyTorch</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://lightning.ai/pages/blog/">Blog</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning/blob/master/.github/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning.ai/docs/pytorch/latest/#community-examples">Resources</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/">Docs</a></li>
+            <li><a href="https://www.pytorchlightning.ai/community" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/LightningAI" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://lightning.ai/docs/pytorch/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://lightning.ai/pages/blog/">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Lightning Fabric</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Fabric</a>
+            </li>
+          </ul> -->
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="https://www.pytorchlightning.ai/community">Community</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/forums/">Forums</a>
+            </li>
+          </ul>-->
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning.ai</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.kr/">파이토치 한국 사용자 모임</a>
+          </li>
+
+          <li>
+            <a href="https://discuss.pytorch.kr/">파이토치 한국어 커뮤니티</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SCNQBF5"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+ </body>
+</html>

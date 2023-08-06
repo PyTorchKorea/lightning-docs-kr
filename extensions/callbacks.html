@@ -1,0 +1,1585 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ko" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ko" > <!--<![endif]-->
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5SCNQBF5');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Callback &mdash; PyTorch Lightning &amp; PyTorch Korea User Group 2.0.5 문서</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://lightning.ai/docs/pytorch/stable//extensions/callbacks.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/main.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="next" title="Checkpointing" href="../common/checkpointing.html" />
+    <link rel="prev" title="Accelerator" href="accelerator.html" />
+  <!-- Google Analytics -->
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82W25RV60Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82W25RV60Q');
+    </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="../_static/js/react/react.jsx" type="text/babel"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://lightning.ai/docs/pytorch/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://lightning.ai/pages/blog/">Blog</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/pytorch/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/fabric/stable/">
+                  <span class="dropdown-title">Lightning Fabric</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li> -->
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://www.pytorchlightning.ai/community">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning.ai/docs/pytorch/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning.ai/forums/" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          <!-- 
+          <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/past_versions.html">Previous Versions</a>
+          </li>
+          
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning">GitHub</a>
+          </li> -->
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning AI</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.kr/">파이토치 한국 사용자 모임</a>
+          </li>
+
+          <li>
+            <a href="https://discuss.pytorch.kr/">파이토치 한국어 커뮤니티</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  2.0.5
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../starter/introduction.html">Lightning in 15 minutes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starter/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../upgrade/migration_guide.html">Guide how to upgrade to the 2.0 version</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Level Up</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../levels/core_skills.html">Basic skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/intermediate.html">Intermediate skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/advanced.html">Advanced skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/expert.html">Expert skills</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../common/lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Optional API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">accelerators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#callbacks">callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#cli">cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#core">core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#loggers">loggers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#profiler">profiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#trainer">trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#strategies">strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#tuner">tuner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#utilities">utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary/index.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/index.html">How-to Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="../glossary/index.html">Glossary</a> &gt;</li>
+        
+      <li>Callback</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/extensions/callbacks.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <section id="callback">
+<span id="callbacks"></span><h1>Callback<a class="headerlink" href="#callback" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<p>Callbacks allow you to add arbitrary self-contained programs to your training.
+At specific points during the flow of execution (hooks), the Callback interface allows you to design programs that encapsulate a full set of functionality.
+It de-couples functionality that does not need to be in the <a class="reference internal" href="../common/lightning_module.html"><span class="doc">lightning module</span></a> and can be shared across projects.</p>
+<p>Lightning has a callback system to execute them when needed. Callbacks should capture NON-ESSENTIAL
+logic that is NOT required for your <a class="reference internal" href="../common/lightning_module.html"><span class="doc">lightning module</span></a> to run.</p>
+<p>A complete list of Callback hooks can be found in <a class="reference internal" href="../api/lightning.pytorch.callbacks.Callback.html#lightning.pytorch.callbacks.Callback" title="lightning.pytorch.callbacks.callback.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a>.</p>
+<p>An overall Lightning system should have:</p>
+<ol class="arabic simple">
+<li><p>Trainer for all engineering</p></li>
+<li><p>LightningModule for all research code.</p></li>
+<li><p>Callbacks for non-essential code.</p></li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightning.pytorch.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
+
+
+<span class="k">class</span> <span class="nc">MyPrintingCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_train_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training is starting&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training is ending&quot;</span><span class="p">)</span>
+
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">MyPrintingCallback</span><span class="p">()])</span>
+</pre></div>
+</div>
+<p>We successfully extended functionality without polluting our super clean
+<a class="reference internal" href="../common/lightning_module.html"><span class="doc">lightning module</span></a> research code.</p>
+<p>You can do pretty much anything with callbacks.</p>
+<hr class="docutils" />
+<section id="built-in-callbacks">
+<h2>Built-in Callbacks<a class="headerlink" href="#built-in-callbacks" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>Lightning has a few built-in callbacks.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>For a richer collection of callbacks, check out our
+<a class="reference external" href="https://lightning-bolts.readthedocs.io/en/stable/index.html">bolts library</a>.</p>
+</div>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.BackboneFinetuning.html#lightning.pytorch.callbacks.BackboneFinetuning" title="lightning.pytorch.callbacks.BackboneFinetuning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BackboneFinetuning</span></code></a></p></td>
+<td><p>Finetune a backbone model based on a learning rate user-defined scheduling.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.BaseFinetuning.html#lightning.pytorch.callbacks.BaseFinetuning" title="lightning.pytorch.callbacks.BaseFinetuning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseFinetuning</span></code></a></p></td>
+<td><p>This class implements the base logic for writing your own Finetuning Callback.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.BasePredictionWriter.html#lightning.pytorch.callbacks.BasePredictionWriter" title="lightning.pytorch.callbacks.BasePredictionWriter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BasePredictionWriter</span></code></a></p></td>
+<td><p>Base class to implement how the predictions should be stored.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.BatchSizeFinder.html#lightning.pytorch.callbacks.BatchSizeFinder" title="lightning.pytorch.callbacks.BatchSizeFinder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchSizeFinder</span></code></a></p></td>
+<td><p>The <code class="docutils literal notranslate"><span class="pre">BatchSizeFinder</span></code> callback tries to find the largest batch size for a given model that does not give an out of memory (OOM) error.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.Callback.html#lightning.pytorch.callbacks.Callback" title="lightning.pytorch.callbacks.Callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Callback</span></code></a></p></td>
+<td><p>Abstract base class used to build new callbacks.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.DeviceStatsMonitor.html#lightning.pytorch.callbacks.DeviceStatsMonitor" title="lightning.pytorch.callbacks.DeviceStatsMonitor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceStatsMonitor</span></code></a></p></td>
+<td><p>Automatically monitors and logs device stats during training, validation and testing stage.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.EarlyStopping.html#lightning.pytorch.callbacks.EarlyStopping" title="lightning.pytorch.callbacks.EarlyStopping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a></p></td>
+<td><p>Monitor a metric and stop training when it stops improving.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.GradientAccumulationScheduler.html#lightning.pytorch.callbacks.GradientAccumulationScheduler" title="lightning.pytorch.callbacks.GradientAccumulationScheduler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GradientAccumulationScheduler</span></code></a></p></td>
+<td><p>Change gradient accumulation factor according to scheduling.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.LambdaCallback.html#lightning.pytorch.callbacks.LambdaCallback" title="lightning.pytorch.callbacks.LambdaCallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LambdaCallback</span></code></a></p></td>
+<td><p>Create a simple callback on the fly using lambda functions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.LearningRateFinder.html#lightning.pytorch.callbacks.LearningRateFinder" title="lightning.pytorch.callbacks.LearningRateFinder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LearningRateFinder</span></code></a></p></td>
+<td><p>The <code class="docutils literal notranslate"><span class="pre">LearningRateFinder</span></code> callback enables the user to do a range test of good initial learning rates, to reduce the amount of guesswork in picking a good starting learning rate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.LearningRateMonitor.html#lightning.pytorch.callbacks.LearningRateMonitor" title="lightning.pytorch.callbacks.LearningRateMonitor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LearningRateMonitor</span></code></a></p></td>
+<td><p>Automatically monitor and logs learning rate for learning rate schedulers during training.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.ModelCheckpoint.html#lightning.pytorch.callbacks.ModelCheckpoint" title="lightning.pytorch.callbacks.ModelCheckpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ModelCheckpoint</span></code></a></p></td>
+<td><p>Save the model periodically by monitoring a quantity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.ModelPruning.html#lightning.pytorch.callbacks.ModelPruning" title="lightning.pytorch.callbacks.ModelPruning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ModelPruning</span></code></a></p></td>
+<td><p>Model pruning Callback, using PyTorch's prune utilities.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.ModelSummary.html#lightning.pytorch.callbacks.ModelSummary" title="lightning.pytorch.callbacks.ModelSummary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ModelSummary</span></code></a></p></td>
+<td><p>Generates a summary of all layers in a <a class="reference internal" href="../api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.ProgressBar.html#lightning.pytorch.callbacks.ProgressBar" title="lightning.pytorch.callbacks.ProgressBar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProgressBar</span></code></a></p></td>
+<td><p>The base class for progress bars in Lightning.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.RichModelSummary.html#lightning.pytorch.callbacks.RichModelSummary" title="lightning.pytorch.callbacks.RichModelSummary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RichModelSummary</span></code></a></p></td>
+<td><p>Generates a summary of all layers in a <a class="reference internal" href="../api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a> with <a class="reference external" href="https://github.com/Textualize/rich">rich text formatting</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.RichProgressBar.html#lightning.pytorch.callbacks.RichProgressBar" title="lightning.pytorch.callbacks.RichProgressBar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RichProgressBar</span></code></a></p></td>
+<td><p><p>Create a progress bar with <a class="reference external" href="https://github.com/Textualize/rich">rich text formatting</a>.</p>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.StochasticWeightAveraging.html#lightning.pytorch.callbacks.StochasticWeightAveraging" title="lightning.pytorch.callbacks.StochasticWeightAveraging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StochasticWeightAveraging</span></code></a></p></td>
+<td><p>Implements the Stochastic Weight Averaging (SWA) Callback to average a model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.Timer.html#lightning.pytorch.callbacks.Timer" title="lightning.pytorch.callbacks.Timer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timer</span></code></a></p></td>
+<td><p>The Timer callback tracks the time spent in the training, validation, and test loops and interrupts the Trainer if the given time limit for the training loop is reached.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lightning.pytorch.callbacks.TQDMProgressBar.html#lightning.pytorch.callbacks.TQDMProgressBar" title="lightning.pytorch.callbacks.TQDMProgressBar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TQDMProgressBar</span></code></a></p></td>
+<td><p>This is the default progress bar used by Lightning.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="save-callback-state">
+<h2>Save Callback state<a class="headerlink" href="#save-callback-state" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>Some callbacks require internal state in order to function properly. You can optionally
+choose to persist your callback’s state as part of model checkpoint files using
+<a class="reference internal" href="../api/lightning.pytorch.callbacks.Callback.html#lightning.pytorch.callbacks.Callback.state_dict" title="lightning.pytorch.callbacks.Callback.state_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">state_dict()</span></code></a> and <a class="reference internal" href="../api/lightning.pytorch.callbacks.Callback.html#lightning.pytorch.callbacks.Callback.load_state_dict" title="lightning.pytorch.callbacks.Callback.load_state_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load_state_dict()</span></code></a>.
+Note that the returned state must be able to be pickled.</p>
+<p>When your callback is meant to be used only as a singleton callback then implementing the above two hooks is enough
+to persist state effectively. However, if passing multiple instances of the callback to the Trainer is supported, then
+the callback must define a <a class="reference internal" href="../api/lightning.pytorch.callbacks.Callback.html#lightning.pytorch.callbacks.Callback.state_key" title="lightning.pytorch.callbacks.Callback.state_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">state_key</span></code></a> property in order for Lightning
+to be able to distinguish the different states when loading the callback state. This concept is best illustrated by
+the following example.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Counter</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">what</span><span class="o">=</span><span class="s2">&quot;epochs&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">what</span> <span class="o">=</span> <span class="n">what</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;batches&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">state_key</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="c1"># note: we do not include `verbose` here on purpose</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Counter[what=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">what</span><span class="si">}</span><span class="s2">]&quot;</span>
+
+    <span class="k">def</span> <span class="nf">on_train_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">what</span> <span class="o">==</span> <span class="s2">&quot;epochs&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">on_train_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">what</span> <span class="o">==</span> <span class="s2">&quot;batches&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;batches&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+
+<span class="c1"># two callbacks of the same type are being used</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">Counter</span><span class="p">(</span><span class="n">what</span><span class="o">=</span><span class="s2">&quot;epochs&quot;</span><span class="p">),</span> <span class="n">Counter</span><span class="p">(</span><span class="n">what</span><span class="o">=</span><span class="s2">&quot;batches&quot;</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>A Lightning checkpoint from this Trainer with the two stateful callbacks will include the following information:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;state_dict&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+    <span class="s2">&quot;callbacks&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;Counter{&#39;what&#39;: &#39;batches&#39;}&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;batches&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span> <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="s2">&quot;Counter{&#39;what&#39;: &#39;epochs&#39;}&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;batches&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+        <span class="o">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The implementation of a <a class="reference internal" href="../api/lightning.pytorch.callbacks.Callback.html#lightning.pytorch.callbacks.Callback.state_key" title="lightning.pytorch.callbacks.Callback.state_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">state_key</span></code></a> is essential here. If it were missing,
+Lightning would not be able to disambiguate the state for these two callbacks, and <a class="reference internal" href="../api/lightning.pytorch.callbacks.Callback.html#lightning.pytorch.callbacks.Callback.state_key" title="lightning.pytorch.callbacks.Callback.state_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">state_key</span></code></a>
+by default only defines the class name as the key, e.g., here <code class="docutils literal notranslate"><span class="pre">Counter</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>The following are best practices when using/designing callbacks.</p>
+<ol class="arabic simple">
+<li><p>Callbacks should be isolated in their functionality.</p></li>
+<li><p>Your callback should not rely on the behavior of other callbacks in order to work properly.</p></li>
+<li><p>Do not manually call methods from the callback.</p></li>
+<li><p>Directly calling methods (eg. <cite>on_validation_end</cite>) is strongly discouraged.</p></li>
+<li><p>Whenever possible, your callbacks should not depend on the order in which they are executed.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="entry-points">
+<h2>Entry Points<a class="headerlink" href="#entry-points" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>Lightning supports registering Trainer callbacks directly through
+<a class="reference external" href="https://setuptools.pypa.io/en/latest/userguide/entry_point.html">Entry Points</a>. Entry points allow an arbitrary
+package to include callbacks that the Lightning Trainer can automatically use, without you having to add them
+to the Trainer manually. This is useful in production environments where it is common to provide specialized monitoring
+and logging callbacks globally for every application.</p>
+<p>Here is a callback factory function that returns two special callbacks:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">factories.py</span><a class="headerlink" href="#id3" title="이 코드에 대한 퍼머링크">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_custom_callbacks_factory</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">MyCallback1</span><span class="p">(),</span> <span class="n">MyCallback2</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+<p>If we make this <cite>factories.py</cite> file into an installable package, we can define an <strong>entry point</strong> for this factory function.
+Here is a minimal example of the <cite>setup.py</cite> file for the package <cite>my-package</cite>:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">setup.py</span><a class="headerlink" href="#id4" title="이 코드에 대한 퍼머링크">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-package&quot;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+    <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lightning&quot;</span><span class="p">],</span>
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;lightning.pytorch.callbacks_factory&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="c1"># The format here must be [any name]=[module path]:[function name]</span>
+            <span class="s2">&quot;monitor_callbacks=factories:my_custom_callbacks_factory&quot;</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The group name for the entry points is <code class="docutils literal notranslate"><span class="pre">lightning.pytorch.callbacks_factory</span></code> and it contains a list of strings that
+specify where to find the function within the package.</p>
+<p>Now, if you <cite>pip install -e .</cite> this package, it will register the <code class="docutils literal notranslate"><span class="pre">my_custom_callbacks_factory</span></code> function and Lightning
+will automatically call it to collect the callbacks whenever you run the Trainer!</p>
+<p>To unregister the factory, simply uninstall the package with <cite>pip uninstall “my-package”</cite>.</p>
+<hr class="docutils" />
+</section>
+<section id="callback-api">
+<span id="callback-hooks"></span><h2>Callback API<a class="headerlink" href="#callback-api" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>Here is the full API of methods available in the Callback base class.</p>
+<p>The <a class="reference internal" href="../api/lightning.pytorch.callbacks.Callback.html#lightning.pytorch.callbacks.Callback" title="lightning.pytorch.callbacks.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a> class is the base for all the callbacks in Lightning just like the <a class="reference internal" href="../api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a> is the base for all models.
+It defines a public interface that each callback implementation must follow, the key ones are:</p>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<section id="state-key">
+<h4>state_key<a class="headerlink" href="#state-key" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">state_key</span></span></dt>
+<dd><p>Identifier for the state of the callback.</p>
+<p>Used to store and retrieve a callback’s state from the checkpoint dictionary by
+<code class="docutils literal notranslate"><span class="pre">checkpoint[&quot;callbacks&quot;][state_key]</span></code>. Implementations of a callback need to provide a unique state key if 1)
+the callback has state and 2) it is desired to maintain the state of multiple instances of that callback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="hooks">
+<h3>Hooks<a class="headerlink" href="#hooks" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<section id="setup">
+<h4>setup<a class="headerlink" href="#setup" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.setup"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when fit, validate, test, predict, or tune begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="teardown">
+<h4>teardown<a class="headerlink" href="#teardown" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">teardown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.teardown"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when fit, validate, test, predict, or tune ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-fit-start">
+<h4>on_fit_start<a class="headerlink" href="#on-fit-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_fit_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_fit_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when fit begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-fit-end">
+<h4>on_fit_end<a class="headerlink" href="#on-fit-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_fit_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_fit_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when fit ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-sanity-check-start">
+<h4>on_sanity_check_start<a class="headerlink" href="#on-sanity-check-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_sanity_check_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_sanity_check_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the validation sanity check starts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-sanity-check-end">
+<h4>on_sanity_check_end<a class="headerlink" href="#on-sanity-check-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_sanity_check_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_sanity_check_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the validation sanity check ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-train-batch-start">
+<h4>on_train_batch_start<a class="headerlink" href="#on-train-batch-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_train_batch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_train_batch_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the train batch begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-train-batch-end">
+<h4>on_train_batch_end<a class="headerlink" href="#on-train-batch-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_train_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_train_batch_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the train batch ends.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>The value <code class="docutils literal notranslate"><span class="pre">outputs[&quot;loss&quot;]</span></code> here will be the normalized value w.r.t <code class="docutils literal notranslate"><span class="pre">accumulate_grad_batches</span></code> of the
+loss returned from <code class="docutils literal notranslate"><span class="pre">training_step</span></code>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-train-epoch-start">
+<h4>on_train_epoch_start<a class="headerlink" href="#on-train-epoch-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_train_epoch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_train_epoch_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the train epoch begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-train-epoch-end">
+<h4>on_train_epoch_end<a class="headerlink" href="#on-train-epoch-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_train_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_train_epoch_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the train epoch ends.</p>
+<p>To access all batch outputs at the end of the epoch, you can cache step outputs as an attribute of the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">pytorch_lightning.LightningModule</span></code> and access them in this hook:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyLightningModule</span><span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">training_step_outputs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="o">...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">training_step_outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loss</span>
+
+
+<span class="k">class</span> <span class="nc">MyCallback</span><span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_train_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">):</span>
+        <span class="c1"># do something with all training_step outputs, for example:</span>
+        <span class="n">epoch_mean</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">training_step_outputs</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">pl_module</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;training_epoch_mean&quot;</span><span class="p">,</span> <span class="n">epoch_mean</span><span class="p">)</span>
+        <span class="c1"># free up the memory</span>
+        <span class="n">pl_module</span><span class="o">.</span><span class="n">training_step_outputs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-validation-epoch-start">
+<h4>on_validation_epoch_start<a class="headerlink" href="#on-validation-epoch-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_validation_epoch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_validation_epoch_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the val epoch begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-validation-epoch-end">
+<h4>on_validation_epoch_end<a class="headerlink" href="#on-validation-epoch-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_validation_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_validation_epoch_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the val epoch ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-test-epoch-start">
+<h4>on_test_epoch_start<a class="headerlink" href="#on-test-epoch-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_test_epoch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_test_epoch_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the test epoch begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-test-epoch-end">
+<h4>on_test_epoch_end<a class="headerlink" href="#on-test-epoch-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_test_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_test_epoch_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the test epoch ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-predict-epoch-start">
+<h4>on_predict_epoch_start<a class="headerlink" href="#on-predict-epoch-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_predict_epoch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_predict_epoch_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the predict epoch begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-predict-epoch-end">
+<h4>on_predict_epoch_end<a class="headerlink" href="#on-predict-epoch-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_predict_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_predict_epoch_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the predict epoch ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-validation-batch-start">
+<h4>on_validation_batch_start<a class="headerlink" href="#on-validation-batch-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_validation_batch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_validation_batch_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the validation batch begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-validation-batch-end">
+<h4>on_validation_batch_end<a class="headerlink" href="#on-validation-batch-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_validation_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_validation_batch_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the validation batch ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-test-batch-start">
+<h4>on_test_batch_start<a class="headerlink" href="#on-test-batch-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_test_batch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_test_batch_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the test batch begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-test-batch-end">
+<h4>on_test_batch_end<a class="headerlink" href="#on-test-batch-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_test_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_test_batch_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the test batch ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-predict-batch-start">
+<h4>on_predict_batch_start<a class="headerlink" href="#on-predict-batch-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_predict_batch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_predict_batch_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the predict batch begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-predict-batch-end">
+<h4>on_predict_batch_end<a class="headerlink" href="#on-predict-batch-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_predict_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_predict_batch_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the predict batch ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-train-start">
+<h4>on_train_start<a class="headerlink" href="#on-train-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_train_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_train_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the train begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-train-end">
+<h4>on_train_end<a class="headerlink" href="#on-train-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_train_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the train ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-validation-start">
+<h4>on_validation_start<a class="headerlink" href="#on-validation-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_validation_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the validation loop begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-validation-end">
+<h4>on_validation_end<a class="headerlink" href="#on-validation-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_validation_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_validation_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the validation loop ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-test-start">
+<h4>on_test_start<a class="headerlink" href="#on-test-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_test_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_test_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the test begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-test-end">
+<h4>on_test_end<a class="headerlink" href="#on-test-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_test_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_test_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the test ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-predict-start">
+<h4>on_predict_start<a class="headerlink" href="#on-predict-start" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_predict_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_predict_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when the predict begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-predict-end">
+<h4>on_predict_end<a class="headerlink" href="#on-predict-end" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_predict_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_predict_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when predict ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-exception">
+<h4>on_exception<a class="headerlink" href="#on-exception" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_exception"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when any trainer execution is interrupted by an exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="state-dict">
+<h4>state_dict<a class="headerlink" href="#state-dict" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">state_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.state_dict"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when saving a checkpoint, implement to generate callback’s <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+<dt class="field-even">반환</dt>
+<dd class="field-even"><p>A dictionary containing callback state.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-save-checkpoint">
+<h4>on_save_checkpoint<a class="headerlink" href="#on-save-checkpoint" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_save_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_save_checkpoint"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when saving a checkpoint to give you a chance to store anything else you might want to save.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.callbacks.Callback.on_save_checkpoint.params.trainer"></span><strong>trainer</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.callbacks.Callback.on_save_checkpoint.params.trainer">¶</a> (<a class="reference internal" href="../api/lightning.pytorch.trainer.trainer.Trainer.html#lightning.pytorch.trainer.trainer.Trainer" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></a>) – the current <code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code> instance.</p></li>
+<li><p><span class="target" id="lightning.pytorch.callbacks.Callback.on_save_checkpoint.params.pl_module"></span><strong>pl_module</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.callbacks.Callback.on_save_checkpoint.params.pl_module">¶</a> (<a class="reference internal" href="../api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a>) – the current <a class="reference internal" href="../api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a> instance.</p></li>
+<li><p><span class="target" id="lightning.pytorch.callbacks.Callback.on_save_checkpoint.params.checkpoint"></span><strong>checkpoint</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.callbacks.Callback.on_save_checkpoint.params.checkpoint">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – the checkpoint dictionary that will be saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="load-state-dict">
+<h4>load_state_dict<a class="headerlink" href="#load-state-dict" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">load_state_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.load_state_dict"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when loading a checkpoint, implement to reload callback state given callback’s <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><span class="target" id="lightning.pytorch.callbacks.Callback.load_state_dict.params.state_dict"></span><strong>state_dict</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.callbacks.Callback.load_state_dict.params.state_dict">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – the callback state returned by <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>.</p>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-load-checkpoint">
+<h4>on_load_checkpoint<a class="headerlink" href="#on-load-checkpoint" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_load_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_load_checkpoint"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called when loading a model checkpoint, use to reload state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.callbacks.Callback.on_load_checkpoint.params.trainer"></span><strong>trainer</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.callbacks.Callback.on_load_checkpoint.params.trainer">¶</a> (<a class="reference internal" href="../api/lightning.pytorch.trainer.trainer.Trainer.html#lightning.pytorch.trainer.trainer.Trainer" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></a>) – the current <code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code> instance.</p></li>
+<li><p><span class="target" id="lightning.pytorch.callbacks.Callback.on_load_checkpoint.params.pl_module"></span><strong>pl_module</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.callbacks.Callback.on_load_checkpoint.params.pl_module">¶</a> (<a class="reference internal" href="../api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a>) – the current <a class="reference internal" href="../api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a> instance.</p></li>
+<li><p><span class="target" id="lightning.pytorch.callbacks.Callback.on_load_checkpoint.params.checkpoint"></span><strong>checkpoint</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.callbacks.Callback.on_load_checkpoint.params.checkpoint">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – the full checkpoint dictionary that got loaded by the Trainer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-before-backward">
+<h4>on_before_backward<a class="headerlink" href="#on-before-backward" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_before_backward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_before_backward"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called before <code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-after-backward">
+<h4>on_after_backward<a class="headerlink" href="#on-after-backward" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_after_backward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_after_backward"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called after <code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code> and before optimizers are stepped.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-before-optimizer-step">
+<h4>on_before_optimizer_step<a class="headerlink" href="#on-before-optimizer-step" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_before_optimizer_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_before_optimizer_step"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called before <code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="on-before-zero-grad">
+<h4>on_before_zero_grad<a class="headerlink" href="#on-before-zero-grad" title="이 표제에 대한 퍼머링크">¶</a></h4>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">Callback.</span></span><span class="sig-name descname"><span class="pre">on_before_zero_grad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/callbacks/callback.html#Callback.on_before_zero_grad"><span class="viewcode-link"><span class="pre">[소스]</span></span></a></dt>
+<dd><p>Called before <code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+</section>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../common/checkpointing.html" class="btn btn-neutral float-right" title="Checkpointing" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="accelerator.html" class="btn btn-neutral" title="Accelerator" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Copyright (c) 2018-2023, Lightning AI et al...
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Callback</a><ul>
+<li><a class="reference internal" href="#built-in-callbacks">Built-in Callbacks</a></li>
+<li><a class="reference internal" href="#save-callback-state">Save Callback state</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a></li>
+<li><a class="reference internal" href="#entry-points">Entry Points</a></li>
+<li><a class="reference internal" href="#callback-api">Callback API</a><ul>
+<li><a class="reference internal" href="#properties">Properties</a><ul>
+<li><a class="reference internal" href="#state-key">state_key</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hooks">Hooks</a><ul>
+<li><a class="reference internal" href="#setup">setup</a></li>
+<li><a class="reference internal" href="#teardown">teardown</a></li>
+<li><a class="reference internal" href="#on-fit-start">on_fit_start</a></li>
+<li><a class="reference internal" href="#on-fit-end">on_fit_end</a></li>
+<li><a class="reference internal" href="#on-sanity-check-start">on_sanity_check_start</a></li>
+<li><a class="reference internal" href="#on-sanity-check-end">on_sanity_check_end</a></li>
+<li><a class="reference internal" href="#on-train-batch-start">on_train_batch_start</a></li>
+<li><a class="reference internal" href="#on-train-batch-end">on_train_batch_end</a></li>
+<li><a class="reference internal" href="#on-train-epoch-start">on_train_epoch_start</a></li>
+<li><a class="reference internal" href="#on-train-epoch-end">on_train_epoch_end</a></li>
+<li><a class="reference internal" href="#on-validation-epoch-start">on_validation_epoch_start</a></li>
+<li><a class="reference internal" href="#on-validation-epoch-end">on_validation_epoch_end</a></li>
+<li><a class="reference internal" href="#on-test-epoch-start">on_test_epoch_start</a></li>
+<li><a class="reference internal" href="#on-test-epoch-end">on_test_epoch_end</a></li>
+<li><a class="reference internal" href="#on-predict-epoch-start">on_predict_epoch_start</a></li>
+<li><a class="reference internal" href="#on-predict-epoch-end">on_predict_epoch_end</a></li>
+<li><a class="reference internal" href="#on-validation-batch-start">on_validation_batch_start</a></li>
+<li><a class="reference internal" href="#on-validation-batch-end">on_validation_batch_end</a></li>
+<li><a class="reference internal" href="#on-test-batch-start">on_test_batch_start</a></li>
+<li><a class="reference internal" href="#on-test-batch-end">on_test_batch_end</a></li>
+<li><a class="reference internal" href="#on-predict-batch-start">on_predict_batch_start</a></li>
+<li><a class="reference internal" href="#on-predict-batch-end">on_predict_batch_end</a></li>
+<li><a class="reference internal" href="#on-train-start">on_train_start</a></li>
+<li><a class="reference internal" href="#on-train-end">on_train_end</a></li>
+<li><a class="reference internal" href="#on-validation-start">on_validation_start</a></li>
+<li><a class="reference internal" href="#on-validation-end">on_validation_end</a></li>
+<li><a class="reference internal" href="#on-test-start">on_test_start</a></li>
+<li><a class="reference internal" href="#on-test-end">on_test_end</a></li>
+<li><a class="reference internal" href="#on-predict-start">on_predict_start</a></li>
+<li><a class="reference internal" href="#on-predict-end">on_predict_end</a></li>
+<li><a class="reference internal" href="#on-exception">on_exception</a></li>
+<li><a class="reference internal" href="#state-dict">state_dict</a></li>
+<li><a class="reference internal" href="#on-save-checkpoint">on_save_checkpoint</a></li>
+<li><a class="reference internal" href="#load-state-dict">load_state_dict</a></li>
+<li><a class="reference internal" href="#on-load-checkpoint">on_load_checkpoint</a></li>
+<li><a class="reference internal" href="#on-before-backward">on_before_backward</a></li>
+<li><a class="reference internal" href="#on-after-backward">on_after_backward</a></li>
+<li><a class="reference internal" href="#on-before-optimizer-step">on_before_optimizer_step</a></li>
+<li><a class="reference internal" href="#on-before-zero-grad">on_before_zero_grad</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/clipboard.min.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../_static/togglebutton.js"></script>
+         <script src="../_static/translations.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script script type="text/javascript">
+  var collapsedSections = ['Best practices', 'Optional Extensions', 'Tutorials', 'API References', 'Bolts', 'Examples', 'Partner Domain Frameworks', 'Community'];
+</script>
+
+
+
+  <!-- Begin Footer -->
+
+  <!-- <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources"> -->
+    <!-- <div class="container"> -->
+      <!-- <div class="row"> -->
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://lightning.ai/docs/pytorch/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning.ai/docs/pytorch/latest/">PyTorch</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://lightning.ai/pages/blog/">Blog</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning/blob/master/.github/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning.ai/docs/pytorch/latest/#community-examples">Resources</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/">Docs</a></li>
+            <li><a href="https://www.pytorchlightning.ai/community" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/LightningAI" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://lightning.ai/docs/pytorch/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://lightning.ai/pages/blog/">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Lightning Fabric</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Fabric</a>
+            </li>
+          </ul> -->
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="https://www.pytorchlightning.ai/community">Community</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/forums/">Forums</a>
+            </li>
+          </ul>-->
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning.ai</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.kr/">파이토치 한국 사용자 모임</a>
+          </li>
+
+          <li>
+            <a href="https://discuss.pytorch.kr/">파이토치 한국어 커뮤니티</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SCNQBF5"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+ </body>
+</html>

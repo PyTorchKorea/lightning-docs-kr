@@ -1,0 +1,1260 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ko" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ko" > <!--<![endif]-->
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5SCNQBF5');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Strategy &mdash; PyTorch Lightning &amp; PyTorch Korea User Group 2.0.5 문서</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://lightning.ai/docs/pytorch/stable//api/lightning.pytorch.strategies.Strategy.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/main.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="next" title="XLAStrategy" href="lightning.pytorch.strategies.XLAStrategy.html" />
+    <link rel="prev" title="SingleDeviceStrategy" href="lightning.pytorch.strategies.SingleDeviceStrategy.html" />
+  <!-- Google Analytics -->
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82W25RV60Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82W25RV60Q');
+    </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="../_static/js/react/react.jsx" type="text/babel"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://lightning.ai/docs/pytorch/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://lightning.ai/pages/blog/">Blog</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/pytorch/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/fabric/stable/">
+                  <span class="dropdown-title">Lightning Fabric</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li> -->
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://www.pytorchlightning.ai/community">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning.ai/docs/pytorch/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning.ai/forums/" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          <!-- 
+          <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/past_versions.html">Previous Versions</a>
+          </li>
+          
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning">GitHub</a>
+          </li> -->
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning AI</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.kr/">파이토치 한국 사용자 모임</a>
+          </li>
+
+          <li>
+            <a href="https://discuss.pytorch.kr/">파이토치 한국어 커뮤니티</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  2.0.5
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../starter/introduction.html">Lightning in 15 minutes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starter/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../upgrade/migration_guide.html">Guide how to upgrade to the 2.0 version</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Level Up</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../levels/core_skills.html">Basic skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/intermediate.html">Intermediate skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/advanced.html">Advanced skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/expert.html">Expert skills</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../common/lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Optional API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">accelerators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#callbacks">callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#cli">cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#core">core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#loggers">loggers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#profiler">profiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#trainer">trainer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api_references.html#strategies">strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#tuner">tuner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#utilities">utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary/index.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/index.html">How-to Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="../api_references.html">accelerators</a> &gt;</li>
+        
+      <li>Strategy</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/lightning.pytorch.strategies.Strategy.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <section id="strategy">
+<h1>Strategy<a class="headerlink" href="#strategy" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lightning.pytorch.strategies.</span></span><span class="sig-name descname"><span class="pre">Strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accelerator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_io</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision_plugin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>기반 클래스: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<p>Base class for all strategies that change the behaviour of the training, validation and test- loop.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.all_gather">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_gather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync_grads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.all_gather"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.all_gather" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Perform an all_gather on all processes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.all_gather.params.tensor"></span><strong>tensor</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.all_gather.params.tensor">¶</a> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – the tensor to all_gather</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.all_gather.params.group"></span><strong>group</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.all_gather.params.group">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – the process group to gather results from</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.all_gather.params.sync_grads"></span><strong>sync_grads</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.all_gather.params.sync_grads">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – flag that allows users to synchronize gradients for all_gather op</p></li>
+</ul>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.backward">
+<span class="sig-name descname"><span class="pre">backward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">closure_loss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.backward"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.backward" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Forwards backward-calls to the precision plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.backward.params.closure_loss"></span><strong>closure_loss</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.backward.params.closure_loss">¶</a> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – a tensor holding the loss value to backpropagate</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.backward.params.optimizer"></span><strong>optimizer</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.backward.params.optimizer">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/optim.html#torch.optim.Optimizer" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Optimizer</span></code></a>]) – An optional optimizer that gets passed down to the precision plugin’s backward</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.backward.params.*args"></span><strong>*args</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.backward.params.*args">¶</a> – Positional arguments that get passed down to the precision plugin’s backward, intended as arguments
+for the actual function that performs the backward, like <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.backward.html#torch.Tensor.backward" title="(PyTorch v2.0에서)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">backward()</span></code></a>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.backward.params.**kwargs"></span><strong>**kwargs</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.backward.params.**kwargs">¶</a> – Keyword arguments for the same purpose as <code class="docutils literal notranslate"><span class="pre">*args</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.barrier">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">barrier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.barrier"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.barrier" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Synchronizes all processes which blocks processes until the whole group enters this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><span class="target" id="lightning.pytorch.strategies.Strategy.barrier.params.name"></span><strong>name</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.barrier.params.name">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – an optional name to pass into barrier.</p>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.batch_to_device">
+<span class="sig-name descname"><span class="pre">batch_to_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.batch_to_device"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.batch_to_device" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Moves the batch to the correct device.</p>
+<p>The returned batch is of the same type as the input batch, just
+having all tensors on the correct device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.batch_to_device.params.batch"></span><strong>batch</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.batch_to_device.params.batch">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>) – The batch of samples to move to the correct device</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.batch_to_device.params.device"></span><strong>device</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.batch_to_device.params.device">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">device</span></code></a>]) – The target device</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.batch_to_device.params.dataloader_idx"></span><strong>dataloader_idx</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.batch_to_device.params.dataloader_idx">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – The index of the dataloader to which the batch belongs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.broadcast">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">broadcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.broadcast"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.broadcast" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Broadcasts an object to all processes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.broadcast.params.obj"></span><strong>obj</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.broadcast.params.obj">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">TBroadcast</span></code>)) – the object to broadcast</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.broadcast.params.src"></span><strong>src</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.broadcast.params.src">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – source rank</p></li>
+</ul>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">TBroadcast</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.connect"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.connect" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called by the accelerator to connect the accelerator and the model with this plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.lightning_module_state_dict">
+<span class="sig-name descname"><span class="pre">lightning_module_state_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.lightning_module_state_dict"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.lightning_module_state_dict" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Returns model state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.model_sharded_context">
+<span class="sig-name descname"><span class="pre">model_sharded_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.model_sharded_context"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.model_sharded_context" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Provide hook to create modules in a distributed aware context. This is useful for when we’d like to
+shard the model instantly, which is useful for extremely large models which can save memory and
+initialization time.</p>
+<p>Returns: Model parallel context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generator" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.model_to_device">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model_to_device</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.model_to_device"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.model_to_device" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Moves the model to the correct device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.on_exception">
+<span class="sig-name descname"><span class="pre">on_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.on_exception"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.on_exception" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called when the trainer execution is interrupted by an exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.on_predict_end">
+<span class="sig-name descname"><span class="pre">on_predict_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.on_predict_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.on_predict_end" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called when predict ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.on_predict_start">
+<span class="sig-name descname"><span class="pre">on_predict_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.on_predict_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.on_predict_start" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called when predict begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.on_test_end">
+<span class="sig-name descname"><span class="pre">on_test_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.on_test_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.on_test_end" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called when test end.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.on_test_start">
+<span class="sig-name descname"><span class="pre">on_test_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.on_test_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.on_test_start" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called when test begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.on_train_batch_start">
+<span class="sig-name descname"><span class="pre">on_train_batch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.on_train_batch_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.on_train_batch_start" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called in the training loop before anything happens for that batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.on_train_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.on_train_end" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called when train ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.on_train_start">
+<span class="sig-name descname"><span class="pre">on_train_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.on_train_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.on_train_start" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called when train begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.on_validation_end">
+<span class="sig-name descname"><span class="pre">on_validation_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.on_validation_end"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.on_validation_end" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called when validation ends.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.on_validation_start">
+<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.on_validation_start"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.on_validation_start" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Called when validation begins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.optimizer_state">
+<span class="sig-name descname"><span class="pre">optimizer_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.optimizer_state"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.optimizer_state" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Returns state of an optimizer.</p>
+<p>Allows for syncing/collating optimizer state from processes in custom plugins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.optimizer_step">
+<span class="sig-name descname"><span class="pre">optimizer_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.optimizer_step"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.optimizer_step" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Performs the actual optimizer step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.optimizer_step.params.optimizer"></span><strong>optimizer</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.optimizer_step.params.optimizer">¶</a> (<a class="reference external" href="https://pytorch.org/docs/stable/optim.html#torch.optim.Optimizer" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Optimizer</span></code></a>) – the optimizer performing the step</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.optimizer_step.params.closure"></span><strong>closure</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.optimizer_step.params.closure">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – closure calculating the loss value</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.optimizer_step.params.model"></span><strong>model</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.optimizer_step.params.model">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – reference to the model, optionally defining optimizer step related hooks</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.optimizer_step.params.**kwargs"></span><strong>**kwargs</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.optimizer_step.params.**kwargs">¶</a> – Keyword arguments to <code class="docutils literal notranslate"><span class="pre">optimizer.step</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.post_backward">
+<span class="sig-name descname"><span class="pre">post_backward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">closure_loss</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.post_backward"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.post_backward" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Run after precision plugin executes backward.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.pre_backward">
+<span class="sig-name descname"><span class="pre">pre_backward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">closure_loss</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.pre_backward"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.pre_backward" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Run before precision plugin executes backward.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.predict_step">
+<span class="sig-name descname"><span class="pre">predict_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.predict_step"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.predict_step" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The actual predict step.</p>
+<p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_step()</span></code> for more details</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.process_dataloader">
+<span class="sig-name descname"><span class="pre">process_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataloader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.process_dataloader"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.process_dataloader" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Wraps the dataloader if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><span class="target" id="lightning.pytorch.strategies.Strategy.process_dataloader.params.dataloader"></span><strong>dataloader</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.process_dataloader.params.dataloader">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>) – iterable. Ideally of type: <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></a></p>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.reduce">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.reduce"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.reduce" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Reduces the given tensor (e.g. across GPUs/processes).</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.reduce.params.tensor"></span><strong>tensor</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.reduce.params.tensor">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – the tensor to sync and reduce</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.reduce.params.group"></span><strong>group</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.reduce.params.group">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – the process group to reduce</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.reduce.params.reduce_op"></span><strong>reduce_op</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.reduce.params.reduce_op">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/distributed.html#torch.distributed.ReduceOp" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReduceOp</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – the reduction operation. Defaults to ‘mean’.
+Can also be a string ‘sum’ or ReduceOp.</p></li>
+</ul>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.reduce_boolean_decision">
+<span class="sig-name descname"><span class="pre">reduce_boolean_decision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decision</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.reduce_boolean_decision"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.reduce_boolean_decision" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Reduce a boolean decision across all processes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.remove_checkpoint">
+<span class="sig-name descname"><span class="pre">remove_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.remove_checkpoint"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.remove_checkpoint" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Remove checkpoint filepath from the filesystem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><span class="target" id="lightning.pytorch.strategies.Strategy.remove_checkpoint.params.filepath"></span><strong>filepath</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.remove_checkpoint.params.filepath">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>]) – Path to checkpoint</p>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.save_checkpoint">
+<span class="sig-name descname"><span class="pre">save_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.save_checkpoint"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.save_checkpoint" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Save model/training states as a checkpoint file through state-dump and file-write.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.save_checkpoint.params.checkpoint"></span><strong>checkpoint</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.save_checkpoint.params.checkpoint">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – dict containing model and trainer state</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.save_checkpoint.params.filepath"></span><strong>filepath</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.save_checkpoint.params.filepath">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>]) – write-target file’s path</p></li>
+<li><p><span class="target" id="lightning.pytorch.strategies.Strategy.save_checkpoint.params.storage_options"></span><strong>storage_options</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.save_checkpoint.params.storage_options">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – parameter for how to save to storage, passed to <code class="docutils literal notranslate"><span class="pre">CheckpointIO</span></code> plugin</p></li>
+</ul>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.setup"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.setup" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Setup plugins for the trainer fit and creates optimizers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><span class="target" id="lightning.pytorch.strategies.Strategy.setup.params.trainer"></span><strong>trainer</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.setup.params.trainer">¶</a> (<a class="reference internal" href="lightning.pytorch.trainer.trainer.Trainer.html#lightning.pytorch.trainer.trainer.Trainer" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></a>) – the trainer instance</p>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.setup_environment">
+<span class="sig-name descname"><span class="pre">setup_environment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.setup_environment"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.setup_environment" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Setup any processes or distributed connections.</p>
+<p>This is called before the LightningModule/DataModule setup hook which allows the user to access the accelerator
+environment before setup is complete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.setup_optimizers">
+<span class="sig-name descname"><span class="pre">setup_optimizers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.setup_optimizers"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.setup_optimizers" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Creates optimizers and schedulers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><span class="target" id="lightning.pytorch.strategies.Strategy.setup_optimizers.params.trainer"></span><strong>trainer</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.strategies.Strategy.setup_optimizers.params.trainer">¶</a> (<a class="reference internal" href="lightning.pytorch.trainer.trainer.Trainer.html#lightning.pytorch.trainer.trainer.Trainer" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code></a>) – the Trainer, these optimizers should be connected to</p>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.setup_precision_plugin">
+<span class="sig-name descname"><span class="pre">setup_precision_plugin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.setup_precision_plugin"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.setup_precision_plugin" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Attaches the precision plugin to the accelerator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.teardown">
+<span class="sig-name descname"><span class="pre">teardown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.teardown"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.teardown" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>This method is called to teardown the training process.</p>
+<p>It is the right place to release memory and free other resources.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.test_step">
+<span class="sig-name descname"><span class="pre">test_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.test_step"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.test_step" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The actual test step.</p>
+<p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">test_step()</span></code> for more details</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.training_step">
+<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.training_step"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.training_step" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The actual training step.</p>
+<p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">training_step()</span></code> for more details</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.validation_step">
+<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/strategies/strategy.html#Strategy.validation_step"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.validation_step" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The actual validation step.</p>
+<p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">validation_step()</span></code> for more details</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.handles_gradient_accumulation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">handles_gradient_accumulation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.handles_gradient_accumulation" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Whether the plugin handles gradient accumulation internally.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.is_global_zero">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_global_zero</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.is_global_zero" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Whether the current process is the rank zero process not only on the local node, but for all nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.lightning_module">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lightning_module</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><span class="pre">lightning.pytorch.core.module.LightningModule</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.lightning_module" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Returns the pure LightningModule without potential wrappers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.lightning_restore_optimizer">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lightning_restore_optimizer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.lightning_restore_optimizer" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Override to disable Lightning restoring optimizers/schedulers.</p>
+<p>This is useful for plugins which manage restoring optimizers/schedulers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(PyTorch v2.0에서)"><span class="pre">torch.nn.modules.module.Module</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.model" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Returns the potentially wrapped LightningModule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.restore_checkpoint_after_setup">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">restore_checkpoint_after_setup</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.restore_checkpoint_after_setup" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Override to delay restoring from checkpoint till after the setup phase has completed. This is useful
+when the strategy requires all the setup hooks to run before loading checkpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">반환</dt>
+<dd class="field-even"><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, restore checkpoint after strategy setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.strategies.Strategy.root_device">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_device</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(PyTorch v2.0에서)"><span class="pre">torch.device</span></a></em><a class="headerlink" href="#lightning.pytorch.strategies.Strategy.root_device" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Returns the root device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">device</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lightning.pytorch.strategies.XLAStrategy.html" class="btn btn-neutral float-right" title="XLAStrategy" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="lightning.pytorch.strategies.SingleDeviceStrategy.html" class="btn btn-neutral" title="SingleDeviceStrategy" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Copyright (c) 2018-2023, Lightning AI et al...
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Strategy</a></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/clipboard.min.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../_static/togglebutton.js"></script>
+         <script src="../_static/translations.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script script type="text/javascript">
+  var collapsedSections = ['Best practices', 'Optional Extensions', 'Tutorials', 'API References', 'Bolts', 'Examples', 'Partner Domain Frameworks', 'Community'];
+</script>
+
+
+
+  <!-- Begin Footer -->
+
+  <!-- <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources"> -->
+    <!-- <div class="container"> -->
+      <!-- <div class="row"> -->
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://lightning.ai/docs/pytorch/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning.ai/docs/pytorch/latest/">PyTorch</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://lightning.ai/pages/blog/">Blog</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning/blob/master/.github/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning.ai/docs/pytorch/latest/#community-examples">Resources</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/">Docs</a></li>
+            <li><a href="https://www.pytorchlightning.ai/community" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/LightningAI" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://lightning.ai/docs/pytorch/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://lightning.ai/pages/blog/">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Lightning Fabric</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Fabric</a>
+            </li>
+          </ul> -->
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="https://www.pytorchlightning.ai/community">Community</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/forums/">Forums</a>
+            </li>
+          </ul>-->
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning.ai</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.kr/">파이토치 한국 사용자 모임</a>
+          </li>
+
+          <li>
+            <a href="https://discuss.pytorch.kr/">파이토치 한국어 커뮤니티</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SCNQBF5"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+ </body>
+</html>

@@ -1,0 +1,1424 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ko" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ko" > <!--<![endif]-->
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5SCNQBF5');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Trainer &mdash; PyTorch Lightning &amp; PyTorch Korea User Group 2.0.5 문서</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://lightning.ai/docs/pytorch/stable//api/lightning.pytorch.trainer.trainer.Trainer.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/main.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="next" title="DDPStrategy" href="lightning.pytorch.strategies.DDPStrategy.html" />
+    <link rel="prev" title="XLAProfiler" href="lightning.pytorch.profilers.XLAProfiler.html" />
+  <!-- Google Analytics -->
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82W25RV60Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82W25RV60Q');
+    </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="../_static/js/react/react.jsx" type="text/babel"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://lightning.ai/docs/pytorch/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://lightning.ai/pages/blog/">Blog</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/pytorch/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/fabric/stable/">
+                  <span class="dropdown-title">Lightning Fabric</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li> -->
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://www.pytorchlightning.ai/community">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning.ai/docs/pytorch/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning.ai/forums/" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          <!-- 
+          <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/past_versions.html">Previous Versions</a>
+          </li>
+          
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning">GitHub</a>
+          </li> -->
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning AI</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.kr/">파이토치 한국 사용자 모임</a>
+          </li>
+
+          <li>
+            <a href="https://discuss.pytorch.kr/">파이토치 한국어 커뮤니티</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  2.0.5
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../starter/introduction.html">Lightning in 15 minutes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starter/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../upgrade/migration_guide.html">Guide how to upgrade to the 2.0 version</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Level Up</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../levels/core_skills.html">Basic skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/intermediate.html">Intermediate skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/advanced.html">Advanced skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/expert.html">Expert skills</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../common/lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Optional API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">accelerators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#callbacks">callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#cli">cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#core">core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#loggers">loggers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#profiler">profiler</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api_references.html#trainer">trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#strategies">strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#tuner">tuner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#utilities">utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary/index.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/index.html">How-to Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="../api_references.html">accelerators</a> &gt;</li>
+        
+      <li>Trainer</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/lightning.pytorch.trainer.trainer.Trainer.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <section id="trainer">
+<h1>Trainer<a class="headerlink" href="#trainer" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lightning.pytorch.trainer.trainer.</span></span><span class="sig-name descname"><span class="pre">Trainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accelerator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'32-true'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fast_dev_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_train_batches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_val_batches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_test_batches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_predict_batches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overfit_batches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_check_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_val_every_n_epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_sanity_val_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_every_n_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_checkpointing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_progress_bar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_model_summary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulate_grad_batches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradient_clip_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradient_clip_algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deterministic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inference_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_distributed_sampler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detect_anomaly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barebones</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plugins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync_batchnorm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reload_dataloaders_every_n_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_root_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/trainer/trainer.html#Trainer"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>기반 클래스: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Customize every aspect of training via flags.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.accelerator"></span><strong>accelerator</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.accelerator">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="lightning.pytorch.accelerators.Accelerator.html#lightning.pytorch.accelerators.Accelerator" title="lightning.pytorch.accelerators.accelerator.Accelerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Accelerator</span></code></a>]) – Supports passing different accelerator types (“cpu”, “gpu”, “tpu”, “ipu”, “hpu”, “mps”, “auto”)
+as well as custom accelerator instances.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.strategy"></span><strong>strategy</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.strategy">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="lightning.pytorch.strategies.Strategy.html#lightning.pytorch.strategies.Strategy" title="lightning.pytorch.strategies.strategy.Strategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Strategy</span></code></a>]) – Supports different training strategies with aliases as well custom strategies.
+Default: <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.devices"></span><strong>devices</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.devices">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – The devices to use. Can be set to a positive number (int or str), a sequence of device indices
+(list or str), the value <code class="docutils literal notranslate"><span class="pre">-1</span></code> to indicate all available devices should be used, or <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code> for
+automatic selection based on the chosen accelerator. Default: <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.num_nodes"></span><strong>num_nodes</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.num_nodes">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of GPU nodes for distributed training.
+Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.precision"></span><strong>precision</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.precision">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[64, 32, 16], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[‘16-mixed’, ‘bf16-mixed’, ‘32-true’, ‘64-true’], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[‘64’, ‘32’, ‘16’, ‘bf16’]]) – Double precision (64, ‘64’ or ‘64-true’), full precision (32, ‘32’ or ‘32-true’),
+16bit mixed precision (16, ‘16’, ‘16-mixed’) or bfloat16 mixed precision (‘bf16’, ‘bf16-mixed’).
+Can be used on CPU, GPU, TPUs, HPUs or IPUs.
+Default: <code class="docutils literal notranslate"><span class="pre">'32-true'</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.logger"></span><strong>logger</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.logger">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="lightning.pytorch.loggers.logger.html#lightning.pytorch.loggers.logger.Logger" title="lightning.pytorch.loggers.logger.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference internal" href="lightning.pytorch.loggers.logger.html#lightning.pytorch.loggers.logger.Logger" title="lightning.pytorch.loggers.logger.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – Logger (or iterable collection of loggers) for experiment tracking. A <code class="docutils literal notranslate"><span class="pre">True</span></code> value uses
+the default <code class="docutils literal notranslate"><span class="pre">TensorBoardLogger</span></code> if it is installed, otherwise <code class="docutils literal notranslate"><span class="pre">CSVLogger</span></code>.
+<code class="docutils literal notranslate"><span class="pre">False</span></code> will disable logging. If multiple loggers are provided, local files
+(checkpoints, profiler traces, etc.) are saved in the <code class="docutils literal notranslate"><span class="pre">log_dir</span></code> of he first logger.
+Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.callbacks"></span><strong>callbacks</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.callbacks">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="lightning.pytorch.callbacks.Callback.html#lightning.pytorch.callbacks.Callback" title="lightning.pytorch.callbacks.callback.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a>], <a class="reference internal" href="lightning.pytorch.callbacks.Callback.html#lightning.pytorch.callbacks.Callback" title="lightning.pytorch.callbacks.callback.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – Add a callback or list of callbacks.
+Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.fast_dev_run"></span><strong>fast_dev_run</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.fast_dev_run">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>]) – Runs n if set to <code class="docutils literal notranslate"><span class="pre">n</span></code> (int) else 1 if set to <code class="docutils literal notranslate"><span class="pre">True</span></code> batch(es)
+of train, val and test to find any bugs (ie: a sort of unit test).
+Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.max_epochs"></span><strong>max_epochs</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.max_epochs">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – Stop training once this number of epochs is reached. Disabled by default (None).
+If both max_epochs and max_steps are not specified, defaults to <code class="docutils literal notranslate"><span class="pre">max_epochs</span> <span class="pre">=</span> <span class="pre">1000</span></code>.
+To enable infinite training, set <code class="docutils literal notranslate"><span class="pre">max_epochs</span> <span class="pre">=</span> <span class="pre">-1</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.min_epochs"></span><strong>min_epochs</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.min_epochs">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – Force training for at least these many epochs. Disabled by default (None).</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.max_steps"></span><strong>max_steps</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.max_steps">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Stop training after this number of steps. Disabled by default (-1). If <code class="docutils literal notranslate"><span class="pre">max_steps</span> <span class="pre">=</span> <span class="pre">-1</span></code>
+and <code class="docutils literal notranslate"><span class="pre">max_epochs</span> <span class="pre">=</span> <span class="pre">None</span></code>, will default to <code class="docutils literal notranslate"><span class="pre">max_epochs</span> <span class="pre">=</span> <span class="pre">1000</span></code>. To enable infinite training, set
+<code class="docutils literal notranslate"><span class="pre">max_epochs</span></code> to <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.min_steps"></span><strong>min_steps</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.min_steps">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – Force training for at least these number of steps. Disabled by default (<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.max_time"></span><strong>max_time</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.max_time">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">timedelta</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – Stop training after this amount of time has passed. Disabled by default (<code class="docutils literal notranslate"><span class="pre">None</span></code>).
+The time duration can be specified in the format DD:HH:MM:SS (days, hours, minutes seconds), as a
+<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.timedelta</span></code></a>, or a dictionary with keys that will be passed to
+<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.timedelta</span></code></a>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.limit_train_batches"></span><strong>limit_train_batches</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.limit_train_batches">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – How much of training dataset to check (float = fraction, int = num_batches).
+Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.limit_val_batches"></span><strong>limit_val_batches</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.limit_val_batches">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – How much of validation dataset to check (float = fraction, int = num_batches).
+Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.limit_test_batches"></span><strong>limit_test_batches</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.limit_test_batches">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – How much of test dataset to check (float = fraction, int = num_batches).
+Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.limit_predict_batches"></span><strong>limit_predict_batches</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.limit_predict_batches">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – How much of prediction dataset to check (float = fraction, int = num_batches).
+Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.overfit_batches"></span><strong>overfit_batches</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.overfit_batches">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]) – Overfit a fraction of training/validation data (float) or a set number of batches (int).
+Default: <code class="docutils literal notranslate"><span class="pre">0.0</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.val_check_interval"></span><strong>val_check_interval</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.val_check_interval">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – How often to check the validation set. Pass a <code class="docutils literal notranslate"><span class="pre">float</span></code> in the range [0.0, 1.0] to check
+after a fraction of the training epoch. Pass an <code class="docutils literal notranslate"><span class="pre">int</span></code> to check after a fixed number of training
+batches. An <code class="docutils literal notranslate"><span class="pre">int</span></code> value can only be higher than the number of training batches when
+<code class="docutils literal notranslate"><span class="pre">check_val_every_n_epoch=None</span></code>, which validates after every <code class="docutils literal notranslate"><span class="pre">N</span></code> training batches
+across epochs or during iteration-based training.
+Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.check_val_every_n_epoch"></span><strong>check_val_every_n_epoch</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.check_val_every_n_epoch">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – Perform a validation loop every after every <cite>N</cite> training epochs. If <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+validation will be done solely based on the number of training batches, requiring <code class="docutils literal notranslate"><span class="pre">val_check_interval</span></code>
+to be an integer value.
+Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.num_sanity_val_steps"></span><strong>num_sanity_val_steps</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.num_sanity_val_steps">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – Sanity check runs n validation batches before starting the training routine.
+Set it to <cite>-1</cite> to run all batches in all validation dataloaders.
+Default: <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.log_every_n_steps"></span><strong>log_every_n_steps</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.log_every_n_steps">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – How often to log within steps.
+Default: <code class="docutils literal notranslate"><span class="pre">50</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.enable_checkpointing"></span><strong>enable_checkpointing</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.enable_checkpointing">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>]) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, enable checkpointing.
+It will configure a default ModelCheckpoint callback if there is no user-defined ModelCheckpoint in
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.callbacks" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">callbacks</span></code></a>.
+Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.enable_progress_bar"></span><strong>enable_progress_bar</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.enable_progress_bar">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>]) – Whether to enable to progress bar by default.
+Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.enable_model_summary"></span><strong>enable_model_summary</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.enable_model_summary">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>]) – Whether to enable model summarization by default.
+Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.accumulate_grad_batches"></span><strong>accumulate_grad_batches</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.accumulate_grad_batches">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Accumulates gradients over k batches before stepping the optimizer.
+Default: 1.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.gradient_clip_val"></span><strong>gradient_clip_val</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.gradient_clip_val">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – The value at which to clip gradients. Passing <code class="docutils literal notranslate"><span class="pre">gradient_clip_val=None</span></code> disables
+gradient clipping. If using Automatic Mixed Precision (AMP), the gradients will be unscaled before.
+Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.gradient_clip_algorithm"></span><strong>gradient_clip_algorithm</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.gradient_clip_algorithm">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – The gradient clipping algorithm to use. Pass <code class="docutils literal notranslate"><span class="pre">gradient_clip_algorithm=&quot;value&quot;</span></code>
+to clip by value, and <code class="docutils literal notranslate"><span class="pre">gradient_clip_algorithm=&quot;norm&quot;</span></code> to clip by norm. By default it will
+be set to <code class="docutils literal notranslate"><span class="pre">&quot;norm&quot;</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.deterministic"></span><strong>deterministic</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.deterministic">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[‘warn’], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, sets whether PyTorch operations must use deterministic algorithms.
+Set to <code class="docutils literal notranslate"><span class="pre">&quot;warn&quot;</span></code> to use deterministic algorithms whenever possible, throwing warnings on operations
+that don’t support deterministic mode (requires PyTorch 1.11+). If not set, defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.
+Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.benchmark"></span><strong>benchmark</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.benchmark">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>]) – The value (<code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>) to set <code class="docutils literal notranslate"><span class="pre">torch.backends.cudnn.benchmark</span></code> to.
+The value for <code class="docutils literal notranslate"><span class="pre">torch.backends.cudnn.benchmark</span></code> set in the current session will be used
+(<code class="docutils literal notranslate"><span class="pre">False</span></code> if not manually set). If <a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.deterministic" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">deterministic</span></code></a>
+is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, this will default to <code class="docutils literal notranslate"><span class="pre">False</span></code>. Override to manually set a different value.
+Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.inference_mode"></span><strong>inference_mode</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.inference_mode">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Whether to use <code class="xref py py-func docutils literal notranslate"><span class="pre">torch.inference_mode()</span></code> or <code class="xref py py-func docutils literal notranslate"><span class="pre">torch.no_grad()</span></code> during
+evaluation (<code class="docutils literal notranslate"><span class="pre">validate</span></code>/<code class="docutils literal notranslate"><span class="pre">test</span></code>/<code class="docutils literal notranslate"><span class="pre">predict</span></code>).</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.use_distributed_sampler"></span><strong>use_distributed_sampler</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.use_distributed_sampler">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Whether to wrap the DataLoader’s sampler with
+<code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.DistributedSampler</span></code>. If not specified this is toggled automatically for
+strategies that require it. By default, it will add <code class="docutils literal notranslate"><span class="pre">shuffle=True</span></code> for the train sampler and
+<code class="docutils literal notranslate"><span class="pre">shuffle=False</span></code> for validation/test/predict samplers. If you want to disable this logic, you can pass
+<code class="docutils literal notranslate"><span class="pre">False</span></code> and add your own distributed sampler in the dataloader hooks. If <code class="docutils literal notranslate"><span class="pre">True</span></code> and a distributed
+sampler was already added, Lightning will not replace the existing one. For iterable-style datasets,
+we don’t do this automatically.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.profiler"></span><strong>profiler</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.profiler">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="lightning.pytorch.profilers.Profiler.html#lightning.pytorch.profilers.Profiler" title="lightning.pytorch.profilers.profiler.Profiler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profiler</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – To profile individual steps during training and assist in identifying bottlenecks.
+Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.detect_anomaly"></span><strong>detect_anomaly</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.detect_anomaly">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Enable anomaly detection for the autograd engine.
+Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.barebones"></span><strong>barebones</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.barebones">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Whether to run in “barebones mode”, where all features that may impact raw speed are
+disabled. This is meant for analyzing the Trainer overhead and is discouraged during regular training
+runs. The following features are deactivated:
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.enable_checkpointing" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">enable_checkpointing</span></code></a>,
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.logger" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">logger</span></code></a>,
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.enable_progress_bar" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">enable_progress_bar</span></code></a>,
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.log_every_n_steps" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">log_every_n_steps</span></code></a>,
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.enable_model_summary" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">enable_model_summary</span></code></a>,
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.num_sanity_val_steps" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">num_sanity_val_steps</span></code></a>,
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.fast_dev_run" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">fast_dev_run</span></code></a>,
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.detect_anomaly" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">detect_anomaly</span></code></a>,
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.profiler" title="lightning.pytorch.trainer.trainer.Trainer"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">profiler</span></code></a>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">log()</span></code>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">log_dict()</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.plugins"></span><strong>plugins</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.plugins">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="lightning.pytorch.plugins.precision.PrecisionPlugin.html#lightning.pytorch.plugins.precision.PrecisionPlugin" title="lightning.pytorch.plugins.precision.precision_plugin.PrecisionPlugin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrecisionPlugin</span></code></a>, <a class="reference internal" href="lightning.pytorch.plugins.environments.ClusterEnvironment.html#lightning.pytorch.plugins.environments.ClusterEnvironment" title="lightning.fabric.plugins.environments.cluster_environment.ClusterEnvironment"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterEnvironment</span></code></a>, <a class="reference internal" href="lightning.pytorch.plugins.io.CheckpointIO.html#lightning.pytorch.plugins.io.CheckpointIO" title="lightning.fabric.plugins.io.checkpoint_io.CheckpointIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckpointIO</span></code></a>, <a class="reference internal" href="lightning.pytorch.plugins.LayerSync.html#lightning.pytorch.plugins.LayerSync" title="lightning.pytorch.plugins.layer_sync.LayerSync"><code class="xref py py-class docutils literal notranslate"><span class="pre">LayerSync</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="lightning.pytorch.plugins.precision.PrecisionPlugin.html#lightning.pytorch.plugins.precision.PrecisionPlugin" title="lightning.pytorch.plugins.precision.precision_plugin.PrecisionPlugin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrecisionPlugin</span></code></a>, <a class="reference internal" href="lightning.pytorch.plugins.environments.ClusterEnvironment.html#lightning.pytorch.plugins.environments.ClusterEnvironment" title="lightning.fabric.plugins.environments.cluster_environment.ClusterEnvironment"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterEnvironment</span></code></a>, <a class="reference internal" href="lightning.pytorch.plugins.io.CheckpointIO.html#lightning.pytorch.plugins.io.CheckpointIO" title="lightning.fabric.plugins.io.checkpoint_io.CheckpointIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckpointIO</span></code></a>, <a class="reference internal" href="lightning.pytorch.plugins.LayerSync.html#lightning.pytorch.plugins.LayerSync" title="lightning.pytorch.plugins.layer_sync.LayerSync"><code class="xref py py-class docutils literal notranslate"><span class="pre">LayerSync</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – Plugins allow modification of core behavior like ddp and amp, and enable custom lightning plugins.
+Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.sync_batchnorm"></span><strong>sync_batchnorm</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.sync_batchnorm">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Synchronize batch norm layers between process groups/whole world.
+Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.reload_dataloaders_every_n_epochs"></span><strong>reload_dataloaders_every_n_epochs</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.reload_dataloaders_every_n_epochs">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – Set to a non-negative integer to reload dataloaders every n epochs.
+Default: <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.params.default_root_dir"></span><strong>default_root_dir</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.params.default_root_dir">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – Default path for logs and weights when no logger/ckpt_callback passed.
+Default: <code class="docutils literal notranslate"><span class="pre">os.getcwd()</span></code>.
+Can be remote file paths such as <cite>s3://mybucket/path</cite> or ‘hdfs://path/’</p></li>
+</ul>
+</dd>
+<dt class="field-even">예외 발생</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(Python v3.11에서)"><strong>TypeError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">gradient_clip_val</span></code> is not an int or float.</p></li>
+<li><p><strong>MisconfigurationException</strong> – If <code class="docutils literal notranslate"><span class="pre">gradient_clip_algorithm</span></code> is invalid.
+    If <code class="docutils literal notranslate"><span class="pre">track_grad_norm</span></code> is not a positive number or inf.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_dataloaders</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_dataloaders</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datamodule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpt_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/trainer/trainer.html#Trainer.fit"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.fit" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Runs the full optimization routine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.fit.params.model"></span><strong>model</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.fit.params.model">¶</a> (<a class="reference internal" href="lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a>) – Model to fit.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.fit.params.train_dataloaders"></span><strong>train_dataloaders</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.fit.params.train_dataloaders">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – An iterable or collection of iterables specifying training samples.
+Alternatively, a <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a> that defines
+the <a class="reference internal" href="lightning.pytorch.core.hooks.DataHooks.html#lightning.pytorch.core.hooks.DataHooks.train_dataloader" title="lightning.pytorch.core.hooks.DataHooks.train_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">train_dataloader</span></code></a> hook.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.fit.params.val_dataloaders"></span><strong>val_dataloaders</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.fit.params.val_dataloaders">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – An iterable or collection of iterables specifying validation samples.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.fit.params.datamodule"></span><strong>datamodule</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.fit.params.datamodule">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a>]) – A <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a> that defines
+the <a class="reference internal" href="lightning.pytorch.core.hooks.DataHooks.html#lightning.pytorch.core.hooks.DataHooks.train_dataloader" title="lightning.pytorch.core.hooks.DataHooks.train_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">train_dataloader</span></code></a> hook.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.fit.params.ckpt_path"></span><strong>ckpt_path</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.fit.params.ckpt_path">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – Path/URL of the checkpoint from which training is resumed. Could also be one of two special
+keywords <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;hpc&quot;</span></code>. If there is no checkpoint file at the path, an exception is raised.</p></li>
+</ul>
+</dd>
+<dt class="field-even">예외 발생</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(Python v3.11에서)"><strong>TypeError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">model</span></code> is not <a class="reference internal" href="lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a> for torch version less than
+    2.0.0 and if <code class="docutils literal notranslate"><span class="pre">model</span></code> is not <a class="reference internal" href="lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a> or
+    <a class="reference external" href="https://pytorch.org/docs/stable/_dynamo.html#torch._dynamo.OptimizedModule" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch._dynamo.OptimizedModule</span></code></a> for torch versions greater than or equal to 2.0.0 .</p>
+</dd>
+</dl>
+<p>For more information about multiple dataloaders, see this <span class="xref std std-ref">section</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloaders</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datamodule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_predictions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpt_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/trainer/trainer.html#Trainer.predict"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.predict" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Run inference on your data. This will call the model forward function to compute predictions. Useful to
+perform distributed and batched predictions. Logging is disabled in the predict hooks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.predict.params.model"></span><strong>model</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.predict.params.model">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a>]) – The model to predict with.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.predict.params.dataloaders"></span><strong>dataloaders</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.predict.params.dataloaders">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – An iterable or collection of iterables specifying predict samples.
+Alternatively, a <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a> that defines
+the <a class="reference internal" href="lightning.pytorch.core.hooks.DataHooks.html#lightning.pytorch.core.hooks.DataHooks.predict_dataloader" title="lightning.pytorch.core.hooks.DataHooks.predict_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">predict_dataloader</span></code></a> hook.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.predict.params.datamodule"></span><strong>datamodule</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.predict.params.datamodule">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a>]) – A <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a> that defines
+the <a class="reference internal" href="lightning.pytorch.core.hooks.DataHooks.html#lightning.pytorch.core.hooks.DataHooks.predict_dataloader" title="lightning.pytorch.core.hooks.DataHooks.predict_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">predict_dataloader</span></code></a> hook.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.predict.params.return_predictions"></span><strong>return_predictions</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.predict.params.return_predictions">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>]) – Whether to return predictions.
+<code class="docutils literal notranslate"><span class="pre">True</span></code> by default except when an accelerator that spawns processes is used (not supported).</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.predict.params.ckpt_path"></span><strong>ckpt_path</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.predict.params.ckpt_path">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – Either <code class="docutils literal notranslate"><span class="pre">&quot;best&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hpc&quot;</span></code> or path to the checkpoint you wish to predict.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> and the model instance was passed, use the current weights.
+Otherwise, the best model checkpoint from the previous <code class="docutils literal notranslate"><span class="pre">trainer.fit</span></code> call will be loaded
+if a checkpoint callback is configured.</p></li>
+</ul>
+</dd>
+</dl>
+<p>For more information about multiple dataloaders, see this <span class="xref std std-ref">section</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+<dt class="field-even">반환</dt>
+<dd class="field-even"><p>Returns a list of dictionaries, one for each provided dataloader containing their respective predictions.</p>
+</dd>
+<dt class="field-odd">예외 발생</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(Python v3.11에서)"><strong>TypeError</strong></a> – If no <code class="docutils literal notranslate"><span class="pre">model</span></code> is passed and there was no <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code> passed in the previous run.
+    If <code class="docutils literal notranslate"><span class="pre">model</span></code> passed is not <cite>LightningModule</cite> or <cite>torch._dynamo.OptimizedModule</cite>.</p></li>
+<li><p><strong>MisconfigurationException</strong> – If both <code class="docutils literal notranslate"><span class="pre">dataloaders</span></code> and <code class="docutils literal notranslate"><span class="pre">datamodule</span></code> are passed. Pass only one of these.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(Python v3.11에서)"><strong>RuntimeError</strong></a> – If a compiled <code class="docutils literal notranslate"><span class="pre">model</span></code> is passed and the strategy is not supported.</p></li>
+</ul>
+</dd>
+</dl>
+<p>See <a class="reference internal" href="../deploy/production_basic.html#predict-step-with-your-lightningmodule"><span class="std std-ref">Lightning inference section</span></a> for more.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.save_checkpoint">
+<span class="sig-name descname"><span class="pre">save_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/trainer/trainer.html#Trainer.save_checkpoint"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.save_checkpoint" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Runs routine to create a checkpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.save_checkpoint.params.filepath"></span><strong>filepath</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.save_checkpoint.params.filepath">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>]) – Path where checkpoint is saved.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.save_checkpoint.params.weights_only"></span><strong>weights_only</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.save_checkpoint.params.weights_only">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, will only save the model weights.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.save_checkpoint.params.storage_options"></span><strong>storage_options</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.save_checkpoint.params.storage_options">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – parameter for how to save to storage, passed to <code class="docutils literal notranslate"><span class="pre">CheckpointIO</span></code> plugin</p></li>
+</ul>
+</dd>
+<dt class="field-even">예외 발생</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AttributeError" title="(Python v3.11에서)"><strong>AttributeError</strong></a> – If the model is not attached to the Trainer before calling this method.</p>
+</dd>
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.test">
+<span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloaders</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpt_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datamodule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/trainer/trainer.html#Trainer.test"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.test" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Perform one evaluation epoch over the test set. It’s separated from fit to make sure you never run on
+your test set until you want to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.test.params.model"></span><strong>model</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.test.params.model">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a>]) – The model to test.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.test.params.dataloaders"></span><strong>dataloaders</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.test.params.dataloaders">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – An iterable or collection of iterables specifying test samples.
+Alternatively, a <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a> that defines
+the <a class="reference internal" href="lightning.pytorch.core.hooks.DataHooks.html#lightning.pytorch.core.hooks.DataHooks.test_dataloader" title="lightning.pytorch.core.hooks.DataHooks.test_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">test_dataloader</span></code></a> hook.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.test.params.ckpt_path"></span><strong>ckpt_path</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.test.params.ckpt_path">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – Either <code class="docutils literal notranslate"><span class="pre">&quot;best&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hpc&quot;</span></code> or path to the checkpoint you wish to test.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> and the model instance was passed, use the current weights.
+Otherwise, the best model checkpoint from the previous <code class="docutils literal notranslate"><span class="pre">trainer.fit</span></code> call will be loaded
+if a checkpoint callback is configured.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.test.params.verbose"></span><strong>verbose</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.test.params.verbose">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – If True, prints the test results.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.test.params.datamodule"></span><strong>datamodule</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.test.params.datamodule">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a>]) – A <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a> that defines
+the <a class="reference internal" href="lightning.pytorch.core.hooks.DataHooks.html#lightning.pytorch.core.hooks.DataHooks.test_dataloader" title="lightning.pytorch.core.hooks.DataHooks.test_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">test_dataloader</span></code></a> hook.</p></li>
+</ul>
+</dd>
+</dl>
+<p>For more information about multiple dataloaders, see this <span class="xref std std-ref">section</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</p>
+</dd>
+<dt class="field-even">반환</dt>
+<dd class="field-even"><p>List of dictionaries with metrics logged during the test phase, e.g., in model- or callback hooks
+like <code class="xref py py-meth docutils literal notranslate"><span class="pre">test_step()</span></code> etc.
+The length of the list corresponds to the number of test dataloaders used.</p>
+</dd>
+<dt class="field-odd">예외 발생</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(Python v3.11에서)"><strong>TypeError</strong></a> – If no <code class="docutils literal notranslate"><span class="pre">model</span></code> is passed and there was no <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code> passed in the previous run.
+    If <code class="docutils literal notranslate"><span class="pre">model</span></code> passed is not <cite>LightningModule</cite> or <cite>torch._dynamo.OptimizedModule</cite>.</p></li>
+<li><p><strong>MisconfigurationException</strong> – If both <code class="docutils literal notranslate"><span class="pre">dataloaders</span></code> and <code class="docutils literal notranslate"><span class="pre">datamodule</span></code> are passed. Pass only one of these.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(Python v3.11에서)"><strong>RuntimeError</strong></a> – If a compiled <code class="docutils literal notranslate"><span class="pre">model</span></code> is passed and the strategy is not supported.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloaders</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpt_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datamodule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lightning/pytorch/trainer/trainer.html#Trainer.validate"><span class="viewcode-link"><span class="pre">[소스]</span></span></a><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.validate" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Perform one evaluation epoch over the validation set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.validate.params.model"></span><strong>model</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.validate.params.model">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a>]) – The model to validate.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.validate.params.dataloaders"></span><strong>dataloaders</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.validate.params.dataloaders">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – An iterable or collection of iterables specifying validation samples.
+Alternatively, a <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a> that defines
+the <a class="reference internal" href="lightning.pytorch.core.hooks.DataHooks.html#lightning.pytorch.core.hooks.DataHooks.val_dataloader" title="lightning.pytorch.core.hooks.DataHooks.val_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">val_dataloader</span></code></a> hook.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.validate.params.ckpt_path"></span><strong>ckpt_path</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.validate.params.ckpt_path">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – Either <code class="docutils literal notranslate"><span class="pre">&quot;best&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hpc&quot;</span></code> or path to the checkpoint you wish to validate.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> and the model instance was passed, use the current weights.
+Otherwise, the best model checkpoint from the previous <code class="docutils literal notranslate"><span class="pre">trainer.fit</span></code> call will be loaded
+if a checkpoint callback is configured.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.validate.params.verbose"></span><strong>verbose</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.validate.params.verbose">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – If True, prints the validation results.</p></li>
+<li><p><span class="target" id="lightning.pytorch.trainer.trainer.Trainer.validate.params.datamodule"></span><strong>datamodule</strong><a class="paramlink headerlink reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.validate.params.datamodule">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a>]) – A <a class="reference internal" href="lightning.pytorch.core.LightningDataModule.html#lightning.pytorch.core.LightningDataModule" title="lightning.pytorch.core.datamodule.LightningDataModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code></a> that defines
+the <a class="reference internal" href="lightning.pytorch.core.hooks.DataHooks.html#lightning.pytorch.core.hooks.DataHooks.val_dataloader" title="lightning.pytorch.core.hooks.DataHooks.val_dataloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">val_dataloader</span></code></a> hook.</p></li>
+</ul>
+</dd>
+</dl>
+<p>For more information about multiple dataloaders, see this <span class="xref std std-ref">section</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</p>
+</dd>
+<dt class="field-even">반환</dt>
+<dd class="field-even"><p>List of dictionaries with metrics logged during the validation phase, e.g., in model- or callback hooks
+like <code class="xref py py-meth docutils literal notranslate"><span class="pre">validation_step()</span></code> etc.
+The length of the list corresponds to the number of validation dataloaders used.</p>
+</dd>
+<dt class="field-odd">예외 발생</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(Python v3.11에서)"><strong>TypeError</strong></a> – If no <code class="docutils literal notranslate"><span class="pre">model</span></code> is passed and there was no <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code> passed in the previous run.
+    If <code class="docutils literal notranslate"><span class="pre">model</span></code> passed is not <cite>LightningModule</cite> or <cite>torch._dynamo.OptimizedModule</cite>.</p></li>
+<li><p><strong>MisconfigurationException</strong> – If both <code class="docutils literal notranslate"><span class="pre">dataloaders</span></code> and <code class="docutils literal notranslate"><span class="pre">datamodule</span></code> are passed. Pass only one of these.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(Python v3.11에서)"><strong>RuntimeError</strong></a> – If a compiled <code class="docutils literal notranslate"><span class="pre">model</span></code> is passed and the strategy is not supported.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.callback_metrics">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">callback_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><span class="pre">torch.Tensor</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.callback_metrics" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The metrics available to callbacks.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;a_val&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span>
+
+
+<span class="n">callback_metrics</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">callback_metrics</span>
+<span class="k">assert</span> <span class="n">callback_metrics</span><span class="p">[</span><span class="s2">&quot;a_val&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.0</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.checkpoint_callback">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">checkpoint_callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">lightning.pytorch.callbacks.checkpoint.Checkpoint</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.checkpoint_callback" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The first <a class="reference internal" href="lightning.pytorch.callbacks.ModelCheckpoint.html#lightning.pytorch.callbacks.ModelCheckpoint" title="lightning.pytorch.callbacks.model_checkpoint.ModelCheckpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelCheckpoint</span></code></a> callback in the
+Trainer.callbacks list, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if it doesn’t exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Checkpoint</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.checkpoint_callbacks">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">checkpoint_callbacks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">lightning.pytorch.callbacks.checkpoint.Checkpoint</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.checkpoint_callbacks" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>A list of all instances of <a class="reference internal" href="lightning.pytorch.callbacks.ModelCheckpoint.html#lightning.pytorch.callbacks.ModelCheckpoint" title="lightning.pytorch.callbacks.model_checkpoint.ModelCheckpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelCheckpoint</span></code></a> found
+in the Trainer.callbacks list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Checkpoint</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.ckpt_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ckpt_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(Python v3.11에서)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.ckpt_path" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Set to the path/URL of a checkpoint loaded via <a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.fit" title="lightning.pytorch.trainer.trainer.Trainer.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>,
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.validate" title="lightning.pytorch.trainer.trainer.Trainer.validate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">validate()</span></code></a>,
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.test" title="lightning.pytorch.trainer.trainer.Trainer.test"><code class="xref py py-meth docutils literal notranslate"><span class="pre">test()</span></code></a>, or
+<a class="reference internal" href="#lightning.pytorch.trainer.trainer.Trainer.predict" title="lightning.pytorch.trainer.trainer.Trainer.predict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict()</span></code></a>. <code class="docutils literal notranslate"><span class="pre">None</span></code> otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(Python v3.11에서)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.current_epoch">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_epoch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><span class="pre">int</span></a></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.current_epoch" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The current epoch, updated after the epoch end hooks are run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.default_root_dir">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_root_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><span class="pre">str</span></a></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.default_root_dir" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The default location to save artifacts of loggers, checkpoints etc.</p>
+<p>It is used as a fallback if logger or checkpoint callback do not define specific save paths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.device_ids">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">device_ids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.device_ids" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>List of device indexes per node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.early_stopping_callback">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">early_stopping_callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lightning.pytorch.callbacks.EarlyStopping.html#lightning.pytorch.callbacks.EarlyStopping" title="lightning.pytorch.callbacks.early_stopping.EarlyStopping"><span class="pre">lightning.pytorch.callbacks.early_stopping.EarlyStopping</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.early_stopping_callback" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The first <a class="reference internal" href="lightning.pytorch.callbacks.EarlyStopping.html#lightning.pytorch.callbacks.EarlyStopping" title="lightning.pytorch.callbacks.early_stopping.EarlyStopping"><code class="xref py py-class docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a> callback in the
+Trainer.callbacks list, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if it doesn’t exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.callbacks.EarlyStopping.html#lightning.pytorch.callbacks.EarlyStopping" title="lightning.pytorch.callbacks.early_stopping.EarlyStopping"><code class="xref py py-class docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.early_stopping_callbacks">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">early_stopping_callbacks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lightning.pytorch.callbacks.EarlyStopping.html#lightning.pytorch.callbacks.EarlyStopping" title="lightning.pytorch.callbacks.early_stopping.EarlyStopping"><span class="pre">lightning.pytorch.callbacks.early_stopping.EarlyStopping</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.early_stopping_callbacks" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>A list of all instances of <a class="reference internal" href="lightning.pytorch.callbacks.EarlyStopping.html#lightning.pytorch.callbacks.EarlyStopping" title="lightning.pytorch.callbacks.early_stopping.EarlyStopping"><code class="xref py py-class docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a> found in
+the Trainer.callbacks list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="lightning.pytorch.callbacks.EarlyStopping.html#lightning.pytorch.callbacks.EarlyStopping" title="lightning.pytorch.callbacks.early_stopping.EarlyStopping"><code class="xref py py-class docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.enable_validation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enable_validation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.enable_validation" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Check if we should run validation during training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.estimated_stepping_batches">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">estimated_stepping_batches</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.estimated_stepping_batches" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The estimated number of batches that will <code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code> during training.</p>
+<p>This accounts for gradient accumulation and the current trainer configuration. This might sets up your training
+dataloader if hadn’t been set up already.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">stepping_batches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">estimated_stepping_batches</span>
+    <span class="n">scheduler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">OneCycleLR</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">max_lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">total_steps</span><span class="o">=</span><span class="n">stepping_batches</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">optimizer</span><span class="p">],</span> <span class="p">[</span><span class="n">scheduler</span><span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">예외 발생</dt>
+<dd class="field-odd"><p><strong>MisconfigurationException</strong> – If estimated stepping batches cannot be computed due to different <cite>accumulate_grad_batches</cite>
+    at different epochs.</p>
+</dd>
+<dt class="field-even">반환 형식</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.global_step">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">global_step</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><span class="pre">int</span></a></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.global_step" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The number of optimizer steps taken (does not reset each epoch).</p>
+<p>This includes multiple optimizers (if enabled).</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.is_global_zero">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_global_zero</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.is_global_zero" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Whether this process is the global zero in multi-node training.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">is_global_zero</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;in node 0, accelerator 0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.is_last_batch">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_last_batch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.is_last_batch" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Whether trainer is executing the last batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.log_dir">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.log_dir" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The directory for the current experiment. Use this to save images to, etc…</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">save_img</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">log_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.logged_metrics">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logged_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><span class="pre">torch.Tensor</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.logged_metrics" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The metrics sent to the loggers.</p>
+<p>This includes metrics logged via <code class="xref py py-meth docutils literal notranslate"><span class="pre">log()</span></code> with the
+<code class="xref py py-paramref docutils literal notranslate"><span class="pre">logger</span></code> argument set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.logger">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lightning.pytorch.loggers.logger.html#lightning.pytorch.loggers.logger.Logger" title="lightning.pytorch.loggers.logger.Logger"><span class="pre">lightning.pytorch.loggers.logger.Logger</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.logger" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The first <a class="reference internal" href="lightning.pytorch.loggers.logger.html#lightning.pytorch.loggers.logger.Logger" title="lightning.pytorch.loggers.logger.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a> being used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.loggers.logger.html#lightning.pytorch.loggers.logger.Logger" title="lightning.pytorch.loggers.logger.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.loggers">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">loggers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lightning.pytorch.loggers.logger.html#lightning.pytorch.loggers.logger.Logger" title="lightning.pytorch.loggers.logger.Logger"><span class="pre">lightning.pytorch.loggers.logger.Logger</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.loggers" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The list of <a class="reference internal" href="lightning.pytorch.loggers.logger.html#lightning.pytorch.loggers.logger.Logger" title="lightning.pytorch.loggers.logger.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a> used.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">logger</span> <span class="ow">in</span> <span class="n">trainer</span><span class="o">.</span><span class="n">loggers</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">({</span><span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">})</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="lightning.pytorch.loggers.logger.html#lightning.pytorch.loggers.logger.Logger" title="lightning.pytorch.loggers.logger.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(PyTorch v2.0에서)"><span class="pre">torch.nn.modules.module.Module</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.model" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The LightningModule, but possibly wrapped into DataParallel or DistributedDataParallel.</p>
+<p>To access the pure LightningModule, use
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">lightning_module()</span></code> instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(PyTorch v2.0에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.num_devices">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_devices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><span class="pre">int</span></a></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.num_devices" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Number of devices the trainer uses per node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.num_predict_batches">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_predict_batches</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.num_predict_batches" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The number of prediction batches that will be used during <code class="docutils literal notranslate"><span class="pre">trainer.predict()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.num_sanity_val_batches">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_sanity_val_batches</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.num_sanity_val_batches" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The number of validation batches that will be used during the sanity-checking part of
+<code class="docutils literal notranslate"><span class="pre">trainer.fit()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.num_test_batches">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_test_batches</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.num_test_batches" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The number of test batches that will be used during <code class="docutils literal notranslate"><span class="pre">trainer.test()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.num_training_batches">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_training_batches</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.num_training_batches" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The number of training batches that will be used during <code class="docutils literal notranslate"><span class="pre">trainer.fit()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.num_val_batches">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_val_batches</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.num_val_batches" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The number of validation batches that will be used during <code class="docutils literal notranslate"><span class="pre">trainer.fit()</span></code> or
+<code class="docutils literal notranslate"><span class="pre">trainer.validate()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.predict_dataloaders">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict_dataloaders</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.predict_dataloaders" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The prediction dataloader(s) used during <code class="docutils literal notranslate"><span class="pre">trainer.predict()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.progress_bar_callback">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">progress_bar_callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lightning.pytorch.callbacks.ProgressBar.html#lightning.pytorch.callbacks.ProgressBar" title="lightning.pytorch.callbacks.progress.progress_bar.ProgressBar"><span class="pre">lightning.pytorch.callbacks.progress.progress_bar.ProgressBar</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.progress_bar_callback" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>An instance of <a class="reference internal" href="lightning.pytorch.callbacks.ProgressBar.html#lightning.pytorch.callbacks.ProgressBar" title="lightning.pytorch.callbacks.progress.progress_bar.ProgressBar"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProgressBar</span></code></a> found in the
+Trainer.callbacks list, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if one doesn’t exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="lightning.pytorch.callbacks.ProgressBar.html#lightning.pytorch.callbacks.ProgressBar" title="lightning.pytorch.callbacks.progress.progress_bar.ProgressBar"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProgressBar</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.progress_bar_metrics">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">progress_bar_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.progress_bar_metrics" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The metrics sent to the progress bar.</p>
+<p>This includes metrics logged via <code class="xref py py-meth docutils literal notranslate"><span class="pre">log()</span></code> with the
+<code class="xref py py-paramref docutils literal notranslate"><span class="pre">prog_bar</span></code> argument set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.received_sigterm">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">received_sigterm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.received_sigterm" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Whether a <code class="docutils literal notranslate"><span class="pre">signal.SIGTERM</span></code> signal was received.</p>
+<p>For example, this can be checked to exit gracefully.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.sanity_checking">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sanity_checking</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.sanity_checking" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>Whether sanity checking is running.</p>
+<p>Useful to disable some hooks, logging or callbacks during the sanity checking.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(Python v3.11에서)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.test_dataloaders">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">test_dataloaders</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.test_dataloaders" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The test dataloader(s) used during <code class="docutils literal notranslate"><span class="pre">trainer.test()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.train_dataloader">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">train_dataloader</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.train_dataloader" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The training dataloader(s) used during <code class="docutils literal notranslate"><span class="pre">trainer.fit()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lightning.pytorch.trainer.trainer.Trainer.val_dataloaders">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">val_dataloaders</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lightning.pytorch.trainer.trainer.Trainer.val_dataloaders" title="이 정의에 대한 퍼머링크">¶</a></dt>
+<dd><p>The validation dataloader(s) used during <code class="docutils literal notranslate"><span class="pre">trainer.fit()</span></code> or <code class="docutils literal notranslate"><span class="pre">trainer.validate()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(Python v3.11에서)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lightning.pytorch.strategies.DDPStrategy.html" class="btn btn-neutral float-right" title="DDPStrategy" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="lightning.pytorch.profilers.XLAProfiler.html" class="btn btn-neutral" title="XLAProfiler" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Copyright (c) 2018-2023, Lightning AI et al...
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Trainer</a></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/clipboard.min.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../_static/togglebutton.js"></script>
+         <script src="../_static/translations.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script script type="text/javascript">
+  var collapsedSections = ['Best practices', 'Optional Extensions', 'Tutorials', 'API References', 'Bolts', 'Examples', 'Partner Domain Frameworks', 'Community'];
+</script>
+
+
+
+  <!-- Begin Footer -->
+
+  <!-- <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources"> -->
+    <!-- <div class="container"> -->
+      <!-- <div class="row"> -->
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://lightning.ai/docs/pytorch/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning.ai/docs/pytorch/latest/">PyTorch</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://lightning.ai/pages/blog/">Blog</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning/blob/master/.github/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning.ai/docs/pytorch/latest/#community-examples">Resources</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/">Docs</a></li>
+            <li><a href="https://www.pytorchlightning.ai/community" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/LightningAI" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://lightning.ai/docs/pytorch/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://lightning.ai/pages/blog/">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Lightning Fabric</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Fabric</a>
+            </li>
+          </ul> -->
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="https://www.pytorchlightning.ai/community">Community</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/forums/">Forums</a>
+            </li>
+          </ul>-->
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning.ai</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.kr/">파이토치 한국 사용자 모임</a>
+          </li>
+
+          <li>
+            <a href="https://discuss.pytorch.kr/">파이토치 한국어 커뮤니티</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SCNQBF5"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+ </body>
+</html>

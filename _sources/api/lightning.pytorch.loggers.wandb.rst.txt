@@ -1,0 +1,25 @@
+﻿wandb
+=====
+
+.. currentmodule:: lightning.pytorch.loggers.wandb
+
+
+
+
+
+
+
+.. rubric:: Classes
+
+.. autosummary::
+    :nosignatures:
+
+    WandbLogger
+
+
+
+
+
+
+
+.. automodule:: lightning.pytorch.loggers.wandb

@@ -1,0 +1,33 @@
+﻿logger
+======
+
+.. currentmodule:: lightning.pytorch.loggers.logger
+
+
+
+.. rubric:: Functions
+
+.. autosummary::
+    :nosignatures:
+
+    merge_dicts
+
+
+
+
+
+.. rubric:: Classes
+
+.. autosummary::
+    :nosignatures:
+
+    DummyLogger
+    Logger
+
+
+
+
+
+
+
+.. automodule:: lightning.pytorch.loggers.logger

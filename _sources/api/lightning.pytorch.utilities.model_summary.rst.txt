@@ -1,0 +1,18 @@
+﻿model\_summary
+==============
+
+.. currentmodule:: lightning.pytorch.utilities.model_summary
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. automodule:: lightning.pytorch.utilities.model_summary

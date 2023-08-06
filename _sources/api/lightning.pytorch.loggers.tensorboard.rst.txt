@@ -1,0 +1,25 @@
+﻿tensorboard
+===========
+
+.. currentmodule:: lightning.pytorch.loggers.tensorboard
+
+
+
+
+
+
+
+.. rubric:: Classes
+
+.. autosummary::
+    :nosignatures:
+
+    TensorBoardLogger
+
+
+
+
+
+
+
+.. automodule:: lightning.pytorch.loggers.tensorboard

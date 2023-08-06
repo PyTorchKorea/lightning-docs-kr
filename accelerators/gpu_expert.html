@@ -1,0 +1,904 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ko" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ko" > <!--<![endif]-->
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5SCNQBF5');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>GPU training (Expert) &mdash; PyTorch Lightning &amp; PyTorch Korea User Group 2.0.5 문서</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://lightning.ai/docs/pytorch/stable//accelerators/gpu_expert.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/main.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+  <!-- Google Analytics -->
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82W25RV60Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82W25RV60Q');
+    </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="../_static/js/react/react.jsx" type="text/babel"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://lightning.ai/docs/pytorch/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://lightning.ai/pages/blog/">Blog</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/pytorch/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/fabric/stable/">
+                  <span class="dropdown-title">Lightning Fabric</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li> -->
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://www.pytorchlightning.ai/community">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning.ai/docs/pytorch/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning.ai/forums/" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          <!-- 
+          <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/past_versions.html">Previous Versions</a>
+          </li>
+          
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning">GitHub</a>
+          </li> -->
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning AI</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.kr/">파이토치 한국 사용자 모임</a>
+          </li>
+
+          <li>
+            <a href="https://discuss.pytorch.kr/">파이토치 한국어 커뮤니티</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  2.0.5
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../starter/introduction.html">Lightning in 15 minutes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starter/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../upgrade/migration_guide.html">Guide how to upgrade to the 2.0 version</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Level Up</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../levels/core_skills.html">Basic skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/intermediate.html">Intermediate skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/advanced.html">Advanced skills</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../levels/expert.html">Expert skills</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../common/lightning_module.html">LightningModule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Optional API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">accelerators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#callbacks">callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#cli">cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#core">core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#loggers">loggers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#profiler">profiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#trainer">trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#strategies">strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#tuner">tuner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html#utilities">utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary/index.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common/index.html">How-to Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>GPU training (Expert)</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/accelerators/gpu_expert.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <section id="gpu-training-expert">
+<span id="gpu-expert"></span><h1>GPU training (Expert)<a class="headerlink" href="#gpu-training-expert" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<p><strong>Audience:</strong> Experts creating new scaling techniques such as Deepspeed or FSDP</p>
+<div class="admonition warning">
+<p class="admonition-title">경고</p>
+<p>This is an <a class="reference internal" href="../versioning.html#experimental-api"><span class="std std-ref">experimental</span></a> feature.</p>
+</div>
+<hr class="docutils" />
+<p>Lightning enables experts focused on researching new ways of optimizing distributed training/inference strategies to create new strategies and plug them into Lightning.</p>
+<p>For example, Lightning worked closely with the Microsoft team to develop a Deepspeed integration and with the Facebook(Meta) team to develop a FSDP integration.</p>
+<hr class="docutils" />
+<section id="what-is-a-strategy">
+<h2>What is a Strategy?<a class="headerlink" href="#what-is-a-strategy" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>Strategy controls the model distribution across training, evaluation, and prediction to be used by the <a class="reference internal" href="../common/trainer.html"><span class="doc">Trainer</span></a>. It can be controlled by passing different
+strategy with aliases (<code class="docutils literal notranslate"><span class="pre">&quot;ddp&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ddp_spawn&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;deepspeed&quot;</span></code> and so on) as well as a custom strategy to the <code class="docutils literal notranslate"><span class="pre">strategy</span></code> parameter for Trainer.</p>
+<p>The Strategy in PyTorch Lightning handles the following responsibilities:</p>
+<ul class="simple">
+<li><p>Launch and teardown of training processes (if applicable).</p></li>
+<li><p>Setup communication between processes (NCCL, GLOO, MPI, and so on).</p></li>
+<li><p>Provide a unified communication interface for reduction, broadcast, and so on.</p></li>
+<li><p>Owns the <a class="reference internal" href="../api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule" title="lightning.pytorch.core.module.LightningModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code></a></p></li>
+<li><p>Handles/owns optimizers and schedulers.</p></li>
+</ul>
+<p>Strategy is a composition of one <a class="reference internal" href="../extensions/accelerator.html"><span class="doc">Accelerator</span></a>, one <a class="reference internal" href="../extensions/plugins.html#precision-plugins"><span class="std std-ref">Precision Plugin</span></a>, a <a class="reference internal" href="../extensions/plugins.html#checkpointio-plugins"><span class="std std-ref">CheckpointIO</span></a>
+plugin and other optional plugins such as the <a class="reference internal" href="../extensions/plugins.html#cluster-environments"><span class="std std-ref">ClusterEnvironment</span></a>.</p>
+<img alt="Illustration of the Strategy as a composition of the Accelerator and several plugins" src="_static/fetched-s3-assets/overview.jpeg" />
+<p>We expose Strategies mainly for expert users that want to extend Lightning for new hardware support or new distributed backends (e.g. a backend not yet supported by <a class="reference external" href="https://pytorch.org/docs/stable/distributed.html#backends">PyTorch</a> itself).</p>
+<hr class="docutils" />
+<section id="selecting-a-built-in-strategy">
+<h3>Selecting a Built-in Strategy<a class="headerlink" href="#selecting-a-built-in-strategy" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p>Built-in strategies can be selected in two ways.</p>
+<ol class="arabic simple">
+<li><p>Pass the shorthand name to the <code class="docutils literal notranslate"><span class="pre">strategy</span></code> Trainer argument</p></li>
+<li><p>Import a Strategy from <code class="xref py py-mod docutils literal notranslate"><span class="pre">lightning.pytorch.strategies</span></code>, instantiate it and pass it to the <code class="docutils literal notranslate"><span class="pre">strategy</span></code> Trainer argument</p></li>
+</ol>
+<p>The latter allows you to configure further options on the specifc strategy.
+Here are some examples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Training with the DistributedDataParallel strategy on 4 GPUs</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;ddp&quot;</span><span class="p">,</span> <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># Training with the DistributedDataParallel strategy on 4 GPUs, with options configured</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="n">DDPStrategy</span><span class="p">(</span><span class="n">static_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># Training with the DDP Spawn strategy using auto accelerator selection</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;ddp_spawn&quot;</span><span class="p">,</span> <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># Training with the DeepSpeed strategy on available GPUs</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;deepspeed&quot;</span><span class="p">,</span> <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+
+<span class="c1"># Training with the DDP strategy using 3 CPU processes</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;ddp&quot;</span><span class="p">,</span> <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Training with the DDP Spawn strategy on 8 TPU cores</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;ddp_spawn&quot;</span><span class="p">,</span> <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;tpu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Training with the default IPU strategy on 8 IPUs</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;ipu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The below table lists all relevant strategies available in Lightning with their corresponding short-hand name:</p>
+<table class="colwidths-given docutils align-default" id="id1">
+<caption><span class="caption-text">Strategy Classes and Nicknames</span><a class="headerlink" href="#id1" title="이 표에 대한 퍼머링크">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Class</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>fsdp</p></td>
+<td><p><a class="reference internal" href="../api/lightning.pytorch.strategies.FSDPStrategy.html#lightning.pytorch.strategies.FSDPStrategy" title="lightning.pytorch.strategies.FSDPStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">FSDPStrategy</span></code></a></p></td>
+<td><p>Strategy for Fully Sharded Data Parallel training. <a class="reference internal" href="../advanced/model_parallel.html#fully-sharded-training"><span class="std std-ref">Learn more.</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>ddp</p></td>
+<td><p><a class="reference internal" href="../api/lightning.pytorch.strategies.DDPStrategy.html#lightning.pytorch.strategies.DDPStrategy" title="lightning.pytorch.strategies.DDPStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DDPStrategy</span></code></a></p></td>
+<td><p>Strategy for multi-process single-device training on one or multiple nodes. <a class="reference internal" href="gpu_intermediate.html#distributed-data-parallel"><span class="std std-ref">Learn more.</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>ddp_spawn</p></td>
+<td><p><a class="reference internal" href="../api/lightning.pytorch.strategies.DDPStrategy.html#lightning.pytorch.strategies.DDPStrategy" title="lightning.pytorch.strategies.DDPStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DDPStrategy</span></code></a></p></td>
+<td><p>Same as “ddp” but launches processes using <a class="reference external" href="https://pytorch.org/docs/stable/multiprocessing.html#torch.multiprocessing.spawn" title="(PyTorch v2.0에서)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.multiprocessing.spawn()</span></code></a> method and joins processes after training finishes. <a class="reference internal" href="gpu_intermediate.html#distributed-data-parallel-spawn"><span class="std std-ref">Learn more.</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>deepspeed</p></td>
+<td><p><a class="reference internal" href="../api/lightning.pytorch.strategies.DeepSpeedStrategy.html#lightning.pytorch.strategies.DeepSpeedStrategy" title="lightning.pytorch.strategies.DeepSpeedStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeepSpeedStrategy</span></code></a></p></td>
+<td><p>Provides capabilities to run training using the DeepSpeed library, with training optimizations for large billion parameter models. <a class="reference internal" href="../advanced/model_parallel.html#deepspeed"><span class="std std-ref">Learn more.</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>hpu_parallel</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HPUParallelStrategy</span></code></p></td>
+<td><p>Strategy for distributed training on multiple HPU devices. <a class="reference internal" href="../integrations/hpu/index.html"><span class="doc">Learn more.</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>hpu_single</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SingleHPUStrategy</span></code></p></td>
+<td><p>Strategy for training on a single HPU device. <a class="reference internal" href="../integrations/hpu/index.html"><span class="doc">Learn more.</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>ipu_strategy</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IPUStrategy</span></code></p></td>
+<td><p>Plugin for training on IPU devices. <a class="reference internal" href="ipu.html"><span class="doc">Learn more.</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>xla</p></td>
+<td><p><a class="reference internal" href="../api/lightning.pytorch.strategies.XLAStrategy.html#lightning.pytorch.strategies.XLAStrategy" title="lightning.pytorch.strategies.XLAStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">XLAStrategy</span></code></a></p></td>
+<td><p>Strategy for training on multiple TPU devices using the <code class="xref py py-func docutils literal notranslate"><span class="pre">torch_xla.distributed.xla_multiprocessing.spawn()</span></code> method. <a class="reference internal" href="tpu.html"><span class="doc">Learn more.</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>single_xla</p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleXLAStrategy</span></code></p></td>
+<td><p>Strategy for training on a single XLA device, like TPUs. <a class="reference internal" href="tpu.html"><span class="doc">Learn more.</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="third-party-strategies">
+<h3>Third-party Strategies<a class="headerlink" href="#third-party-strategies" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p>There are powerful third-party strategies that integrate well with Lightning but aren’t maintained as part of the <code class="docutils literal notranslate"><span class="pre">lightning</span></code> package.</p>
+<table class="colwidths-given docutils align-default" id="id2">
+<caption><span class="caption-text">List of third-party strategy implementations</span><a class="headerlink" href="#id2" title="이 표에 대한 퍼머링크">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Package</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ColossalAI</p></td>
+<td><p><a class="reference external" href="https://github.com/Lightning-AI/lightning-colossalai">Lightning-AI/lightning-colossalai</a></p></td>
+<td><p>Colossal-AI provides a collection of parallel components for you. It aims to support you to write your distributed deep learning models just like how you write your model on your laptop. <a class="reference external" href="https://www.colossalai.org/">Learn more.</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Bagua</p></td>
+<td><p><a class="reference external" href="https://github.com/Lightning-AI/lightning-Bagua">Lightning-AI/lightning-Bagua</a></p></td>
+<td><p>Bagua is a deep learning training acceleration framework for PyTorch, with advanced distributed training algorithms and system optimizations. <a class="reference external" href="https://tutorials.baguasys.com/">Learn more.</a></p></td>
+</tr>
+<tr class="row-even"><td><p>hivemind</p></td>
+<td><p><a class="reference external" href="https://github.com/Lightning-AI/lightning-hivemind">Lightning-AI/lightning-hivemind</a></p></td>
+<td><p>Hivemind is a PyTorch library for decentralized deep learning across the Internet. Its intended usage is training one large model on hundreds of computers from different universities, companies, and volunteers. <a class="reference external" href="https://github.com/learning-at-home/hivemind">Learn more.</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="create-a-custom-strategy">
+<h3>Create a Custom Strategy<a class="headerlink" href="#create-a-custom-strategy" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p>Every strategy in Lightning is a subclass of one of the main base classes: <a class="reference internal" href="../api/lightning.pytorch.strategies.Strategy.html#lightning.pytorch.strategies.Strategy" title="lightning.pytorch.strategies.Strategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Strategy</span></code></a>, <a class="reference internal" href="../api/lightning.pytorch.strategies.SingleDeviceStrategy.html#lightning.pytorch.strategies.SingleDeviceStrategy" title="lightning.pytorch.strategies.SingleDeviceStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleDeviceStrategy</span></code></a> or <a class="reference internal" href="../api/lightning.pytorch.strategies.ParallelStrategy.html#lightning.pytorch.strategies.ParallelStrategy" title="lightning.pytorch.strategies.ParallelStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParallelStrategy</span></code></a>.</p>
+<img alt="Strategy base classes" src="_static/fetched-s3-assets/hierarchy.jpeg" />
+<p>As an expert user, you may choose to extend either an existing built-in Strategy or create a completely new one by
+subclassing the base classes.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightning.pytorch.strategies</span> <span class="kn">import</span> <span class="n">DDPStrategy</span>
+
+
+<span class="k">class</span> <span class="nc">CustomDDPStrategy</span><span class="p">(</span><span class="n">DDPStrategy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">configure_ddp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">MyCustomDistributedDataParallel</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">device_ids</span><span class="o">=...</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">):</span>
+        <span class="c1"># you can access the accelerator and plugins directly</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accelerator</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precision_plugin</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The custom strategy can then be passed into the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> directly via the <code class="docutils literal notranslate"><span class="pre">strategy</span></code> parameter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># custom strategy</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="n">CustomDDPStrategy</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Since the strategy also hosts the Accelerator and various plugins, you can customize all of them to work together as you like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># custom strategy, with new accelerator and plugins</span>
+<span class="n">accelerator</span> <span class="o">=</span> <span class="n">MyAccelerator</span><span class="p">()</span>
+<span class="n">precision_plugin</span> <span class="o">=</span> <span class="n">MyPrecisionPlugin</span><span class="p">()</span>
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">CustomDDPStrategy</span><span class="p">(</span><span class="n">accelerator</span><span class="o">=</span><span class="n">accelerator</span><span class="p">,</span> <span class="n">precision_plugin</span><span class="o">=</span><span class="n">precision_plugin</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="n">strategy</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="strategy-registry">
+<h1>Strategy Registry<a class="headerlink" href="#strategy-registry" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<p>Lightning includes a registry that holds information about Training strategies and allows for the registration of new custom strategies.</p>
+<p>The Strategies are assigned strings that identify them, such as “ddp”, “deepspeed_stage_2_offload”, and so on.
+It also returns the optional description and parameters for initialising the Strategy that were defined during registration.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Training with the DDP Strategy</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;ddp&quot;</span><span class="p">,</span> <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># Training with DeepSpeed ZeRO Stage 3 and CPU Offload</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;deepspeed_stage_3_offload&quot;</span><span class="p">,</span> <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Training with the TPU Spawn Strategy with `debug` as True</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;xla_debug&quot;</span><span class="p">,</span> <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;tpu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Additionally, you can pass your custom registered training strategies to the <code class="docutils literal notranslate"><span class="pre">strategy</span></code> argument.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightning.pytorch.strategies</span> <span class="kn">import</span> <span class="n">DDPStrategy</span><span class="p">,</span> <span class="n">StrategyRegistry</span><span class="p">,</span> <span class="n">CheckpointIO</span>
+
+
+<span class="k">class</span> <span class="nc">CustomCheckpointIO</span><span class="p">(</span><span class="n">CheckpointIO</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">save_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">load_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="o">...</span>
+
+
+<span class="n">custom_checkpoint_io</span> <span class="o">=</span> <span class="n">CustomCheckpointIO</span><span class="p">()</span>
+
+<span class="c1"># Register the DDP Strategy with your custom CheckpointIO plugin</span>
+<span class="n">StrategyRegistry</span><span class="o">.</span><span class="n">register</span><span class="p">(</span>
+    <span class="s2">&quot;ddp_custom_checkpoint_io&quot;</span><span class="p">,</span>
+    <span class="n">DDPStrategy</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;DDP Strategy with custom checkpoint io plugin&quot;</span><span class="p">,</span>
+    <span class="n">checkpoint_io</span><span class="o">=</span><span class="n">custom_checkpoint_io</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;ddp_custom_checkpoint_io&quot;</span><span class="p">,</span> <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Copyright (c) 2018-2023, Lightning AI et al...
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">GPU training (Expert)</a><ul>
+<li><a class="reference internal" href="#what-is-a-strategy">What is a Strategy?</a><ul>
+<li><a class="reference internal" href="#selecting-a-built-in-strategy">Selecting a Built-in Strategy</a></li>
+<li><a class="reference internal" href="#third-party-strategies">Third-party Strategies</a></li>
+<li><a class="reference internal" href="#create-a-custom-strategy">Create a Custom Strategy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#strategy-registry">Strategy Registry</a></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/clipboard.min.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../_static/togglebutton.js"></script>
+         <script src="../_static/translations.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script script type="text/javascript">
+  var collapsedSections = ['Best practices', 'Optional Extensions', 'Tutorials', 'API References', 'Bolts', 'Examples', 'Partner Domain Frameworks', 'Community'];
+</script>
+
+
+
+  <!-- Begin Footer -->
+
+  <!-- <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources"> -->
+    <!-- <div class="container"> -->
+      <!-- <div class="row"> -->
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://lightning.ai/docs/pytorch/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://lightning.ai/docs/pytorch/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning.ai/docs/pytorch/latest/">PyTorch</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://lightning.ai/pages/blog/">Blog</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning/blob/master/.github/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning.ai/docs/pytorch/latest/#community-examples">Resources</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://lightning.ai/docs/pytorch/latest/">Docs</a></li>
+            <li><a href="https://www.pytorchlightning.ai/community" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/LightningAI" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://lightning.ai/docs/pytorch/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <!-- <li>
+            <a href="https://lightning.ai/docs/pytorch/latest/starter/introduction.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://lightning.ai/pages/blog/">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Lightning Fabric</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Fabric</a>
+            </li>
+          </ul> -->
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="https://www.pytorchlightning.ai/community">Community</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/forums/">Forums</a>
+            </li>
+          </ul>-->
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning.ai</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.kr/">파이토치 한국 사용자 모임</a>
+          </li>
+
+          <li>
+            <a href="https://discuss.pytorch.kr/">파이토치 한국어 커뮤니티</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SCNQBF5"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+ </body>
+</html>
