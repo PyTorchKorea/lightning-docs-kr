@@ -6,6 +6,6 @@ ipython[notebook]==8.10
 setuptools==65.5.1
 
 # pt-lightning-sphinx-theme @ https://github.com/Lightning-AI/lightning_sphinx_theme/archive/master.zip
-pt-lightning-sphinx-theme@https://github.com/PyTorchKorea/lightning_sphinx_theme/archive/master.zip
+-e git+https://github.com/PyTorchKorea/lightning_sphinx_theme.git#egg=pt-lightning-sphinx-theme
 
 -r ../../_notebooks/.actions/requires.txt
